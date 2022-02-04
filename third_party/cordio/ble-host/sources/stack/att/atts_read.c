@@ -317,7 +317,7 @@ void attsProcFindTypeReq(attCcb_t *pCcb, uint16_t len, uint8_t *pPacket)
           }
 
           /* copy result into response buffer; first check if it fits */
-          if ((p + (sizeof(uint16_t) * 2)) <= (pBuf + pCcb->mtu + L2C_PAYLOAD_START))
+          if (p <= (pBuf + pCcb->mtu + L2C_PAYLOAD_START - (sizeof(uint16_t) * 2)))
           {
             UINT16_TO_BSTREAM(p, handle);
             UINT16_TO_BSTREAM(p, nextHandle);
@@ -509,7 +509,7 @@ void attsProcReadTypeReq(attCcb_t *pCcb, uint16_t len, uint8_t *pPacket)
                                handle, pAttr->permissions) == ATT_SUCCESS))
           {
             /* copy result into response buffer; first check if it fits */
-            if ((p + attLen + sizeof(uint16_t)) <= (pBuf + pCcb->mtu + L2C_PAYLOAD_START))
+            if (p <= (pBuf + pCcb->mtu + L2C_PAYLOAD_START - attLen - sizeof(uint16_t)))
             {
               UINT16_TO_BSTREAM(p, handle);
               memcpy(p, pAttr->pValue, attLen);
@@ -788,8 +788,7 @@ void attsProcReadGroupTypeReq(attCcb_t *pCcb, uint16_t len, uint8_t *pPacket)
                                handle, pAttr->permissions) == ATT_SUCCESS))
           {
             /* copy result into response buffer; first check if it fits */
-            if ((p + attLen + (2 * sizeof(uint16_t))) <=
-                (pBuf + pCcb->mtu + L2C_PAYLOAD_START))
+            if (p <= (pBuf + pCcb->mtu + L2C_PAYLOAD_START - attLen - (2 * sizeof(uint16_t))))
             {
               UINT16_TO_BSTREAM(p, handle);
               handle = attsFindServiceGroupEnd(handle);

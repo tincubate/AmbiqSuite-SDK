@@ -86,13 +86,12 @@ extern "C" {
 #define DM_SYNC_MAX              1
 #endif
 
-/*! \brief Number of supported advertising sets: must be set to 1 for legacy advertising */
+/*! \brief Number of supported advertising sets */
 #ifndef DM_NUM_ADV_SETS
 #define DM_NUM_ADV_SETS          2
 #endif
 
-/*! \brief Number of scanner and initiator PHYs (LE 1M, LE 2M and LE Coded): must be set to 1 for
-    legacy scanner and initiator */
+/*! \brief Number of scanner and initiator PHYs (LE 1M, LE 2M and LE Coded)*/
 #ifndef DM_NUM_PHYS
 #define DM_NUM_PHYS              2
 #endif

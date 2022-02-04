@@ -2663,7 +2663,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                                 <br>0x0</td>
 
                             <td align="center" colspan="2">XTALICOMPTRIM
-                                <br>0x3</td>
+                                <br>0x1</td>
 
                             <td align="center" colspan="2">XTALIBUFTRIM
                                 <br>0x1</td>
@@ -5235,19 +5235,19 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                     </thead>
                     <tbody>
                         <tr>
-                            <td align="center" colspan="4">RSVD28
+                            <td align="center" colspan="4">CORETEMPCOTRIM
                                 <br>0x3</td>
 
                             <td align="center" colspan="6">SIMOBUCKMEMLPTRIM
                                 <br>0x20</td>
 
-                            <td align="center" colspan="6">RSVD16
+                            <td align="center" colspan="6">MEMACTIVETRIM
                                 <br>0x20</td>
 
-                            <td align="center" colspan="6">RSVD10
+                            <td align="center" colspan="6">SIMOBUCKCORELPTRIM
                                 <br>0x20</td>
 
-                            <td align="center" colspan="10">RSVD00
+                            <td align="center" colspan="10">COREACTIVETRIM
                                 <br>0x200</td>
 
                         </tr>
@@ -5267,9 +5267,9 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                     <tbody>
                         <tr>
                             <td>31:28</td>
-                            <td>RSVD28</td>
+                            <td>CORETEMPCOTRIM</td>
                             <td>RW</td>
-                            <td>RESERVED - this field should not be modified<br><br>
+                            <td>simobuck_core_tempco_trim<br><br>
                                 </td>
                         </tr>
 
@@ -5283,25 +5283,25 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
                         <tr>
                             <td>21:16</td>
-                            <td>RSVD16</td>
+                            <td>MEMACTIVETRIM</td>
                             <td>RW</td>
-                            <td>RESERVED - this field should not be modified<br><br>
+                            <td>simobuck_mem_active_trim (VDDC)<br><br>
                                 </td>
                         </tr>
 
                         <tr>
                             <td>15:10</td>
-                            <td>RSVD10</td>
+                            <td>SIMOBUCKCORELPTRIM</td>
                             <td>RW</td>
-                            <td>RESERVED - this field should not be modified<br><br>
+                            <td>simobuck_core_lp_trim<br><br>
                                 </td>
                         </tr>
 
                         <tr>
                             <td>9:0</td>
-                            <td>RSVD00</td>
+                            <td>COREACTIVETRIM</td>
                             <td>RW</td>
-                            <td>RESERVED - this field should not be modified<br><br>
+                            <td>simobuck_core_active_trim (VDDF)<br><br>
                                 </td>
                         </tr>
 
@@ -6435,7 +6435,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31:0</td>
                             <td>FW0BITS</td>
                             <td>RW</td>
-                            <td>Write protect flash 0x00000000 - 0x0007FFFF. Each bit provides write protection for 16KB chunks of flash data space. Bits are cleared by writing a 1 to the bit. When read, 0 indicates the region is protected.  Bits are sticky (can be set when PROTLOCK is 1, but only cleared by reset)<br><br>
+                            <td>Write protect flash 0x00000000 - 0x0007FFFF. Each bit provides write protection for 16KB chunks of flash data space. Bits are cleared by writing a 1 to the bit. When read, 0 indicates the region is protected. Bits are sticky (can be set when PROTLOCK is 1, but only cleared by reset)<br><br>
                                 </td>
                         </tr>
 
@@ -7797,7 +7797,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
             <small>
                 AmbiqSuite Register Documentation&nbsp;
                 <a href="http://www.ambiqmicro.com">
-                <img class="footer" src="../resources/ambiqmicro_logo.png" alt="Ambiq Micro"/></a>&nbsp&nbsp Copyright &copy; 2020&nbsp&nbsp<br />
+                <img class="footer" src="../resources/ambiqmicro_logo.png" alt="Ambiq Micro"/></a>&nbsp&nbsp Copyright &copy; 2021&nbsp&nbsp<br />
                 This documentation is licensed and distributed under the <a rel="license" href="http://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause License</a>.&nbsp&nbsp<br/>
             </small>
         </div>

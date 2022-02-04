@@ -938,6 +938,10 @@ static void locatorProcMsg(dmEvt_t *pMsg)
     case DM_CONN_CLOSE_IND:
       uiEvent = APP_UI_CONN_CLOSE;
       break;
+    
+    case DM_PHY_UPDATE_IND:
+      APP_TRACE_INFO3("DM_PHY_UPDATE_IND status: %d, RX: %d, TX: %d", pMsg->phyUpdate.status,pMsg->phyUpdate.rxPhy, pMsg->phyUpdate.txPhy);
+      break;
 
     case DM_SEC_PAIR_CMPL_IND:
       DmSecGenerateEccKeyReq();

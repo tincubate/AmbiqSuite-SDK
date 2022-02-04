@@ -14,7 +14,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -46,12 +46,19 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
 #include <stdint.h>
 #include "am_mcu_apollo.h"
+
+#if defined(AM_PART_APOLLO4) || defined(AM_PART_APOLLO4B) || defined(AM_PART_APOLLO4P)
+//
+// For this entire module, part differentiation is strictly API related.
+//
+#define AM_PART_APOLLO4
+#endif
 
 //*****************************************************************************
 //
@@ -259,7 +266,7 @@ void
 am_util_faultisr_collect_data(uint32_t u32IsrSP)
 {
     volatile am_fault_t sFaultData;
-#if (defined(AM_PART_APOLLO4) || defined(AM_PART_APOLLO4B))
+#if (defined(AM_PART_APOLLO4))
     am_hal_fault_status_t  sHalFaultData = {0};
 #else
     am_hal_mcuctrl_fault_t sHalFaultData = {0};
@@ -350,7 +357,7 @@ am_util_faultisr_collect_data(uint32_t u32IsrSP)
     //
     // Use the HAL MCUCTRL functions to read the fault data.
     //
-#if (defined(AM_PART_APOLLO4) || defined(AM_PART_APOLLO4B))
+#if (defined(AM_PART_APOLLO4))
     am_hal_fault_status_get(&sHalFaultData);
 #else
 #if AM_APOLLO3_MCUCTRL
@@ -446,7 +453,7 @@ am_util_faultisr_collect_data(uint32_t u32IsrSP)
     // We need to spin here inside the function so that we have access to
     // local data, i.e. sFaultData.
     //
-    while(1)
+    while (1)
     {
     }
 }

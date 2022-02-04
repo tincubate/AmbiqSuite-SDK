@@ -99,6 +99,12 @@ void hrcpHrsParseHrm(uint8_t *pValue, uint16_t len)
   uint16_t  energyExp;
   uint16_t  rrInterval;
 
+#if 1
+    // Ambiq: Avoid 'variable is used before its value is set' warnings. Warning
+    //        is actually invalid because they're set in BSTREAM_TO_UINTxx().
+    heartRate = energyExp = rrInterval = 0;
+#endif
+
   /* Suppress unused variable compile warning */
   (void)heartRate; (void)energyExp; (void)rrInterval;
 

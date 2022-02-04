@@ -40,7 +40,7 @@ extern "C" {
  *
  */
 /**@{*/
-#define GYRO_HANDLE_START  0x50                          /*!< \brief Start handle. */
+#define GYRO_HANDLE_START  0x0076                        /*!< \brief Start handle. */
 #define GYRO_HANDLE_END   (GYRO_HANDLE_END_PLUS_ONE - 1) /*!< \brief End handle. */
 
 /**************************************************************************************************

@@ -13,7 +13,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -599,8 +599,9 @@ internal_iom_reset_on_error(am_hal_iom_state_t  *pIOMState, uint32_t ui32IntMask
             }
         }
     }
-    if (ui32IntMask & AM_HAL_IOM_INT_NAK)
+    if (ui32IntMask & (AM_HAL_IOM_INT_NAK | AM_HAL_IOM_INT_ARB))
     {
+        uint32_t iomDbg = IOMn(ui32Module)->IOMDBG;
         //
         // Wait for Idle
         //
@@ -615,8 +616,12 @@ internal_iom_reset_on_error(am_hal_iom_state_t  *pIOMState, uint32_t ui32IntMask
         // Reset Fifo
         IOMn(ui32Module)->FIFOCTRL_b.FIFORSTN = 0;
 
+        // Disable Clock gating
+        IOMn(ui32Module)->IOMDBG |= IOM0_IOMDBG_IOCLKON_Msk;
         // Wait for few IO clock cycles
         am_hal_flash_delay(iterationsToWait);
+        // Revert
+        IOMn(ui32Module)->IOMDBG = iomDbg;
 
         IOMn(ui32Module)->FIFOCTRL_b.FIFORSTN = 1;
 
@@ -1995,6 +2000,12 @@ am_hal_iom_power_ctrl(void *pHandle,
                 pIOMState->registerState.regMI2CCFG    = IOMn(pIOMState->ui32Module)->MI2CCFG;
                 pIOMState->registerState.regINTEN      = IOMn(pIOMState->ui32Module)->INTEN;
                 pIOMState->registerState.regDMATRIGEN  = IOMn(pIOMState->ui32Module)->DMATRIGEN;
+
+                if (IOMn(pIOMState->ui32Module)->CQCFG & _VAL2FLD(IOM0_CQCFG_CQEN, IOM0_CQCFG_CQEN_EN))
+                {
+                    am_hal_iom_CQDisable(pIOMState);
+                }
+
                 pIOMState->registerState.bValid = true;
             }
 

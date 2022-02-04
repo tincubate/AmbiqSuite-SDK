@@ -108,7 +108,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#RTCCTL" target="_self">RTCCTL - RTC Control Register</a>
+                            <a class="el" href="#RTCCTL" target="_self">RTCCTL - RTC Control</a>
                         </td>
                     </tr>
 
@@ -119,7 +119,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#INTEN" target="_self">INTEN - RTC Interrupt Register: Enable</a>
+                            <a class="el" href="#INTEN" target="_self">INTEN - RTC Interrupt: Enable</a>
                         </td>
                     </tr>
 
@@ -130,7 +130,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#INTSTAT" target="_self">INTSTAT - RTC Interrupt Register: Status</a>
+                            <a class="el" href="#INTSTAT" target="_self">INTSTAT - RTC Interrupt: Status</a>
                         </td>
                     </tr>
 
@@ -141,7 +141,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#INTCLR" target="_self">INTCLR - RTC Interrupt Register: Clear</a>
+                            <a class="el" href="#INTCLR" target="_self">INTCLR - RTC Interrupt: Clear</a>
                         </td>
                     </tr>
 
@@ -152,7 +152,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#INTSET" target="_self">INTSET - RTC Interrupt Register: Set</a>
+                            <a class="el" href="#INTSET" target="_self">INTSET - RTC Interrupt: Set</a>
                         </td>
                     </tr>
 
@@ -358,7 +358,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
                 </table>
                 <h3>Description:</h3>
-                <p>This register contains the day, month and year information.  It contains which day in the week, and the century as well.  The information of the century can also be derived from the year information.  The 31st bit contains the error bit.  See description in the register bit for condition when error is triggered.</p>
+                <p>This register contains the day, month and year information. It contains which day in the week, and the century as well. The information of the century can also be derived from the year information. The 31st bit contains the error bit. See description in the register bit for condition when error is triggered.</p>
                 <h3>Example Macro Usage:</h3>
                 <pre style="margin:10px" class="language-pascal"><span style='color:#3f7f59; '>//
 // Register access is all performed through the standard CMSIS structure-based
@@ -467,7 +467,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31</td>
                             <td>CTERR</td>
                             <td>RO</td>
-                            <td>Counter read error status. Error is triggered when software reads the lower word of the counters, and fails to read the upper counter within 1/100 second.  This is because when the lower counter is read, the upper counter is held off from incrementing until it is read so that the full time stamp can be read.<br><br>
+                            <td>Counter read error status. Error is triggered when software reads the lower word of the counters, and fails to read the upper counter within 1/100 second. This is because when the lower counter is read, the upper counter is held off from incrementing until it is read so that the full time stamp can be read.<br><br>
                                  NOERR                = 0x0 - No read error occurred<br>
                              RDERR                = 0x1 - Read error occurred</td>
                         </tr>
@@ -899,7 +899,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="RTCCTL" class="panel-title">RTCCTL - RTC Control Register</h3>
+                <h3 id="RTCCTL" class="panel-title">RTCCTL - RTC Control</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -917,7 +917,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
                 </table>
                 <h3>Description:</h3>
-                <p>This is the register control for the RTC module.  It sets the 12 or 24 hours mode, enables counter writes and sets the alarm repeat interval.</p>
+                <p>This is the register control for the RTC module. It sets the 12 or 24 hours mode, enables counter writes and sets the alarm repeat interval.</p>
                 <h3>Example Macro Usage:</h3>
                 <pre style="margin:10px" class="language-pascal"><span style='color:#3f7f59; '>//
 // Register access is all performed through the standard CMSIS structure-based
@@ -1065,7 +1065,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="INTEN" class="panel-title">INTEN - RTC Interrupt Register: Enable</h3>
+                <h3 id="INTEN" class="panel-title">INTEN - RTC Interrupt: Enable</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -1188,7 +1188,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="INTSTAT" class="panel-title">INTSTAT - RTC Interrupt Register: Status</h3>
+                <h3 id="INTSTAT" class="panel-title">INTSTAT - RTC Interrupt: Status</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -1311,7 +1311,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="INTCLR" class="panel-title">INTCLR - RTC Interrupt Register: Clear</h3>
+                <h3 id="INTCLR" class="panel-title">INTCLR - RTC Interrupt: Clear</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -1434,7 +1434,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="INTSET" class="panel-title">INTSET - RTC Interrupt Register: Set</h3>
+                <h3 id="INTSET" class="panel-title">INTSET - RTC Interrupt: Set</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -1563,7 +1563,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
             <small>
                 AmbiqSuite Register Documentation&nbsp;
                 <a href="http://www.ambiqmicro.com">
-                <img class="footer" src="../resources/ambiqmicro_logo.png" alt="Ambiq Micro"/></a>&nbsp&nbsp Copyright &copy; 2020&nbsp&nbsp<br />
+                <img class="footer" src="../resources/ambiqmicro_logo.png" alt="Ambiq Micro"/></a>&nbsp&nbsp Copyright &copy; 2021&nbsp&nbsp<br />
                 This documentation is licensed and distributed under the <a rel="license" href="http://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause License</a>.&nbsp&nbsp<br/>
             </small>
         </div>

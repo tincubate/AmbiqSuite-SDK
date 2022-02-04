@@ -337,12 +337,12 @@
                     <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\..\..\..\..\CMSIS\AmbiqMicro\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\utils</state>
+          <state>$PROJ_DIR$\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\devices</state>
           <state>$PROJ_DIR$\..\..\..\..\..\CMSIS\ARM\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\mcu\apollo3</state>
           <state>$PROJ_DIR$\..\src</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\devices</state>
-          <state>$PROJ_DIR$\..\..\..\bsp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>
@@ -610,12 +610,12 @@
                     <name>AUserIncludes</name>
           <state>$PROJ_DIR$\..\..\..\..\..\CMSIS\AmbiqMicro\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\utils</state>
+          <state>$PROJ_DIR$\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\devices</state>
           <state>$PROJ_DIR$\..\..\..\..\..\CMSIS\ARM\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\mcu\apollo3</state>
           <state>$PROJ_DIR$\..\src</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\devices</state>
-          <state>$PROJ_DIR$\..\..\..\bsp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..</state>
                 </option>
                 <option>
                     <name>AExtraOptionsCheckV2</name>
@@ -1366,12 +1366,12 @@
                     <name>CCIncludePath2</name>
           <state>$PROJ_DIR$\..\..\..\..\..\CMSIS\AmbiqMicro\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\utils</state>
+          <state>$PROJ_DIR$\..\..\..\bsp</state>
+          <state>$PROJ_DIR$\..\..\..\..\..</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\devices</state>
           <state>$PROJ_DIR$\..\..\..\..\..\CMSIS\ARM\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\mcu\apollo3</state>
           <state>$PROJ_DIR$\..\src</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\devices</state>
-          <state>$PROJ_DIR$\..\..\..\bsp</state>
-          <state>$PROJ_DIR$\..\..\..\..\..</state>
                 </option>
                 <option>
                     <name>CCStdIncCheck</name>

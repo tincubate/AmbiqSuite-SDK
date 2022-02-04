@@ -40,7 +40,7 @@ extern "C" {
  *
  */
 /**@{*/
-#define URICFG_HANDLE_START  0x80                            /*!< \brief Start handle. */
+#define URICFG_HANDLE_START  0x00A0                          /*!< \brief Start handle. */
 #define URICFG_HANDLE_END   (URICFG_HANDLE_END_PLUS_ONE - 1) /*!< \brief End handle. */
 
 /**************************************************************************************************

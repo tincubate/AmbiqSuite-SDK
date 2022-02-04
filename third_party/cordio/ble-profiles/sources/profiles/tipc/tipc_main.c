@@ -120,6 +120,13 @@ uint8_t TipcCtsValueUpdate(uint16_t *pHdlList, attEvt_t *pMsg)
   int8_t    timeZone;
   uint8_t   dstOffset, source, accuracy;
 
+#if 1
+    // Ambiq: Avoid 'variable is used before its value is set' warnings. Warning
+    //        is actually invalid because they're set in BSTREAM_TO_UINTxx().
+    month = day = hour = min = sec = dayOfWeek = adjustReason =     \
+    year = sec256 = dstOffset = accuracy = timeZone = source = 0;
+#endif
+
   /* Suppress unused variable compile warning */
   (void)month; (void)day; (void)hour; (void)min; (void)sec; (void)dayOfWeek; (void)adjustReason;
   (void)year; (void)sec256; (void)dstOffset; (void)accuracy; (void)timeZone; (void)source;

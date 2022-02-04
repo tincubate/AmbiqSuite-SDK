@@ -38,6 +38,18 @@
 #include "att_api.h"
 #include "app_api.h"
 
+#if defined(__CC_ARM)
+/* The C standard does not permit convert short integer pointer to long integer pointer,
+ * or it will generate compile warning "extended constant initialiser used #1296" in Keil.
+ * This file needs to do the pointer conversion (uint8_t -> uint32_t)so we need to ignore
+ * such warning at this moment to lower the code change risk.
+ * Will remove this diag_suppress once find another implement code for the feature.
+ */
+#pragma diag_suppress 1296
+#elif defined(__ICCARM__)
+#elif defined(__GNUC__)
+#endif
+
 /**************************************************************************************************
   Global Variables
 **************************************************************************************************/

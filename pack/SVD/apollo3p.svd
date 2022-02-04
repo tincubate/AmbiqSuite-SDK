@@ -41,7 +41,7 @@
   <version>1.0</version>                                          <!-- version of this description, adding CMSIS-SVD 1.1 tags -->
   <description>Ultra-Low power ARM Cortex-M4 MCU from Ambiq Micro</description>
   <licenseText>                                                   <!-- this license text will appear in header file. \n force line breaks -->
-Copyright (c) 2020, Ambiq Micro, Inc.\nAll rights reserved.\n\nRedistribution and use in source and binary forms, with or without\nmodification, are permitted provided that the following conditions are met:\n\n1. Redistributions of source code must retain the above copyright notice,\nthis list of conditions and the following disclaimer.\n\n2. Redistributions in binary form must reproduce the above copyright\nnotice, this list of conditions and the following disclaimer in the\ndocumentation and/or other materials provided with the distribution.\n\n3. Neither the name of the copyright holder nor the names of its\ncontributors may be used to endorse or promote products derived from this\nsoftware without specific prior written permission.\n\nThird party software included in this distribution is subject to the\nadditional license terms as defined in the /docs/licenses directory.\n\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"\nAND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\nIMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE\nARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE\nLIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR\nCONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF\nSUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS\nINTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN\nCONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)\nARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE\nPOSSIBILITY OF SUCH DAMAGE.\n
+Copyright (c) 2021, Ambiq Micro, Inc.\nAll rights reserved.\n\nRedistribution and use in source and binary forms, with or without\nmodification, are permitted provided that the following conditions are met:\n\n1. Redistributions of source code must retain the above copyright notice,\nthis list of conditions and the following disclaimer.\n\n2. Redistributions in binary form must reproduce the above copyright\nnotice, this list of conditions and the following disclaimer in the\ndocumentation and/or other materials provided with the distribution.\n\n3. Neither the name of the copyright holder nor the names of its\ncontributors may be used to endorse or promote products derived from this\nsoftware without specific prior written permission.\n\nThird party software included in this distribution is subject to the\nadditional license terms as defined in the /docs/licenses directory.\n\nTHIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"\nAND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\nIMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE\nARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE\nLIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR\nCONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF\nSUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS\nINTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN\nCONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)\nARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE\nPOSSIBILITY OF SUCH DAMAGE.\n
 
   </licenseText>
   <cpu>                                                           <!-- details about the cpu embedded in the device -->
@@ -4464,7 +4464,7 @@ the start of the transaction, and will go low when the command is complete, and 
               <enumeratedValues>
                 <enumeratedValue>
                   <name>ACTIVE</name>
-                  <description>An I/O command is active. Indicates the active module has an active command and is processing this. De-asserted when the command is completed.</description>
+                  <description>An I/O command is active. Indicates the active module has an active command and is processing this. Deasserted when the command is completed.</description>
                   <value>1</value>
                 </enumeratedValue>
               </enumeratedValues>
@@ -5152,7 +5152,7 @@ BLE core only when this signal is 1. The hardware will automatically wait for th
             </field>
             <field>
               <name>LRU</name>
-              <description>Sets the cache replacement policy. 0=LRR (least recently replaced), 1=LRU (least recently used).  LRR minimizes writes to the TAG SRAM.</description>
+              <description>Sets the cache replacement policy. 0=LRR (least recently replaced), 1=LRU (least recently used). LRR minimizes writes to the TAG SRAM.</description>
               <bitRange>[1:1]</bitRange>
               <access>read-write</access>
 
@@ -5559,7 +5559,7 @@ BLE core only when this signal is 1. The hardware will automatically wait for th
             </field>
             <field>
               <name>SEDELAY0</name>
-              <description>Sets SE delay (FLASH address setup).  A value of 5 is recommended.</description>
+              <description>Sets SE delay (FLASH address setup). A value of 5 is recommended.</description>
               <bitRange>[6:4]</bitRange>
               <access>read-write</access>
 
@@ -5615,7 +5615,7 @@ BLE core only when this signal is 1. The hardware will automatically wait for th
             </field>
             <field>
               <name>SEDELAY1</name>
-              <description>Sets SE delay (FLASH address setup).  A value of 5 is recommended.</description>
+              <description>Sets SE delay (FLASH address setup). A value of 5 is recommended.</description>
               <bitRange>[6:4]</bitRange>
               <access>read-write</access>
 
@@ -5671,7 +5671,7 @@ BLE core only when this signal is 1. The hardware will automatically wait for th
             </field>
             <field>
               <name>SEDELAY2</name>
-              <description>Sets SE delay (FLASH address setup).  A value of 5 is recommended.</description>
+              <description>Sets SE delay (FLASH address setup). A value of 5 is recommended.</description>
               <bitRange>[6:4]</bitRange>
               <access>read-write</access>
 
@@ -5727,7 +5727,7 @@ BLE core only when this signal is 1. The hardware will automatically wait for th
             </field>
             <field>
               <name>SEDELAY3</name>
-              <description>Sets SE delay (FLASH address setup).  A value of 5 is recommended.</description>
+              <description>Sets SE delay (FLASH address setup). A value of 5 is recommended.</description>
               <bitRange>[6:4]</bitRange>
               <access>read-write</access>
 
@@ -5795,7 +5795,7 @@ BLE core only when this signal is 1. The hardware will automatically wait for th
           <fields>
             <field>
               <name>CALRC</name>
-              <description>LFRC Oscillator calibration value.  This register will enable the hardware to increase or decrease the number of cycles in a 512 Hz clock derived from the original 1024 version. The most significant bit is the sign. A '1' is a reduction, and a '0' is an addition. This calibration value will add or reduce the number of cycles programmed here across a 32 second interval. The range is from -131072 (decimal) to 131071 (decimal). This register is normally used in conjunction with ACALCTR register. The CALRC register will load the ACALCTR register (bits 17:0) if the ACALCTR register is set to measure the LFRC with the XT clock.</description>
+              <description>LFRC Oscillator calibration value. This register will enable the hardware to increase or decrease the number of cycles in a 512 Hz clock derived from the original 1024 version. The most significant bit is the sign. A '1' is a reduction, and a '0' is an addition. This calibration value will add or reduce the number of cycles programmed here across a 32 second interval. The range is from -131072 (decimal) to 131071 (decimal). This register is normally used in conjunction with ACALCTR register. The CALRC register will load the ACALCTR register (bits 17:0) if the ACALCTR register is set to measure the LFRC with the XT clock.</description>
               <bitRange>[17:0]</bitRange>
               <access>read-write</access>
 
@@ -38385,7 +38385,7 @@ BLE core only when this signal is 1. The hardware will automatically wait for th
       <registers>
         <register>
           <name>FIFO</name>
-          <description>Provides direct random access to both output and input FIFOs. The state of the FIFO is not disturbed by reading these locations (i.e., no POP will be done).  FIFO0 is accessible from addresses 0x0 - 0x1C, and is used for data output from the IOM to external devices. These FIFO locations can be read and written directly.
+          <description>Provides direct random access to both output and input FIFOs. The state of the FIFO is not disturbed by reading these locations (i.e., no POP will be done). FIFO0 is accessible from addresses 0x0 - 0x1C, and is used for data output from the IOM to external devices. These FIFO locations can be read and written directly.
 FIFO1 locations 0x20 - 0x3C provide read only access to the input FIFO. These FIFO locations cannot be directly written by the MCU and are updated only by the internal hardware. Writes to FIFO0 will take effect immediately. The FIFO pointers
 in register FIFOLOC indicate the current offset into each FIFO for the read and write operations.
 Access to the FIFOs can only be done in word increments; byte reads and writes are not supported.
@@ -39352,7 +39352,7 @@ Offset bytes are always transmitted MSB first, regardless of the value of the LS
                 <enumeratedValue>
                   <name>EN</name>
                   <description>Enable DCX.</description>
-                  <value>16</value>
+                  <value>1</value>
                 </enumeratedValue>
                 <enumeratedValue>
                   <name>DIS</name>
@@ -41893,7 +41893,7 @@ Values:
           <addressOffset>0x00000120</addressOffset>
           <size>32</size>
           <access>read-write</access>
-          <resetValue>0x00000358</resetValue>
+          <resetValue>0x00000158</resetValue>
           <resetMask>0x000003FF</resetMask>
 
           <fields>
@@ -42692,13 +42692,41 @@ Values:
           <size>32</size>
           <access>read-write</access>
           <resetValue>0x38208200</resetValue>
-          <resetMask>0x0FC00000</resetMask>
+          <resetMask>0xFFFFFFFF</resetMask>
 
           <fields>
+            <field>
+              <name>CORETEMPCOTRIM</name>
+              <description>simobuck_core_tempco_trim</description>
+              <bitRange>[31:28]</bitRange>
+              <access>read-write</access>
+
+            </field>
             <field>
               <name>SIMOBUCKMEMLPTRIM</name>
               <description>simobuck_mem_lp_trim</description>
               <bitRange>[27:22]</bitRange>
+              <access>read-write</access>
+
+            </field>
+            <field>
+              <name>MEMACTIVETRIM</name>
+              <description>simobuck_mem_active_trim (VDDC)</description>
+              <bitRange>[21:16]</bitRange>
+              <access>read-write</access>
+
+            </field>
+            <field>
+              <name>SIMOBUCKCORELPTRIM</name>
+              <description>simobuck_core_lp_trim</description>
+              <bitRange>[15:10]</bitRange>
+              <access>read-write</access>
+
+            </field>
+            <field>
+              <name>COREACTIVETRIM</name>
+              <description>simobuck_core_active_trim (VDDF)</description>
+              <bitRange>[9:0]</bitRange>
               <access>read-write</access>
 
             </field>
@@ -42895,7 +42923,7 @@ Values:
           <fields>
             <field>
               <name>FW0BITS</name>
-              <description>Write protect flash 0x00000000 - 0x0007FFFF. Each bit provides write protection for 16KB chunks of flash data space. Bits are cleared by writing a 1 to the bit. When read, 0 indicates the region is protected.  Bits are sticky (can be set when PROTLOCK is 1, but only cleared by reset)</description>
+              <description>Write protect flash 0x00000000 - 0x0007FFFF. Each bit provides write protection for 16KB chunks of flash data space. Bits are cleared by writing a 1 to the bit. When read, 0 indicates the region is protected. Bits are sticky (can be set when PROTLOCK is 1, but only cleared by reset)</description>
               <bitRange>[31:0]</bitRange>
               <access>read-write</access>
 
@@ -44023,7 +44051,7 @@ enum
             </field>
             <field>
               <name>XIPMIXED</name>
-              <description>Reserved. Set to 0x0</description>
+              <description>Provides override controls for data operations where instruction, address, and data may transfer in different rates.</description>
               <bitRange>[10:8]</bitRange>
               <access>read-write</access>
               <enumeratedValues>
@@ -45304,6 +45332,11 @@ enum
         <value>33</value>
         <description>MSPI2 IRQ</description>
       </interrupt>
+      <interrupt>
+        <name>MAX</name>
+        <value>34</value>
+        <description>Not a valid IRQ. The maximum IRQ is this value - 1.</description>
+      </interrupt>
     </peripheral>
 
     <peripheral>
@@ -46096,7 +46129,7 @@ enum
           <fields>
             <field>
               <name>FIFOTHR</name>
-              <description>FIFO Threshold value.  When the FIFO count is equal to, or larger than this value (in words), a THR interrupt is generated (if enabled)</description>
+              <description>FIFO Threshold value. When the FIFO count is equal to, or larger than this value (in words), a THR interrupt is generated (if enabled)</description>
               <bitRange>[4:0]</bitRange>
               <access>read-write</access>
 
@@ -51061,7 +51094,7 @@ enum
       <registers>
         <register>
           <name>CFG</name>
-          <description>This is the configuration register for the watch dog timer. It controls the enable, interrupt set, clocks for the timer, the compare values for the counters to trigger a reset or interrupt.  This register can only be written to if the watch dog timer is unlocked (WDTLOCK is not set).</description>
+          <description>This is the configuration register for the watch dog timer. It controls the enable, interrupt set, clocks for the timer, the compare values for the counters to trigger a reset or interrupt. This register can only be written to if the watch dog timer is unlocked (WDTLOCK is not set).</description>
           <addressOffset>0x00000000</addressOffset>
           <size>32</size>
           <access>read-write</access>

@@ -105,7 +105,9 @@ void AppCopyRecListInNvm(appDbRec_t *pRecord)
     uint8_t i;
     for(i=0;i<APP_DB_NUM_RECS;i++)
     {
-        if(((*(uint32_t*)(pNvmRec->peerAddr) != 0xFFFFFFFF))&&(*(uint32_t*)(pRecListNvmPointer->peerAddr) != 0x00000000))
+        void *pPeerAddr = pNvmRec->peerAddr;
+        if ( (*(uint32_t*)pPeerAddr != 0xFFFFFFFF)  &&
+             (*(uint32_t*)pPeerAddr != 0x00000000) )
         {
             //valid record in NVM
             memcpy(pRecord, pNvmRec, sizeof(appDbRec_t));
@@ -167,7 +169,8 @@ int32_t AppStorePairingInfoInNVM(appDbHdl_t hdl)
 
     for(i=0;i<APP_DB_NUM_RECS;i++)
     {
-        if((*(uint32_t*)(pNvmRec->peerAddr) != 0xFFFFFFFF))
+        void *pPeerAddr = pNvmRec->peerAddr;
+        if ( *(uint32_t*)pPeerAddr != 0xFFFFFFFF )
         {
             if(BdaCmp(((appDbRec_t*)hdl)->peerAddr, pNvmRec->peerAddr))
             {

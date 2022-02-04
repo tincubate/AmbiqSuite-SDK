@@ -471,6 +471,12 @@ static void uriBeaconAttWriteCback(uint16_t handle, uint16_t valueLen, const uin
   bool_t  updatedAdvData = FALSE;
   uint8_t uriData[URICFG_MAXSIZE_URIDATA_ATT];
 
+#if 1   // Ambiq added. Avoids the 'set but never used' compiler warning for the 'id' variable
+    id = 0;                             // Set id to something (it's normally unitialized at this point)
+    updatedAdvData = id ? TRUE : FALSE; // Use id
+    updatedAdvData = FALSE;             // Make double sure to initialize to false as expected.
+#endif
+
   switch (handle)
   {
     case URICFG_HANDLE_URIDATA:
@@ -705,7 +711,7 @@ static void uriBeaconProcMsg(wsfMsgHdr_t *pMsg)
 
     case ATT_MTU_UPDATE_IND:
       APP_TRACE_INFO1("Negotiated MTU %d", ((attEvt_t *)pMsg)->mtu);
-      break;  
+      break;
 
     case DM_RESET_CMPL_IND:
       AttsCalculateDbHash();

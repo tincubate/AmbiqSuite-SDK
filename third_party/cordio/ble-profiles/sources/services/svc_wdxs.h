@@ -44,7 +44,7 @@ extern "C" {
  *
  */
 /**@{*/
-#define WDXS_START_HDL               0x240              /*!< \brief Start handle. */
+#define WDXS_START_HDL               0x0240             /*!< \brief Start handle. */
 #define WDXS_END_HDL                 (WDXS_MAX_HDL - 1) /*!< \brief End handle. */
 
 /**************************************************************************************************

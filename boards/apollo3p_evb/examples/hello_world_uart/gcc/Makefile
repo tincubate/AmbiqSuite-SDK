@@ -2,7 +2,7 @@
 #
 # Makefile - Rules for building the libraries, examples and docs.
 #
-# Copyright (c) 2020, Ambiq Micro, Inc.
+# Copyright (c) 2021, Ambiq Micro, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+# This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 #
 #******************************************************************************
 TARGET := hello_world_uart
@@ -82,21 +82,21 @@ all clean:
 else
 
 DEFINES = -DPART_$(PART)
-DEFINES+= -DAM_PART_APOLLO3P
 DEFINES+= -DAM_PACKAGE_BGA
+DEFINES+= -DAM_PART_APOLLO3P
 DEFINES+= -Dgcc
 
-INCLUDES = -I../../../../..
+INCLUDES = -I../../../bsp
 INCLUDES+= -I../../../../../utils
 INCLUDES+= -I../../../../../mcu/apollo3p
 INCLUDES+= -I../src
 INCLUDES+= -I../../../../../CMSIS/AmbiqMicro/Include
 INCLUDES+= -I../../../../../devices
 INCLUDES+= -I../../../../../CMSIS/ARM/Include
-INCLUDES+= -I../../../bsp
+INCLUDES+= -I../../../../..
 
-VPATH = ../../../../../utils
-VPATH+=:../src
+VPATH = ../src
+VPATH+=:../../../../../utils
 
 SRC = hello_world_uart.c
 SRC += am_util_delay.c

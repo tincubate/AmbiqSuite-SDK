@@ -65,10 +65,10 @@ typedef enum
  *  \param  pContext Connection context.
  *  \param  pData    WSF msg buffer containing an ACL packet.
  *
- *  \return None.
+ *  \return The length of ACL packet.
  */
 /*************************************************************************************************/
-void hciTrSendAclData(void *pContext, uint8_t *pData)
+uint16_t hciTrSendAclData(void *pContext, uint8_t *pData)
 {
   uint16_t   len;
 
@@ -76,14 +76,16 @@ void hciTrSendAclData(void *pContext, uint8_t *pData)
   BYTES_TO_UINT16(len, &pData[2]);
   len += HCI_ACL_HDR_LEN;
 
-  /* dump event for protocol analysis */
-  HCI_PDUMP_TX_ACL(len, pData);
-
   /* transmit ACL header and data */
   if (hciDrvWrite(HCI_ACL_TYPE, len, pData) == len)
   {
-    /* free buffer */
-    hciCoreTxAclComplete(pContext, pData);
+      /* dump event for protocol analysis */
+      HCI_PDUMP_TX_ACL(len, pData);
+      return len;
+  }
+  else
+  {
+      return 0;
   }
 }
 
@@ -96,25 +98,24 @@ void hciTrSendAclData(void *pContext, uint8_t *pData)
  *
  *  \param  pData    WSF msg buffer containing an HCI command.
  *
- *  \return None.
+ *  \return TRUE if packet sent, FALSE otherwise.
  */
 /*************************************************************************************************/
-void hciTrSendCmd(uint8_t *pData)
+bool_t hciTrSendCmd(uint8_t *pData)
 {
   uint16_t   len;  // in case like LE set periodic advertising data, the maximum HCI command parameter length is 255
 
   /* get length */
   len = pData[2] + HCI_CMD_HDR_LEN;
 
-  /* dump event for protocol analysis */
-  HCI_PDUMP_CMD(len, pData);
-
   /* transmit ACL header and data */
   if (hciDrvWrite(HCI_CMD_TYPE, len, pData) == len)
   {
-    /* free buffer */
-    WsfMsgFree(pData);
+      /* dump event for protocol analysis */
+      HCI_PDUMP_CMD(len, pData);
+      return TRUE;
   }
+  return FALSE;
 }
 
 
@@ -141,6 +142,7 @@ uint16_t hciTrSerialRxIncoming(uint8_t *pBuf, uint16_t len)
 
   uint8_t   dataByte;
   uint16_t  consumed_bytes;
+  uint16_t  received_bytes = len;
 
   consumed_bytes = 0;
   /* loop until all bytes of incoming buffer are handled */
@@ -179,8 +181,9 @@ uint16_t hciTrSerialRxIncoming(uint8_t *pBuf, uint16_t len)
       }
       else
       {
-        /* invalid packet type */
-        WSF_ASSERT(0);
+        /* invalid packet type, discard this packet */
+        stateRx = HCI_RX_STATE_IDLE;
+        consumed_bytes = received_bytes;
         return consumed_bytes;
       }
 
@@ -241,7 +244,9 @@ uint16_t hciTrSerialRxIncoming(uint8_t *pBuf, uint16_t len)
         }
         else
         {
-          WSF_ASSERT(0); /* allocate falied */
+          /* allocate fail, discard this packet */
+          stateRx = HCI_RX_STATE_IDLE;
+          consumed_bytes = received_bytes;
           return consumed_bytes;
         }
 

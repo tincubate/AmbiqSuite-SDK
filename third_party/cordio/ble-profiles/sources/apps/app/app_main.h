@@ -57,11 +57,15 @@ extern "C" {
 #define APP_SLAVE_MSG_START         0x10
 #define APP_MASTER_MSG_START        0x20
 
+/*! \brief Send reading remote feature HCI command when the interval in millisecond expires */
+#define APP_TIME_READ_REMOTE_FEAT_MS  30
+
 /*! \brief App WSF message event enumeration */
 enum
 {
   APP_BTN_POLL_IND = APP_MSG_START,       /*! Button poll timer expired */
-  APP_UI_TIMER_IND                        /*! UI timer expired */
+  APP_UI_TIMER_IND,                       /*! UI timer expired */
+  APP_HCI_READ_REMOTE_FEAT                /*! Read remote feature timer expired */
 };
 
 /*! App slave WSF message event enumeration */
@@ -130,6 +134,7 @@ typedef struct
   uint8_t           attempts;                                               /*! Connection parameter update attempts */
   uint8_t           updateState;                                            /*! Connection Update State */
   wsfTimer_t        updateTimer;                                            /*! Connection parameter update timer */
+  wsfTimer_t        readRemoteFeatTimer;                                    /*! Send HCI command of Read Remote Feature after connection after timer expires */
 } appConnCb_t;
 
 /*! extended connection control block */
@@ -177,6 +182,7 @@ uint8_t appNumConns(uint8_t role);
 
 void appUiBtnPoll(void);
 void appUiTimerExpired(wsfMsgHdr_t *pMsg);
+void appConnReadRemoteFeatTimerStart(dmConnId_t connId);
 
 /* slave utility functions */
 extern void appSlaveResetAdvDataOffset(uint8_t advHandle);

@@ -40,7 +40,7 @@ extern "C" {
  *
  */
 /**@{*/
-#define TEMP_HANDLE_START  0x60                          /*!< \brief Start handle. */
+#define TEMP_HANDLE_START  0x0090                        /*!< \brief Start handle. */
 #define TEMP_HANDLE_END   (TEMP_HANDLE_END_PLUS_ONE - 1) /*!< \brief End handle. */
 
 /**************************************************************************************************

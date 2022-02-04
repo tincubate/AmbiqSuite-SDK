@@ -41,7 +41,7 @@ extern "C" {
  *
  */
 /**@{*/
-#define TIME_START_HDL               0xC0               /*!< \brief Start handle. */
+#define TIME_START_HDL               0x00E0             /*!< \brief Start handle. */
 #define TIME_END_HDL                 (TIME_MAX_HDL - 1) /*!< \brief End handle. */
 
 /**************************************************************************************************

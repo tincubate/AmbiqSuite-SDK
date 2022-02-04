@@ -170,10 +170,10 @@ hciCoreConn_t *hciCoreConnByHandle(uint16_t handle);
  *  \param  pConn    Pointer to connection structure.
  *  \param  pData    WSF buffer containing an ACL packet.
  *
- *  \return None.
+ *  \return TRUE if packet sent, FALSE otherwise.
  */
 /*************************************************************************************************/
-void hciCoreSendAclData(hciCoreConn_t *pConn, uint8_t *pData);
+bool_t hciCoreSendAclData(hciCoreConn_t *pConn, uint8_t *pData);
 
 /*************************************************************************************************/
 /*!
@@ -181,10 +181,10 @@ void hciCoreSendAclData(hciCoreConn_t *pConn, uint8_t *pData);
  *
  *  \param  bufs    Number of new buffers now available.
  *
- *  \return None.
+ *  \return TRUE if any pending hci ACL packet sent successfully.
  */
 /*************************************************************************************************/
-void hciCoreTxReady(uint8_t bufs);
+bool_t hciCoreTxReady(uint8_t bufs);
 
 /*************************************************************************************************/
 /*!
@@ -194,10 +194,10 @@ void hciCoreTxReady(uint8_t bufs);
  *  \param  len      ACL packet length.
  *  \param  pData    WSF buffer containing an ACL packet.
  *
- *  \return None.
+ *  \return TRUE if packet sent, FALSE otherwise.
  */
 /*************************************************************************************************/
-void hciCoreTxAclStart(hciCoreConn_t *pConn, uint16_t len, uint8_t *pData);
+bool_t hciCoreTxAclStart(hciCoreConn_t *pConn, uint16_t len, uint8_t *pData);
 
 /*************************************************************************************************/
 /*!

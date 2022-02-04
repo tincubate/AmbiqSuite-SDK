@@ -6,14 +6,10 @@ def generate_link_script(config):
 
     mapping = dict()
     mapping['ro_base'] = format_number(config['MCU_MRAM']['start'])
-    mapping['dsp0_base'] = format_number(config['DSP0_MRAM']['start'])
-    mapping['dsp1_base'] = format_number(config['DSP1_MRAM']['start'])
     mapping['rw_base'] = format_number(config['MCU_TCM']['start'])
     mapping['sram_base'] = format_number(config['MCU_SRAM']['start'])
     mapping['shared_base'] = format_number(config['SHARED_SRAM']['start'])
     mapping['ro_size'] = format_number(config['MCU_MRAM']['length'])
-    mapping['dsp0_size'] = format_number(config['DSP0_MRAM']['length'])
-    mapping['dsp1_size'] = format_number(config['DSP1_MRAM']['length'])
     mapping['rw_size'] = format_number(config['MCU_TCM']['length'])
     mapping['sram_size'] = format_number(config['MCU_SRAM']['length'])
     mapping['shared_size'] = format_number(config['SHARED_SRAM']['length'])
@@ -65,11 +61,6 @@ LR_1 ${ro_base}
     MCU_TCM ${rw_base} ${rw_size}
     {
         * (+RW, +ZI)
-    }
-
-    MCU_SRAM ${sram_base} ${sram_size}
-    {
-        * (MCU_SRAM)
     }
 
     SHARED_SRAM ${shared_base} ${shared_size}

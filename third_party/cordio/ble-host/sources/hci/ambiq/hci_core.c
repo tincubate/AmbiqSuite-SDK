@@ -41,13 +41,17 @@
 
 /* Default ACL buffer flow control watermark levels */
 #ifndef HCI_ACL_QUEUE_HI
+#if defined(AM_PART_APOLLO3) || defined(AM_PART_APOLLO3P)
 #define HCI_ACL_QUEUE_HI          5             /* Disable flow when this many buffers queued */
+#else
+#define HCI_ACL_QUEUE_HI          14
+#endif
 #endif
 #ifndef HCI_ACL_QUEUE_LO
 #if defined(AM_PART_APOLLO3) || defined(AM_PART_APOLLO3P)
 #define HCI_ACL_QUEUE_LO          3             /* Enable flow when this many buffers queued */
 #else
-#define HCI_ACL_QUEUE_LO          1             /* Enable flow when this many buffers queued */
+#define HCI_ACL_QUEUE_LO          13
 #endif
 #endif
 
@@ -326,26 +330,29 @@ void hciCoreConnClose(uint16_t handle)
  *  \param  pConn    Pointer to connection structure.
  *  \param  pData    WSF buffer containing an ACL packet.
  *
- *  \return None.
+ *  \return TRUE if packet sent, FALSE otherwise.
  */
 /*************************************************************************************************/
-void hciCoreSendAclData(hciCoreConn_t *pConn, uint8_t *pData)
+bool_t hciCoreSendAclData(hciCoreConn_t *pConn, uint8_t *pData)
 {
-  /* increment outstanding buf count for handle */
-  pConn->outBufs++;
-
   /* send to transport */
-  hciTrSendAclData(pConn, pData);
+  if ( hciTrSendAclData(pConn, pData) > 0)
+  {
+    /* increment outstanding buf count for handle */
+    pConn->outBufs++;
 
-  /* decrement available buffer count */
-  if (hciCoreCb.availBufs > 0)
-  {
-    hciCoreCb.availBufs--;
+    /* decrement available buffer count */
+    if (hciCoreCb.availBufs > 0)
+    {
+      hciCoreCb.availBufs--;
+    }
+    else
+    {
+      HCI_TRACE_WARN0("hciCoreSendAclData availBufs=0");
+    }
+    return TRUE;
   }
-  else
-  {
-    HCI_TRACE_WARN0("hciCoreSendAclData availBufs=0");
-  }
+  return FALSE;
 }
 
 /*************************************************************************************************/
@@ -356,16 +363,17 @@ void hciCoreSendAclData(hciCoreConn_t *pConn, uint8_t *pData)
  *
  *  \param  bufs    Number of new buffers now available.
  *
- *  \return None.
+ *  \return TRUE if any pending hci ACL packet sent successfully.
  */
 /*************************************************************************************************/
-void hciCoreTxReady(uint8_t bufs)
+bool_t hciCoreTxReady(uint8_t bufs)
 {
   uint8_t         *pData;
   wsfHandlerId_t  handlerId;
   uint16_t        handle;
   uint16_t        len;
   hciCoreConn_t   *pConn;
+  bool_t          pkt_sent = FALSE;
 
   /* increment available buffers, with ceiling */
   if (bufs > 0)
@@ -384,7 +392,7 @@ void hciCoreTxReady(uint8_t bufs)
     if (hciCoreTxAclContinue(NULL) == FALSE)
     {
       /* if no fragments then check for any queued ACL data */
-      if ((pData = WsfMsgDeq(&hciCoreCb.aclQueue, &handlerId)) != NULL)
+      if ((pData = WsfMsgPeek(&hciCoreCb.aclQueue, &handlerId)) != NULL)
       {
         /* parse handle and length */
         BYTES_TO_UINT16(handle, pData);
@@ -393,11 +401,23 @@ void hciCoreTxReady(uint8_t bufs)
         /* look up conn structure and send data */
         if ((pConn = hciCoreConnByHandle(handle)) != NULL)
         {
-          hciCoreTxAclStart(pConn, len, pData);
+          if (hciCoreTxAclStart(pConn, len, pData) == TRUE)
+          {
+            WsfMsgDeq(&hciCoreCb.aclQueue, &handlerId);
+            hciCoreTxAclComplete(pConn, pData);
+            pkt_sent = TRUE;
+          }
+          else
+          {
+            // Wait for Cooper to be ready.
+            break;
+          }
         }
         /* handle not found, connection must be closed */
         else
         {
+          /* Dequeue */
+          pData = WsfMsgDeq(&hciCoreCb.aclQueue, &handlerId);
           /* discard buffer */
           WsfMsgFree(pData);
 
@@ -411,6 +431,7 @@ void hciCoreTxReady(uint8_t bufs)
       }
     }
   }
+  return pkt_sent;
 }
 
 /*************************************************************************************************/
@@ -423,10 +444,10 @@ void hciCoreTxReady(uint8_t bufs)
  *  \param  len      ACL packet length.
  *  \param  pData    WSF buffer containing an ACL packet.
  *
- *  \return None.
+ *  \return TRUE if packet sent, FALSE otherwise.
  */
 /*************************************************************************************************/
-void hciCoreTxAclStart(hciCoreConn_t *pConn, uint16_t len, uint8_t *pData)
+bool_t hciCoreTxAclStart(hciCoreConn_t *pConn, uint16_t len, uint8_t *pData)
 {
   uint16_t hciLen;
 
@@ -454,15 +475,31 @@ void hciCoreTxAclStart(hciCoreConn_t *pConn, uint16_t len, uint8_t *pData)
     UINT16_TO_BUF(&pData[2], hciLen);
 
     /* send the packet */
-    hciCoreSendAclData(pConn, pData);
+    if (hciCoreSendAclData(pConn, pData) == TRUE)
+    {
+      /* send additional fragments while there are HCI buffers available */
+      // while ((hciCoreCb.availBufs > 0) && hciCoreTxAclContinue(pConn));
 
-    /* send additional fragments while there are HCI buffers available */
-    while ((hciCoreCb.availBufs > 0) && hciCoreTxAclContinue(pConn));
+      // Return True since we save the buffer pointer.
+      return TRUE;
+    }
+    else
+    {
+      /* clear previously stored information required for fragmentation */
+      pConn->pTxAclPkt = NULL;
+      pConn->fragmenting = FALSE;
+
+      /* Restore original acl len in packet */
+      UINT16_TO_BUF(&pData[2], len);
+
+      // Start over for the same packet
+      return FALSE;
+    }
   }
   else
   {
     /* no fragmentation, just send the packet */
-    hciCoreSendAclData(pConn, pData);
+    return hciCoreSendAclData(pConn, pData);
   }
 }
 
@@ -495,26 +532,27 @@ bool_t hciCoreTxAclContinue(hciCoreConn_t *pConn)
 
     if (aclLen > 0)
     {
-      /* decrement remaining length */
-      pConn->txAclRemLen -= aclLen;
-
       /* set handle in packet with continuation bit set */
       UINT16_TO_BUF(pConn->pNextTxFrag, (pConn->handle | HCI_PB_CONTINUE));
 
       /* set acl len in packet */
       UINT16_TO_BUF(&(pConn->pNextTxFrag[2]), aclLen);
 
-      HCI_TRACE_INFO2("hciCoreTxAclContinue aclLen=%u remLen=%u", aclLen, pConn->txAclRemLen);
-
       /* send the packet */
-      hciCoreSendAclData(pConn, pConn->pNextTxFrag);
-
-      /* set up pointer to next fragment */
-      if (pConn->txAclRemLen > 0)
+      if ( hciCoreSendAclData(pConn, pConn->pNextTxFrag) == TRUE)
       {
-        pConn->pNextTxFrag += aclLen;
-      }
+        /* decrement remaining length */
+        pConn->txAclRemLen -= aclLen;
 
+        HCI_TRACE_INFO2("hciCoreTxAclContinue aclLen=%u remLen=%u", aclLen, pConn->txAclRemLen);
+
+        /* set up pointer to next fragment */
+        if (pConn->txAclRemLen > 0)
+        {
+          pConn->pNextTxFrag += aclLen;
+        }
+        hciCoreTxAclComplete(pConn, pConn->pNextTxFrag);
+      }
       return TRUE;
     }
   }
@@ -894,16 +932,16 @@ void HciSendAclData(uint8_t *pData)
   /* look up connection structure */
   if ((pConn = hciCoreConnByHandle(handle)) != NULL)
   {
-    /* if queue empty and buffers available */
-    if (WsfQueueEmpty(&hciCoreCb.aclQueue) && hciCoreCb.availBufs > 0)
+    /* queue data - message handler ID 'handerId' not used */
+    WsfMsgEnq(&hciCoreCb.aclQueue, 0, pData);
+
+    HCI_TRACE_WARN1("enq acl pkt %x", pData);
+
+    /* if queue not empty and buffers available */
+    if ((WsfQueueCount(&hciCoreCb.aclQueue) == 1) && hciCoreCb.availBufs > 0)
     {
       /* send data */
-      hciCoreTxAclStart(pConn, len, pData);
-    }
-    else
-    {
-      /* queue data - message handler ID 'handerId' not used */
-      WsfMsgEnq(&hciCoreCb.aclQueue, 0, pData);
+      hciCoreTxReady(0);
     }
 
     /* increment buffer queue count for this connection with consideration for HCI fragmentation */

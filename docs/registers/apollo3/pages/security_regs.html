@@ -64,7 +64,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#CTRL" target="_self">CTRL - Control Register</a>
+                            <a class="el" href="#CTRL" target="_self">CTRL - Control</a>
                         </td>
                     </tr>
 
@@ -75,7 +75,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#SRCADDR" target="_self">SRCADDR - Source Addresss</a>
+                            <a class="el" href="#SRCADDR" target="_self">SRCADDR - Source Address</a>
                         </td>
                     </tr>
 
@@ -97,7 +97,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#RESULT" target="_self">RESULT - CRC Seed/Result Register</a>
+                            <a class="el" href="#RESULT" target="_self">RESULT - CRC Seed/Result</a>
                         </td>
                     </tr>
 
@@ -108,7 +108,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#LOCKCTRL" target="_self">LOCKCTRL - LOCK Control Register</a>
+                            <a class="el" href="#LOCKCTRL" target="_self">LOCKCTRL - LOCK Control</a>
                         </td>
                     </tr>
 
@@ -119,7 +119,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#LOCKSTAT" target="_self">LOCKSTAT - LOCK Status Register</a>
+                            <a class="el" href="#LOCKSTAT" target="_self">LOCKSTAT - LOCK Status</a>
                         </td>
                     </tr>
 
@@ -130,7 +130,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#KEY0" target="_self">KEY0 - Key0 Register</a>
+                            <a class="el" href="#KEY0" target="_self">KEY0 - Key0</a>
                         </td>
                     </tr>
 
@@ -141,7 +141,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#KEY1" target="_self">KEY1 - Key1 Register</a>
+                            <a class="el" href="#KEY1" target="_self">KEY1 - Key1</a>
                         </td>
                     </tr>
 
@@ -152,7 +152,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#KEY2" target="_self">KEY2 - Key2 Register</a>
+                            <a class="el" href="#KEY2" target="_self">KEY2 - Key2</a>
                         </td>
                     </tr>
 
@@ -163,7 +163,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#KEY3" target="_self">KEY3 - Key3 Register</a>
+                            <a class="el" href="#KEY3" target="_self">KEY3 - Key3</a>
                         </td>
                     </tr>
 
@@ -173,7 +173,7 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="CTRL" class="panel-title">CTRL - Control Register</h3>
+                <h3 id="CTRL" class="panel-title">CTRL - Control</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -191,7 +191,7 @@
 
                 </table>
                 <h3>Description:</h3>
-                <p>Control Register</p>
+                <p>Control</p>
                 <h3>Example Macro Usage:</h3>
                 <pre style="margin:10px" class="language-pascal"><span style='color:#3f7f59; '>//
 // Register access is all performed through the standard CMSIS structure-based
@@ -285,7 +285,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31</td>
                             <td>CRCERROR</td>
                             <td>RO</td>
-                            <td>CRC Error Status - Set to 1 if an error occurs during a CRC operation.  Cleared when CTRL register is written (with any value).  Usually indicates an invalid address range.<br><br>
+                            <td>CRC Error Status - Set to 1 if an error occurs during a CRC operation. Cleared when CTRL register is written (with any value). Usually indicates an invalid address range.<br><br>
                                 </td>
                         </tr>
 
@@ -317,7 +317,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>0</td>
                             <td>ENABLE</td>
                             <td>RW</td>
-                            <td>Function Enable.  Software should set the ENABLE bit to initiate a CRC operation.  Hardware will clear the ENABLE bit upon completion.<br><br>
+                            <td>Function Enable. Software should set the ENABLE bit to initiate a CRC operation. Hardware will clear the ENABLE bit upon completion.<br><br>
                                 </td>
                         </tr>
 
@@ -329,7 +329,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="SRCADDR" class="panel-title">SRCADDR - Source Addresss</h3>
+                <h3 id="SRCADDR" class="panel-title">SRCADDR - Source Address</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -347,7 +347,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
                 </table>
                 <h3>Description:</h3>
-                <p>Source Addresss</p>
+                <p>Source Address</p>
                 <h3>Example Macro Usage:</h3>
                 <pre style="margin:10px" class="language-pascal"><span style='color:#3f7f59; '>//
 // Register access is all performed through the standard CMSIS structure-based
@@ -429,7 +429,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31:0</td>
                             <td>ADDR</td>
                             <td>RW</td>
-                            <td>Source Buffer Address.  Address may be byte aligned, but the length must be a multiple of 4 bits.<br><br>
+                            <td>Source Buffer Address. Address may be byte aligned, but the length must be a multiple of 4 bits.<br><br>
                                 </td>
                         </tr>
 
@@ -575,7 +575,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="RESULT" class="panel-title">RESULT - CRC Seed/Result Register</h3>
+                <h3 id="RESULT" class="panel-title">RESULT - CRC Seed/Result</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -593,7 +593,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
                 </table>
                 <h3>Description:</h3>
-                <p>CRC Seed/Result Register</p>
+                <p>CRC Seed/Result</p>
                 <h3>Example Macro Usage:</h3>
                 <pre style="margin:10px" class="language-pascal"><span style='color:#3f7f59; '>//
 // Register access is all performed through the standard CMSIS structure-based
@@ -675,7 +675,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31:0</td>
                             <td>CRC</td>
                             <td>RW</td>
-                            <td>CRC Seed/Result.  Software must seed the CRC with 0xFFFFFFFF before starting a CRC operation (unless the CRC is continued from a previous operation).<br><br>
+                            <td>CRC Seed/Result. Software must seed the CRC with 0xFFFFFFFF before starting a CRC operation (unless the CRC is continued from a previous operation).<br><br>
                                 </td>
                         </tr>
 
@@ -687,7 +687,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="LOCKCTRL" class="panel-title">LOCKCTRL - LOCK Control Register</h3>
+                <h3 id="LOCKCTRL" class="panel-title">LOCKCTRL - LOCK Control</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -705,7 +705,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
                 </table>
                 <h3>Description:</h3>
-                <p>LOCK Control Register</p>
+                <p>LOCK Control</p>
                 <h3>Example Macro Usage:</h3>
                 <pre style="margin:10px" class="language-pascal"><span style='color:#3f7f59; '>//
 // Register access is all performed through the standard CMSIS structure-based
@@ -799,7 +799,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>SELECT</td>
                             <td>RW</td>
                             <td>LOCK Function Select register.<br><br>
-                                 CUSTOMER_KEY         = 0x1 - Unlock Customer Key (access to top half of info0)<br>
+                                 CUSTOMER_KEY         = 0x1 - Unlock Customer Key (access to top half of INFO0)<br>
                              NONE                 = 0x0 - Lock Control should be set to NONE when not in use.</td>
                         </tr>
 
@@ -811,7 +811,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="LOCKSTAT" class="panel-title">LOCKSTAT - LOCK Status Register</h3>
+                <h3 id="LOCKSTAT" class="panel-title">LOCKSTAT - LOCK Status</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -829,7 +829,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
                 </table>
                 <h3>Description:</h3>
-                <p>LOCK Status Register</p>
+                <p>LOCK Status</p>
                 <h3>Example Macro Usage:</h3>
                 <pre style="margin:10px" class="language-pascal"><span style='color:#3f7f59; '>//
 // Register access is all performed through the standard CMSIS structure-based
@@ -911,8 +911,8 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31:0</td>
                             <td>STATUS</td>
                             <td>RO</td>
-                            <td>LOCK Status register.  This register is a bitmask for which resources are currently unlocked.  These bits are one-hot per resource.<br><br>
-                                 CUSTOMER_KEY         = 0x1 - Customer Key is unlocked (access is granted to top half of info0)<br>
+                            <td>LOCK Status register. This register is a bit mask for which resources are currently unlocked. These bits are one-hot per resource.<br><br>
+                                 CUSTOMER_KEY         = 0x1 - Customer Key is unlocked (access is granted to top half of INFO0)<br>
                              NONE                 = 0x0 - No resources are unlocked</td>
                         </tr>
 
@@ -924,7 +924,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="KEY0" class="panel-title">KEY0 - Key0 Register</h3>
+                <h3 id="KEY0" class="panel-title">KEY0 - Key0</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -942,7 +942,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
                 </table>
                 <h3>Description:</h3>
-                <p>Key0 Register</p>
+                <p>Key0</p>
                 <h3>Example Macro Usage:</h3>
                 <pre style="margin:10px" class="language-pascal"><span style='color:#3f7f59; '>//
 // Register access is all performed through the standard CMSIS structure-based
@@ -1024,7 +1024,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31:0</td>
                             <td>KEY0</td>
                             <td>WO</td>
-                            <td>Bits [31:0] of the 128-bit key should be written to this register.  To protect key values, the register always returns 0x00000000.<br><br>
+                            <td>Bits [31:0] of the 128-bit key should be written to this register. To protect key values, the register always returns 0x00000000.<br><br>
                                 </td>
                         </tr>
 
@@ -1036,7 +1036,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="KEY1" class="panel-title">KEY1 - Key1 Register</h3>
+                <h3 id="KEY1" class="panel-title">KEY1 - Key1</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -1054,7 +1054,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
                 </table>
                 <h3>Description:</h3>
-                <p>Key1 Register</p>
+                <p>Key1</p>
                 <h3>Example Macro Usage:</h3>
                 <pre style="margin:10px" class="language-pascal"><span style='color:#3f7f59; '>//
 // Register access is all performed through the standard CMSIS structure-based
@@ -1136,7 +1136,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31:0</td>
                             <td>KEY1</td>
                             <td>WO</td>
-                            <td>Bits [63:32] of the 128-bit key should be written to this register.  To protect key values, the register always returns 0x00000000.<br><br>
+                            <td>Bits [63:32] of the 128-bit key should be written to this register. To protect key values, the register always returns 0x00000000.<br><br>
                                 </td>
                         </tr>
 
@@ -1148,7 +1148,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="KEY2" class="panel-title">KEY2 - Key2 Register</h3>
+                <h3 id="KEY2" class="panel-title">KEY2 - Key2</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -1166,7 +1166,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
                 </table>
                 <h3>Description:</h3>
-                <p>Key2 Register</p>
+                <p>Key2</p>
                 <h3>Example Macro Usage:</h3>
                 <pre style="margin:10px" class="language-pascal"><span style='color:#3f7f59; '>//
 // Register access is all performed through the standard CMSIS structure-based
@@ -1248,7 +1248,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31:0</td>
                             <td>KEY2</td>
                             <td>WO</td>
-                            <td>Bits [95:64] of the 128-bit key should be written to this register.  To protect key values, the register always returns 0x00000000.<br><br>
+                            <td>Bits [95:64] of the 128-bit key should be written to this register. To protect key values, the register always returns 0x00000000.<br><br>
                                 </td>
                         </tr>
 
@@ -1260,7 +1260,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="KEY3" class="panel-title">KEY3 - Key3 Register</h3>
+                <h3 id="KEY3" class="panel-title">KEY3 - Key3</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -1278,7 +1278,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
                 </table>
                 <h3>Description:</h3>
-                <p>Key3 Register</p>
+                <p>Key3</p>
                 <h3>Example Macro Usage:</h3>
                 <pre style="margin:10px" class="language-pascal"><span style='color:#3f7f59; '>//
 // Register access is all performed through the standard CMSIS structure-based
@@ -1360,7 +1360,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31:0</td>
                             <td>KEY3</td>
                             <td>WO</td>
-                            <td>Bits [127:96] of the 128-bit key should be written to this register.  To protect key values, the register always returns 0x00000000.<br><br>
+                            <td>Bits [127:96] of the 128-bit key should be written to this register. To protect key values, the register always returns 0x00000000.<br><br>
                                 </td>
                         </tr>
 
@@ -1378,7 +1378,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
             <small>
                 AmbiqSuite Register Documentation&nbsp;
                 <a href="http://www.ambiqmicro.com">
-                <img class="footer" src="../resources/ambiqmicro_logo.png" alt="Ambiq Micro"/></a>&nbsp&nbsp Copyright &copy; 2020&nbsp&nbsp<br />
+                <img class="footer" src="../resources/ambiqmicro_logo.png" alt="Ambiq Micro"/></a>&nbsp&nbsp Copyright &copy; 2021&nbsp&nbsp<br />
                 This documentation is licensed and distributed under the <a rel="license" href="http://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause License</a>.&nbsp&nbsp<br/>
             </small>
         </div>

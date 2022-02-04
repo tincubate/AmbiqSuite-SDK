@@ -1,3 +1,49 @@
+# *****************************************************************************
+#
+#    apollo4_pinconfig.py
+#
+#    @brief Script for generating a BSP pin file.
+#
+# *****************************************************************************
+
+# *****************************************************************************
+#
+#    Copyright (c) 2021, Ambiq Micro, Inc.
+#    All rights reserved.
+#
+#    Redistribution and use in source and binary forms, with or without
+#    modification, are permitted provided that the following conditions are met:
+#
+#    1. Redistributions of source code must retain the above copyright notice,
+#    this list of conditions and the following disclaimer.
+#
+#    2. Redistributions in binary form must reproduce the above copyright
+#    notice, this list of conditions and the following disclaimer in the
+#    documentation and/or other materials provided with the distribution.
+#
+#    3. Neither the name of the copyright holder nor the names of its
+#    contributors may be used to endorse or promote products derived from this
+#    software without specific prior written permission.
+#
+#    Third party software included in this distribution is subject to the
+#    additional license terms as defined in the /docs/licenses directory.
+#
+#    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+#    AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+#    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+#    ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+#    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+#    CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+#    SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+#    INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+#    CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+#    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+#    POSSIBILITY OF SUCH DAMAGE.
+#
+#  This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
+#
+# *****************************************************************************
+
 import rsonlite
 from string import Template
 import re
@@ -93,8 +139,17 @@ def write_c_file(input_object):
                     value = 'AM_HAL_GPIO_NCE_MSPI{}CEN{}'.format(pin['MSPInum'], pin['CEnum'])
                 else:
                     raise PinConfigError('Unknown CEnum: {}'.format(pin['CEnum']))
+            elif option.name == 'drvstrength':
+                if pin['drvstrength'].upper() in drvstrengthxlate:
+                    # Translate the deprecated designator to the new version.
+                    drvxlate = drvstrengthxlate[pin['drvstrength'].upper()]
+                    value = '{}_{}'.format(option.prefix, drvxlate)
+                else:
+                    value = '{}_{}'.format(option.prefix, pin[option.name])
             elif is_number(pin[option.name]):
                 value = pin[option.name]
+            elif option.name == 'pullup' and pin[option.name]=='pulldown':
+                value = 'AM_HAL_GPIO_PIN_PULLDOWN_50K'
             else:
                 value = '{}_{}'.format(option.prefix, pin[option.name])
 
@@ -184,7 +239,7 @@ c_template = Template('''\
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -216,7 +271,7 @@ c_template = Template('''\
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -269,7 +324,7 @@ h_template = Template('''\
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -301,7 +356,7 @@ h_template = Template('''\
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -362,7 +417,8 @@ option_list = [
     GpioOption('GPRdZero',    'eGPRdZero',      'READPIN',   'AM_HAL_GPIO_PIN_RDZERO'),
     GpioOption('intdir',      'eIntDir',        'NONE',      'AM_HAL_GPIO_PIN_INTDIR'),
     GpioOption('GPOutcfg',    'eGPOutCfg',      'DISABLE',   'AM_HAL_GPIO_PIN_OUTCFG'),
-    GpioOption('drvstrength', 'eDriveStrength', '12MA',      'AM_HAL_GPIO_PIN_DRIVESTRENGTH'),
+    # GpioOption('drvstrength', 'eDriveStrength', '12MA',      'AM_HAL_GPIO_PIN_DRIVESTRENGTH'),
+    GpioOption('drvstrength', 'eDriveStrength', '0P1X',      'AM_HAL_GPIO_PIN_DRIVESTRENGTH'),
     GpioOption('slewrate',    'uSlewRate',      0,           ''),
     GpioOption('pullup',      'ePullup',        'NONE',      'AM_HAL_GPIO_PIN_PULLUP'),
     GpioOption('CEnum',       'uNCE',           'UNSET',     ''),
@@ -373,6 +429,12 @@ option_list = [
     GpioOption('forceouten',  'eForceOutputEn', 'NONE',      'AM_HAL_GPIO_PIN_FORCEEN'),
     GpioOption('rsvd_1',      'uRsvd_1',        0,           ''),
 ]
+
+
+drvstrengthxlate = {
+  "12MA": "0P1X",
+  "16MA": "0P5X",
+}
 
 class PinConfigError(Exception):
     pass

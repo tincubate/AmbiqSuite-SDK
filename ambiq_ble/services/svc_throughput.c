@@ -9,7 +9,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -41,7 +41,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 #include "wsf_types.h"
@@ -71,29 +71,32 @@
 /* UUIDs */
 static const uint8_t svcRxUuid[] = {ATT_UUID_THROUGHPUT_RX};
 static const uint8_t svcTxUuid[] = {ATT_UUID_THROUGHPUT_TX};
-
+static const uint8_t svcConUptUuid[] = {ATT_UUID_THROUGHPUT_CON_UPT};
 /**************************************************************************************************
  Service variables
 **************************************************************************************************/
 
-/* THROUGHPUT service declaration */
+/* Throughput service declaration */
 static const uint8_t throughputSvc[] = {ATT_UUID_THROUGHPUT_SERVICE};
 static const uint16_t throughputLenSvc = sizeof(throughputSvc);
 
-/* THROUGHPUT RX characteristic */ 
+/* Throughput RX characteristic */
 static const uint8_t throughputRxCh[] = {ATT_PROP_WRITE_NO_RSP, UINT16_TO_BYTES(THROUGHPUT_RX_HDL), ATT_UUID_THROUGHPUT_RX};
 static const uint16_t throughputLenRxCh = sizeof(throughputRxCh);
 
-/* THROUGHPUT TX characteristic */ 
+/* Throughput TX characteristic */
 static const uint8_t throughputTxCh[] = {ATT_PROP_NOTIFY, UINT16_TO_BYTES(THROUGHPUT_TX_HDL), ATT_UUID_THROUGHPUT_TX};
 static const uint16_t throughputLenTxCh = sizeof(throughputTxCh);
 
-/* THROUGHPUT RX data */
+/* Throughput connection update characteristic */
+static const uint8_t throughputConUptCh[] = {(ATT_PROP_READ | ATT_PROP_WRITE_NO_RSP | ATT_PROP_NOTIFY), UINT16_TO_BYTES(THROUGHPUT_CON_UPT_HDL), ATT_UUID_THROUGHPUT_CON_UPT};
+static const uint16_t throughputLenConUptCh = sizeof(throughputConUptCh);
+/* Throughput RX data */
 /* Note these are dummy values */
 static const uint8_t throughputRx[] = {0};
 static const uint16_t throughputLenRx = sizeof(throughputRx);
 
-/* THROUGHPUT TX data */
+/* Throughput TX data */
 /* Note these are dummy values */
 static const uint8_t throughputTx[] = {0};
 static const uint16_t throughputLenTx = sizeof(throughputTx);
@@ -102,14 +105,22 @@ static const uint16_t throughputLenTx = sizeof(throughputTx);
 static uint8_t throughputTxChCcc[] = {UINT16_TO_BYTES(0x0000)};
 static const uint16_t throughputLenTxChCcc = sizeof(throughputTxChCcc);
 
+/* Throughput Set connection parameters data */
+/* Note these are dummy values */
+static uint8_t throughputConUpt[6] = {0};
+static const uint16_t throughputLenConUpt = sizeof(throughputConUpt);
 
-/* Attribute list for THROUGHPUT group */
+/* Proprietary data client characteristic configuration */
+static uint8_t throughputConUptChCcc[] = {UINT16_TO_BYTES(0x0000)};
+static const uint16_t throughputLenConUptChCcc = sizeof(throughputConUptChCcc);
+
+/* Attribute list for Throughput group */
 static const attsAttr_t throughputList[] =
 {
   {
-    attPrimSvcUuid, 
+    attPrimSvcUuid,
     (uint8_t *) throughputSvc,
-    (uint16_t *) &throughputLenSvc, 
+    (uint16_t *) &throughputLenSvc,
     sizeof(throughputSvc),
     0,
     ATTS_PERMIT_READ
@@ -153,10 +164,36 @@ static const attsAttr_t throughputList[] =
     sizeof(throughputTxChCcc),
     ATTS_SET_CCC,
     (ATTS_PERMIT_READ | ATTS_PERMIT_WRITE)
-  }
+  },
+  /* Characteristic declaration */
+  {
+    attChUuid,
+    (uint8_t *) throughputConUptCh,
+    (uint16_t *) &throughputLenConUptCh,
+    sizeof(throughputConUptCh),
+    0,
+    ATTS_PERMIT_READ
+  },
+  /* Characteristic value */
+  {
+    svcConUptUuid,
+    (uint8_t *) throughputConUpt,
+    (uint16_t *) &throughputLenConUpt,
+    sizeof(throughputConUpt),
+    (ATTS_SET_UUID_128 | ATTS_SET_WRITE_CBACK | ATTS_SET_READ_CBACK),
+    (ATTS_PERMIT_READ | ATTS_PERMIT_WRITE)
+  },
+  {
+    attCliChCfgUuid,
+    (uint8_t *) throughputConUptChCcc,
+    (uint16_t *) &throughputLenConUptChCcc,
+    sizeof(throughputConUptChCcc),
+    ATTS_SET_CCC,
+    (ATTS_PERMIT_READ | ATTS_PERMIT_WRITE)
+  },
 };
 
-/* THROUGHPUT group structure */
+/* Throughput group structure */
 static attsGroup_t svcThroughputGroup =
 {
   NULL,
@@ -170,7 +207,7 @@ static attsGroup_t svcThroughputGroup =
 /*************************************************************************************************/
 /*!
  *  \fn     SvcThroughputAddGroup
- *        
+ *
  *  \brief  Add the services to the attribute server.
  *
  *  \return None.
@@ -184,7 +221,7 @@ void SvcThroughputAddGroup(void)
 /*************************************************************************************************/
 /*!
  *  \fn     SvcThroughputRemoveGroup
- *        
+ *
  *  \brief  Remove the services from the attribute server.
  *
  *  \return None.
@@ -198,7 +235,7 @@ void SvcThroughputRemoveGroup(void)
 /*************************************************************************************************/
 /*!
  *  \fn     SvcThroughputCbackRegister
- *        
+ *
  *  \brief  Register callbacks for the service.
  *
  *  \param  readCback   Read callback function.

@@ -40,7 +40,7 @@ extern "C" {
  *
  */
 /**@{*/
-#define BATT_START_HDL                    0x60                /*!< \brief Service start handle. */
+#define BATT_START_HDL                    0x0088              /*!< \brief Service start handle. */
 #define BATT_END_HDL                      (BATT_MAX_HDL - 1)  /*!< \brief Service end handle. */
 
 /**************************************************************************************************

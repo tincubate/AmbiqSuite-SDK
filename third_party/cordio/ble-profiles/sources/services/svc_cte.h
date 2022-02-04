@@ -64,7 +64,7 @@ extern "C" {
  *
  */
 /**@{*/
-#define CTE_START_HDL               0xB0                /*!< \brief Start handle. */
+#define CTE_START_HDL               0x0170              /*!< \brief Start handle. */
 #define CTE_END_HDL                 (CTE_MAX_HDL - 1)   /*!< \brief End handle. */
 
 /**************************************************************************************************

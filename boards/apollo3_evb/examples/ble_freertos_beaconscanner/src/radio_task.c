@@ -8,7 +8,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -245,7 +245,7 @@ button_handler(wsfEventMask_t event, wsfMsgHdr_t *pMsg)
     // Restart the button timer.
     //
     WsfTimerStartMs(&ButtonTimer, 10);
-
+#if AM_BSP_NUM_BUTTONS
     //
     // Every time we get a button timer tick, check all of our buttons.
     //
@@ -270,6 +270,7 @@ button_handler(wsfEventMask_t event, wsfMsgHdr_t *pMsg)
     {
         am_util_debug_printf("Got Button 2 Press\n");
     }
+#endif
 }
 
 //*****************************************************************************
@@ -280,11 +281,12 @@ button_handler(wsfEventMask_t event, wsfMsgHdr_t *pMsg)
 void
 setup_buttons(void)
 {
+#if AM_BSP_NUM_BUTTONS
     //
     // Enable the buttons for user interaction.
     //
     am_devices_button_array_init(am_bsp_psButtons, AM_BSP_NUM_BUTTONS);
-
+#endif
     //
     // Start a timer.
     //
@@ -362,7 +364,7 @@ RadioTask(void *pvParameters)
     //
     exactle_stack_init();
 
-    
+
     // uncomment the following to set custom Bluetooth address here
     // {
     //     uint8_t bd_addr[6] = {0x11, 0x22, 0x33, 0x44, 0x55, 0x66};

@@ -239,6 +239,12 @@ void DmDevReset(void)
 {
   wsfMsgHdr_t *pMsg;
 
+  // if DM reset still in progress, clear flag
+  if(dmCb.resetting)
+  {
+    dmCb.resetting = FALSE;
+  }
+
   if ((pMsg = WsfMsgAlloc(sizeof(wsfMsgHdr_t))) != NULL)
   {
     pMsg->event = DM_DEV_MSG_API_RESET;

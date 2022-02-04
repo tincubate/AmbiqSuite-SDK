@@ -9,7 +9,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -41,7 +41,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 #include "wsf_types.h"
@@ -76,7 +76,7 @@
 static const uint8_t    custSvcUuidData[]                       = {ATT_UUID_CUST_SERVICE};
 static const uint16_t   custSvcUuidLen                          = sizeof(custSvcUuidData);
 
-/* Write Only Sample Characteristic */ 
+/* Write Only Sample Characteristic */
 static const uint8_t    WriteOnlyChData[]                       = {ATT_PROP_WRITE_NO_RSP | ATT_PROP_WRITE, UINT16_TO_BYTES(CUSTS_HANDLE_WRITEONLY), ATT_UUID_CUSTS_WRITEONLY};
 static const uint16_t   WriteOnlyCharChLen                      = sizeof(WriteOnlyChData);
 
@@ -89,7 +89,7 @@ static const uint16_t   WriteOnlyValLen                         = sizeof(WriteOn
 static const uint8_t    WriteOnlyChUsrDescrData[]               = "Write Only Sample Characteristic";
 static const uint16_t   WriteOnlyChUsrDescrLen                  = sizeof(WriteOnlyChUsrDescrData) - 1u;
 
-/* Read Only Sample Characteristic */ 
+/* Read Only Sample Characteristic */
 static const uint8_t    ReadOnlyChData[]                        = {ATT_PROP_READ, UINT16_TO_BYTES(CUSTS_HANDLE_READONLY), ATT_UUID_CUSTS_READONLY};
 static const uint16_t   ReadOnlyCharChLen                       = sizeof(ReadOnlyChData);
 
@@ -102,12 +102,12 @@ static const uint16_t   ReadOnlyValLen                          = sizeof(ReadOnl
 static const uint8_t    ReadOnlyChUsrDescrData[]                = "Read Only Sample Characteristic";
 static const uint16_t   ReadOnlyChUsrDescrLen                   = sizeof(ReadOnlyChUsrDescrData) - 1u;
 
-/* Notification Sample Characteristic */ 
+/* Notification Sample Characteristic */
 static const uint8_t    NotifyChData[]                          = {ATT_PROP_NOTIFY | ATT_PROP_READ, UINT16_TO_BYTES(CUSTS_HANDLE_NOTIFYONLY), ATT_UUID_CUSTS_NOTIFYONLY};
 static const uint16_t   NotifyCharChLen                         = sizeof(NotifyChData);
 
 /* Notification Sample Value */
-static const uint8_t    NotifyValUuid[]                         = {CUSTS_HANDLE_NOTIFYONLY};
+static const uint8_t    NotifyValUuid[]                         = {UINT16_TO_BYTES(CUSTS_HANDLE_NOTIFYONLY)};
 static       uint8_t    NotifyValData[20]                       = {0x00};
 static const uint16_t   NotifyValLen                            = sizeof(NotifyValData);
 
@@ -120,12 +120,12 @@ static const uint8_t    NotifyChUsrDescrData[]                  = "Notification 
 static const uint16_t   NotifyChUsrDescrLen                     = sizeof(NotifyChUsrDescrData) - 1u;
 
 
-/* Indication Sample Characteristic */ 
+/* Indication Sample Characteristic */
 static const uint8_t    IndicateChData[]                        = {ATT_PROP_INDICATE | ATT_PROP_READ, UINT16_TO_BYTES(CUSTS_HANDLE_INDICATEONLY), ATT_UUID_CUSTS_INDICATEONLY};
 static const uint16_t   IndicateCharChLen                       = sizeof(IndicateChData);
 
 /* Indication Sample Value */
-static const uint8_t    IndicateValUuid[]                       = {CUSTS_HANDLE_INDICATEONLY};
+static const uint8_t    IndicateValUuid[]                       = {UINT16_TO_BYTES(CUSTS_HANDLE_INDICATEONLY)};
 static       uint8_t    IndicateValData[20]                     = {0x00};
 static const uint16_t   IndicateValLen                          = sizeof(IndicateValData);
 
@@ -141,9 +141,9 @@ static const attsAttr_t svcCustList[] =
 {
     // Service Declaration
     {
-        attPrimSvcUuid, 
+        attPrimSvcUuid,
         (uint8_t *) custSvcUuidData,
-        (uint16_t *) &custSvcUuidLen, 
+        (uint16_t *) &custSvcUuidLen,
         sizeof(custSvcUuidData),
         0,
         ATTS_PERMIT_READ

@@ -13,7 +13,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -84,7 +84,7 @@ extern "C"
 //!     AM_HAL_GPIO_MASKBIT()
 //!
 
-#define AM_HAL_GPIO_MASKCREATE(sMaskNm)     uint64_t p##sMaskNm=0
+#define AM_HAL_GPIO_MASKCREATE(sMaskNm)     volatile uint64_t p##sMaskNm=0
 //! AM_HAL_GPIO_MASKCREATE() should be used before AM_HAL_GPIO_MASKBIT() to
 //! ensure forward compatibility.  In future releases it will allocate and
 //! initialize a bitmask structure used in the various GPIO interrupt functions.
@@ -594,7 +594,7 @@ extern uint32_t am_hal_gpio_fast_pinconfig(uint64_t ui64PinMask,
 //*****************************************************************************
 extern uint32_t am_hal_gpio_state_read(uint32_t ui32Pin,
                                        am_hal_gpio_read_type_e eReadType,
-                                       uint32_t *pu32RetVal);
+                                       uint32_t *pui32RetVal);
 
 //*****************************************************************************
 //

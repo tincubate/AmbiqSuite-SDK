@@ -51,7 +51,7 @@ extern "C" {
  *
  */
 /**@{*/
-#define HRS_START_HDL               0x20              /*!< \brief Start handle. */
+#define HRS_START_HDL               0x0020            /*!< \brief Start handle. */
 #define HRS_END_HDL                 (HRS_MAX_HDL - 1) /*!< \brief End handle. */
 
 /**************************************************************************************************

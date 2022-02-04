@@ -1837,6 +1837,30 @@ void hciEvtCmdStatusFailure(uint8_t status, uint16_t opcode)
   HCI_OPCODE_LE_START_ENCRYPTION
   HCI_OPCODE_READ_REMOTE_VER_INFO
 #endif
+
+  if((opcode == HCI_OPCODE_LE_GENERATE_DHKEY)&&(status==HCI_ERR_INVALID_PARAM))
+  {
+    hciEvt_t      *pMsg;
+    uint8_t       cbackEvt = 0;
+    hciEvtCback_t cback = hciCb.secCback;
+
+    cbackEvt = HCI_LE_GENERATE_DHKEY_CMPL_CBACK_EVT;
+   
+    /* allocate temp buffer */
+    if ((pMsg = WsfBufAlloc(sizeof(wsfMsgHdr_t))) != NULL)
+    {
+      /* initialize message header */
+      pMsg->hdr.param = 0;
+      pMsg->hdr.event = cbackEvt;
+      pMsg->hdr.status = status;
+
+      /* execute callback */
+      (*cback)(pMsg);
+
+      /* free buffer */
+      WsfBufFree(pMsg);
+    }
+ }
 }
 
 /*************************************************************************************************/

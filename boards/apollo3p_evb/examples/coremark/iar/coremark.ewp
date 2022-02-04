@@ -208,8 +208,9 @@
                 <option>
                     <name>CCDefines</name>
                     <state>iar</state>
-          <state>AM_PACKAGE_BGA</state>
           <state>AM_PART_APOLLO3P</state>
+          <state>AM_PRINTF_BUFSIZE=256</state>
+          <state>AM_PACKAGE_BGA</state>
           <state>COREMARK</state>
                 </option>
                 <option>
@@ -335,13 +336,13 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$\..\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\devices</state>
+          <state>$PROJ_DIR$\..\..\..\..\..</state>
+          <state>$PROJ_DIR$\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\CMSIS\ARM\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\utils</state>
-          <state>$PROJ_DIR$\..\..\..\..\..</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\devices</state>
-          <state>$PROJ_DIR$\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\CMSIS\AmbiqMicro\Include</state>
-          <state>$PROJ_DIR$\..\src</state>
           <state>$PROJ_DIR$\..\..\..\..\..\mcu\apollo3p</state>
                 </option>
                 <option>
@@ -608,13 +609,13 @@
                 </option>
                 <option>
                     <name>AUserIncludes</name>
+          <state>$PROJ_DIR$\..\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\devices</state>
+          <state>$PROJ_DIR$\..\..\..\..\..</state>
+          <state>$PROJ_DIR$\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\CMSIS\ARM\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\utils</state>
-          <state>$PROJ_DIR$\..\..\..\..\..</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\devices</state>
-          <state>$PROJ_DIR$\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\CMSIS\AmbiqMicro\Include</state>
-          <state>$PROJ_DIR$\..\src</state>
           <state>$PROJ_DIR$\..\..\..\..\..\mcu\apollo3p</state>
                 </option>
                 <option>
@@ -1237,8 +1238,9 @@
                     <name>CCDefines</name>
                     <state>NDEBUG</state>
                     <state>iar</state>
-          <state>AM_PACKAGE_BGA</state>
           <state>AM_PART_APOLLO3P</state>
+          <state>AM_PRINTF_BUFSIZE=256</state>
+          <state>AM_PACKAGE_BGA</state>
           <state>COREMARK</state>
                 </option>
                 <option>
@@ -1364,13 +1366,13 @@
                 </option>
                 <option>
                     <name>CCIncludePath2</name>
+          <state>$PROJ_DIR$\..\src</state>
+          <state>$PROJ_DIR$\..\..\..\..\..\devices</state>
+          <state>$PROJ_DIR$\..\..\..\..\..</state>
+          <state>$PROJ_DIR$\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\CMSIS\ARM\Include</state>
           <state>$PROJ_DIR$\..\..\..\..\..\utils</state>
-          <state>$PROJ_DIR$\..\..\..\..\..</state>
-          <state>$PROJ_DIR$\..\..\..\..\..\devices</state>
-          <state>$PROJ_DIR$\..\..\..\bsp</state>
           <state>$PROJ_DIR$\..\..\..\..\..\CMSIS\AmbiqMicro\Include</state>
-          <state>$PROJ_DIR$\..\src</state>
           <state>$PROJ_DIR$\..\..\..\..\..\mcu\apollo3p</state>
                 </option>
                 <option>

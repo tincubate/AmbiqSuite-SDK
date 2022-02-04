@@ -420,7 +420,7 @@ static void appSlaveConnOpen(dmEvt_t *pMsg, appConnCb_t *pCb)
     (*appSlaveCb.advRestartCback)(pMsg);
   }
 
-  DmReadRemoteFeatures((dmConnId_t) pMsg->hdr.param);
+  appConnReadRemoteFeatTimerStart((dmConnId_t) pMsg->hdr.param);
 }
 
 /*************************************************************************************************/
@@ -1196,13 +1196,7 @@ void AppSlaveProcDmMsg(dmEvt_t *pMsg)
     break;
       
     case DM_CONN_DATA_LEN_CHANGE_IND:
-        APP_TRACE_INFO3("data length exchange, status= %d, maxRXLen= %d, maxTXlen= %d", pMsg->dataLenChange.hdr.status, pMsg->dataLenChange.maxRxOctets, pMsg->dataLenChange.maxTxOctets);
-
-        if (AttGetMtu(pCb->connId) == ATT_DEFAULT_MTU)
-        { 		  
-          AttcMtuReq(pCb->connId, MTU_REQ_SIZE);
-        }   
-		  
+      APP_TRACE_INFO3("data length exchange, status= %d, maxRXLen= %d, maxTXlen= %d", pMsg->dataLenChange.hdr.status, pMsg->dataLenChange.maxRxOctets, pMsg->dataLenChange.maxTxOctets);
 	  break;
 
     case DM_HW_ERROR_IND:

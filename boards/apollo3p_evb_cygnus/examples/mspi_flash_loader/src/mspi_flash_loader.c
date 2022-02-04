@@ -39,7 +39,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -71,7 +71,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 #include "am_mcu_apollo.h"
@@ -430,7 +430,7 @@ main(void)
     uint32_t    *pui32Address = (uint32_t *)(MSPI_XIP_BASE_ADDRESS + u32InstallOffset);
     for (uint32_t i = 0; i < binSize / 4; i++)
     {
-        if (*pui32Address != 0xFFFFFFFF)
+        if ( *(pui32Address + i) != 0xFFFFFFFF )
         {
             am_util_stdio_printf("Failed to erase Flash Device sector!\n");
             return -1;

@@ -85,6 +85,23 @@ static void secHciCback(hciEvt_t *pEvent)
     pBuf = WsfMsgDeq(&secCb.dhKeyQueue, &handlerId);
     break;
 
+  case HCI_HW_ERROR_CBACK_EVT:
+    while ((pBuf = WsfMsgDeq(&secCb.pubKeyQueue, &handlerId)) != NULL)
+    {
+      WsfMsgFree(pBuf);
+    }
+
+    while ((pBuf = WsfMsgDeq(&secCb.dhKeyQueue, &handlerId)) != NULL)
+    {
+      WsfMsgFree(pBuf);
+    }
+
+    while ((pBuf = WsfMsgDeq(&secCb.aesEncQueue, &handlerId)) != NULL)
+    {
+      WsfMsgFree(pBuf);
+    }
+    break;
+
   default:
     break;
   }

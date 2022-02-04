@@ -41,7 +41,7 @@ extern "C" {
  * \note GAP -- RPAO characterstic added only when DM Privacy enabled
  */
 /**@{*/
-#define GAP_START_HDL               0x01               /*!< \brief GAP start handle */
+#define GAP_START_HDL               0x0001             /*!< \brief GAP start handle */
 #define GAP_END_HDL                 (GAP_MAX_HDL - 3)  /*!< \brief GAP end handle */
 /**@}*/
 
@@ -49,7 +49,7 @@ extern "C" {
  *
  */
 /**@{*/
-#define GATT_START_HDL              0x10                /*!< \brief GATT start handle */
+#define GATT_START_HDL              0x0010              /*!< \brief GATT start handle */
 #define GATT_END_HDL                (GATT_MAX_HDL - 1)  /*!< \brief GATT end handle */
 /**@}*/
 

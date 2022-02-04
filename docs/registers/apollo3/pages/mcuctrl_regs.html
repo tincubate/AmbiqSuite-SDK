@@ -681,7 +681,8 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>PARTNUM</td>
                             <td>RO</td>
                             <td>BCD part number.<br><br>
-                                 APOLLO3              = 0x6000000 - Apollo3 Blue part number is 0x06xxxxxx.<br>
+                                 APOLLO3P             = 0x7000000 - Apollo3 Blue Plus part number is 0x07xxxxxx.<br>
+                             APOLLO3              = 0x6000000 - Apollo3 Blue part number is 0x06xxxxxx.<br>
                              APOLLO2              = 0x3000000 - Apollo2 part number is 0x03xxxxxx.<br>
                              APOLLO               = 0x1000000 - Apollo part number is 0x01xxxxxx.<br>
                              PN_M                 = 0xFF000000 - Mask for the part number field.<br>
@@ -1101,7 +1102,8 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>REVMAJ</td>
                             <td>RO</td>
                             <td>Major Revision ID.<br><br>
-                                 B                    = 0x2 - Apollo3 Blue revision B<br>
+                                 C                    = 0x3 - Apollo3 Blue Plus<br>
+                             B                    = 0x2 - Apollo3 Blue revision B<br>
                              A                    = 0x1 - Apollo3 Blue revision A</td>
                         </tr>
 
@@ -2672,7 +2674,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                                 <br>0x0</td>
 
                             <td align="center" colspan="2">XTALICOMPTRIM
-                                <br>0x3</td>
+                                <br>0x1</td>
 
                             <td align="center" colspan="2">XTALIBUFTRIM
                                 <br>0x1</td>
@@ -5402,14 +5404,20 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                     </thead>
                     <tbody>
                         <tr>
-                            <td align="center" colspan="4">RESERVED_RW_23
-                                <br>0x0</td>
+                            <td align="center" colspan="4">CORETEMPCOTRIM
+                                <br>0x3</td>
 
                             <td align="center" colspan="6">SIMOBUCKMEMLPTRIM
                                 <br>0x20</td>
 
-                            <td align="center" colspan="22">RESERVED_RW_00
-                                <br>0x0</td>
+                            <td align="center" colspan="6">MEMACTIVETRIM
+                                <br>0x20</td>
+
+                            <td align="center" colspan="6">SIMOBUCKCORELPTRIM
+                                <br>0x20</td>
+
+                            <td align="center" colspan="10">COREACTIVETRIM
+                                <br>0x200</td>
 
                         </tr>
                     </tbody>
@@ -5428,9 +5436,9 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                     <tbody>
                         <tr>
                             <td>31:28</td>
-                            <td>RESERVED_RW_23</td>
+                            <td>CORETEMPCOTRIM</td>
                             <td>RW</td>
-                            <td>Reserved bits, always leave unchanged. The SIMOBUCK1 register must be modified via atomic RMW, leaving this bit field completely unmodified. Failure to do so will result in unpredictable behavior.<br><br>
+                            <td>simobuck_core_tempco_trim<br><br>
                                 </td>
                         </tr>
 
@@ -5443,10 +5451,26 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                         </tr>
 
                         <tr>
-                            <td>21:0</td>
-                            <td>RESERVED_RW_00</td>
+                            <td>21:16</td>
+                            <td>MEMACTIVETRIM</td>
                             <td>RW</td>
-                            <td>Reserved bits, always leave unchanged. The SIMOBUCK1 register must be modified via atomic RMW, leaving this bit field completely unmodified. Failure to do so will result in unpredictable behavior.<br><br>
+                            <td>simobuck_mem_active_trim (VDDC)<br><br>
+                                </td>
+                        </tr>
+
+                        <tr>
+                            <td>15:10</td>
+                            <td>SIMOBUCKCORELPTRIM</td>
+                            <td>RW</td>
+                            <td>simobuck_core_lp_trim<br><br>
+                                </td>
+                        </tr>
+
+                        <tr>
+                            <td>9:0</td>
+                            <td>COREACTIVETRIM</td>
+                            <td>RW</td>
+                            <td>simobuck_core_active_trim (VDDF)<br><br>
                                 </td>
                         </tr>
 
@@ -7138,7 +7162,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
             <small>
                 AmbiqSuite Register Documentation&nbsp;
                 <a href="http://www.ambiqmicro.com">
-                <img class="footer" src="../resources/ambiqmicro_logo.png" alt="Ambiq Micro"/></a>&nbsp&nbsp Copyright &copy; 2020&nbsp&nbsp<br />
+                <img class="footer" src="../resources/ambiqmicro_logo.png" alt="Ambiq Micro"/></a>&nbsp&nbsp Copyright &copy; 2021&nbsp&nbsp<br />
                 This documentation is licensed and distributed under the <a rel="license" href="http://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause License</a>.&nbsp&nbsp<br/>
             </small>
         </div>

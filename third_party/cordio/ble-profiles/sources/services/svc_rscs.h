@@ -60,7 +60,7 @@ Constants
  *
  */
 /**@{*/
-#define RSCS_START_HDL               0x04A0             /*!< \brief Start handle. */
+#define RSCS_START_HDL               0x04D0             /*!< \brief Start handle. */
 #define RSCS_END_HDL                 (RSCS_MAX_HDL - 1) /*!< \brief End handle. */
 
 /**************************************************************************************************

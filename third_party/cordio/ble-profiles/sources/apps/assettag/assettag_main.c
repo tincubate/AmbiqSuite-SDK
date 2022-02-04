@@ -474,6 +474,10 @@ static void assetTagProcMsg(dmEvt_t *pMsg)
     }
     break;
 
+    case DM_PHY_UPDATE_IND:
+      APP_TRACE_INFO3("DM_PHY_UPDATE_IND status: %d, RX: %d, TX: %d", pMsg->phyUpdate.status,pMsg->phyUpdate.rxPhy, pMsg->phyUpdate.txPhy);
+      break;    
+
     case DM_SEC_PAIR_CMPL_IND:
       DmSecGenerateEccKeyReq();
       uiEvent = APP_UI_SEC_PAIR_CMPL;

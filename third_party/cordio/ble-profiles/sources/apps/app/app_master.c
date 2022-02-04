@@ -297,7 +297,7 @@ static void appMasterScanReport(dmEvt_t *pMsg)
 /*************************************************************************************************/
 static void appMasterConnOpen(dmEvt_t *pMsg, appConnCb_t *pCb)
 {
-  DmReadRemoteFeatures((dmConnId_t) pMsg->hdr.param);
+  appConnReadRemoteFeatTimerStart((dmConnId_t) pMsg->hdr.param);
 }
 
 /*************************************************************************************************/
@@ -507,6 +507,8 @@ static void appMasterSecPairCmpl(dmEvt_t *pMsg, appConnCb_t *pCb)
 static void appMasterSecPairFailed(dmEvt_t *pMsg, appConnCb_t *pCb)
 {
   pCb->initiatingSec = FALSE;
+  // disconnect the connection when paired failed to avoid spoofing reported by https://nvd.nist.gov/vuln/detail/CVE-2020-9770
+  AppConnClose(pMsg->hdr.param);
   return;
 }
 
@@ -782,6 +784,8 @@ void AppMasterSecProcDmMsg(dmEvt_t *pMsg)
       break;
 
     case DM_SEC_ENCRYPT_FAIL_IND:
+      // disconnect the connection when paired failed to avoid spoofing reported by https://nvd.nist.gov/vuln/detail/CVE-2020-9770
+      AppConnClose(pMsg->hdr.param);
       break;
 
     case DM_SEC_KEY_IND:

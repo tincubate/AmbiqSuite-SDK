@@ -89,7 +89,7 @@ Macros
  *
  */
 /**@{*/
-#define HID_START_HDL                 0x50              /*!< \brief Start handle. */
+#define HID_START_HDL                 0x50            /*!< \brief Start handle. */
 #define HID_END_HDL                   (HID_MAX_HDL - 1) /*!< \brief End handle. */
 
 /**************************************************************************************************

@@ -168,6 +168,12 @@ uint8_t AnpcAnsValueUpdate(uint16_t *pHdlList, attEvt_t *pMsg)
   uint8_t   status = ATT_SUCCESS;
   uint8_t   buf[19];
 
+#if 1
+    // Ambiq: Avoid 'variable is used before its value is set' warnings. Warning
+    //        is actually invalid because they're set in BSTREAM_TO_UINTxx().
+    catIdMask = catId = numAlert = 0;
+#endif
+
   /* Suppress unused variable compile warning */
   (void)catIdMask; (void)catId; (void)numAlert;
 

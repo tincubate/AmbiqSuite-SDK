@@ -121,9 +121,12 @@ extern "C" {
 /*! \brief Base value for HCI error status values passed through ATT.
  * Since the values of HCI and ATT error codes overlap, the constant
  * \ref ATT_HCI_ERR_BASE is added to HCI error codes before being passed through ATT.
+ * The range of HCI error code is 0x00 to 0x45. Modifying the \ref ATT_HCI_ERR_BASE
+ * from 0x20 to 0xA0 may eliminate the confustion of disconnection reason.
+ * After adding the \ref ATT_HCI_ERR_BASE the error code will be 0xA0 to 0xE5.
  * See \ref HCI_SUCCESS for HCI error code values.
  */
-#define ATT_HCI_ERR_BASE              0x20
+#define ATT_HCI_ERR_BASE              0xA0
 /**@}*/
 
 /** \name ATT PDU Types

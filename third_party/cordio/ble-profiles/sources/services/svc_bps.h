@@ -40,7 +40,7 @@ extern "C" {
  *
  */
 /**@{*/
-#define BPS_START_HDL               0xE0              /*!< \brief Start handle. */
+#define BPS_START_HDL               0x00F0            /*!< \brief Start handle. */
 #define BPS_END_HDL                 (BPS_MAX_HDL - 1) /*!< \brief End handle. */
 
 /**************************************************************************************************

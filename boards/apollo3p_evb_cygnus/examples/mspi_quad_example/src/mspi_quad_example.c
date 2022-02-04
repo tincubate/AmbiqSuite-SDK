@@ -19,7 +19,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -51,7 +51,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -100,7 +100,7 @@ uint8_t         g_SectorRXBuffer[MSPI_BUFFER_SIZE];
 
 void            *g_FlashHdl;
 void            *g_MSPIHdl;
-const am_devices_mspi_flash_config_t MSPI_Flash_Config = 
+const am_devices_mspi_flash_config_t MSPI_Flash_Config =
 {
     .eDeviceConfig = AM_HAL_MSPI_FLASH_QUAD_CE0,
     .eClockFreq = MSPI_TEST_FREQ,
@@ -413,7 +413,7 @@ main(void)
     uint32_t    *pui32Address = (uint32_t *)(MSPI_XIP_BASE_ADDRESS + (MSPI_TARGET_SECTOR << 16));
     for (uint32_t i = 0; i < AM_DEVICES_MSPI_FLASH_SECTOR_SIZE / 4; i++)
     {
-        if ( *pui32Address != 0xFFFFFFFF )
+        if ( *(pui32Address + i) != 0xFFFFFFFF )
         {
             am_util_stdio_printf("Failed to erase Flash Device sector!\n");
             return -1;

@@ -333,9 +333,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>AM_PART_APOLLO3P APS6404L AM_PACKAGE_BGA AM_UTIL_FAULTISR_PRINT keil</Define>
+              <Define>APS6404L AM_PACKAGE_BGA AM_UTIL_FAULTISR_PRINT AM_PART_APOLLO3P keil</Define>
               <Undefine></Undefine>
-              <IncludePath>../../../../../CMSIS/ARM/Include;../src;../../../../../devices;../../../../../utils;../../../../../CMSIS/AmbiqMicro/Include;../../../bsp;../../../../../mcu/apollo3p;../../../../..</IncludePath>
+              <IncludePath>../../../../..;../../../bsp;../../../../../CMSIS/ARM/Include;../src;../../../../../devices;../../../../../utils;../../../../../CMSIS/AmbiqMicro/Include;../../../../../mcu/apollo3p</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>

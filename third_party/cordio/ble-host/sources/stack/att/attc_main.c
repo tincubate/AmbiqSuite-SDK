@@ -295,6 +295,11 @@ static void attcSendContinuingReq(attcCcb_t *pCcb)
 /*************************************************************************************************/
 static void attcSendMtuReq(attcCcb_t *pCcb)
 {
+  // The Bluetooth Core Specification (Version 5.1 | Vol 3, Part F, Chapter 3.4.2.1 Exchange MTU request) 
+  // mentions the MTU exchange request shall only be sent once during a connection by the client.
+  // The bit of ATT_CCB_STATUS_MTU_SENT will set if the MTU exchange request had been executed during the connection,
+  // it will only be cleared when the current connection closes.
+  
   /* if MTU already exchanged */
   if (pCcb->pMainCcb->control & ATT_CCB_STATUS_MTU_SENT)
   {

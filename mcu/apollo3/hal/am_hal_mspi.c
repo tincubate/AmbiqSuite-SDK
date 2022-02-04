@@ -13,7 +13,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -163,13 +163,13 @@ typedef struct
     uint32_t    regCQCFG;
     uint32_t    regCQADDR;
     uint32_t    regCQPAUSE;
-    uint32_t    regCQFLAGS;
     uint32_t    regCQCURIDX;
     uint32_t    regCQENDIDX;
     uint32_t    regINTEN;
-    // TODO: May be no need to preserve these values, as they are constants anyways?
+    uint32_t    regCQFLAGS;
     uint32_t    regDMABCOUNT;
     uint32_t    regDMATHRESH;
+    uint32_t    regTHRESHOLD;
 } am_hal_mspi_register_state_t;
 
 //
@@ -281,7 +281,7 @@ typedef struct
 // Global Variables.
 //
 //*****************************************************************************
-am_hal_mspi_state_t             g_MSPIState[AM_REG_MSPI_NUM_MODULES];
+static am_hal_mspi_state_t  g_MSPIState[AM_REG_MSPI_NUM_MODULES];
 
 
 #if !MSPI_USE_CQ
@@ -2601,12 +2601,10 @@ uint32_t am_hal_mspi_status_get(void *pHandle,
     //
     // Get the Command Complete status.
     //
-    // TODO: Need to implement.
 
     //
     // Get the FIFO status.
     //
-    // TODO: Need to implement.
 
     //
     //  Get the DMA status.
@@ -2618,13 +2616,11 @@ uint32_t am_hal_mspi_status_get(void *pHandle,
     //
     // Get the CQ status.
     //
-    // TODO: Need to implement.
     pStatus->ui32NumCQEntries = pMSPIState->ui32NumCQEntries;
 
     //
     // Get the scrambling status.
     //
-    // TODO: Need to implement.
 
     //
     // Return the status.
@@ -2782,11 +2778,11 @@ uint32_t am_hal_mspi_interrupt_service(void *pHandle, uint32_t ui32IntStatus)
 #endif // AM_HAL_DISABLE_API_VALIDATION
 
     ui32Module = pMSPIState->ui32Module;
+
     //
     // Add a delay to help make the service function work.
-    // TODO - why do we need this?
     //
-//    am_hal_flash_delay(FLASH_CYCLES_US(10));
+    // am_hal_flash_delay(FLASH_CYCLES_US(10));
 
 #if MSPI_USE_CQ
     if (pMSPIState->bHP)
@@ -2814,8 +2810,9 @@ uint32_t am_hal_mspi_interrupt_service(void *pHandle, uint32_t ui32IntStatus)
             //
             if (!(pMSPIState->ui32TxnInt & AM_HAL_MSPI_INT_CMDCMP))
             {
-                // TODO - We are waiting for CMDCMP indefinetely in the ISR
-                // May need to re-evaluate
+                //
+                //
+                //
                 while (!MSPIn(ui32Module)->INTSTAT_b.CMDCMP);
             }
             pMSPIState->ui32TxnInt |= MSPIn(ui32Module)->INTSTAT;
@@ -3004,7 +3001,6 @@ uint32_t am_hal_mspi_interrupt_service(void *pHandle, uint32_t ui32IntStatus)
             //
             if (!(pMSPIState->ui32TxnInt & AM_HAL_MSPI_INT_CMDCMP))
             {
-                // TODO - We are waiting for CMDCMP indefinetely in the ISR
                 // May need to re-evaluate
                 while (!MSPIn(ui32Module)->INTSTAT_b.CMDCMP);
             }
@@ -3130,8 +3126,8 @@ uint32_t am_hal_mspi_power_control(void *pHandle,
                 MSPIn(pMSPIState->ui32Module)->CQCURIDX   = pMSPIState->registerState.regCQCURIDX;
                 MSPIn(pMSPIState->ui32Module)->CQENDIDX   = pMSPIState->registerState.regCQENDIDX;
                 MSPIn(pMSPIState->ui32Module)->INTEN      = pMSPIState->registerState.regINTEN;
+                MSPIn(pMSPIState->ui32Module)->THRESHOLD   = pMSPIState->registerState.regTHRESHOLD;
 
-                // TODO: May be we can just set these values, as they are constants anyways?
                 MSPIn(pMSPIState->ui32Module)->DMABCOUNT  = pMSPIState->registerState.regDMABCOUNT;
                 MSPIn(pMSPIState->ui32Module)->DMATHRESH  = pMSPIState->registerState.regDMATHRESH;
 
@@ -3139,10 +3135,16 @@ uint32_t am_hal_mspi_power_control(void *pHandle,
                 // We can try to restore the SWFlags here. Hardware flags depend on external conditions
                 // and hence can not be restored (assuming the external conditions remain the same, it should be set automatically.
                 MSPIn(pMSPIState->ui32Module)->CQSETCLEAR = AM_HAL_MSPI_SC_SET(pMSPIState->registerState.regCQFLAGS & 0xFF);
+
                 //
                 // Set the CQCFG last
                 //
-                MSPIn(pMSPIState->ui32Module)->CQCFG      = pMSPIState->registerState.regCQCFG;
+                MSPIn(pMSPIState->ui32Module)->CQCFG      = pMSPIState->registerState.regCQCFG & ~_VAL2FLD(MSPI_CQCFG_CQEN, MSPI_CQCFG_CQEN_EN);
+
+                if (pMSPIState->registerState.regCQCFG & _VAL2FLD(MSPI_CQCFG_CQEN, MSPI_CQCFG_CQEN_EN))
+                {
+                    mspi_cq_enable(pMSPIState);
+                }
 
                 pMSPIState->registerState.bValid = false;
             }
@@ -3170,20 +3172,25 @@ uint32_t am_hal_mspi_power_control(void *pHandle,
                 pMSPIState->registerState.regSCRAMBLING = MSPIn(pMSPIState->ui32Module)->SCRAMBLING;
                 pMSPIState->registerState.regCQADDR     = MSPIn(pMSPIState->ui32Module)->CQADDR;
                 pMSPIState->registerState.regCQPAUSE    = MSPIn(pMSPIState->ui32Module)->CQPAUSE;
-                pMSPIState->registerState.regCQFLAGS    = MSPIn(pMSPIState->ui32Module)->CQFLAGS;
                 pMSPIState->registerState.regCQCURIDX   = MSPIn(pMSPIState->ui32Module)->CQCURIDX;
                 pMSPIState->registerState.regCQENDIDX   = MSPIn(pMSPIState->ui32Module)->CQENDIDX;
                 pMSPIState->registerState.regINTEN      = MSPIn(pMSPIState->ui32Module)->INTEN;
+                pMSPIState->registerState.regCQFLAGS    = MSPIn(pMSPIState->ui32Module)->CQFLAGS;
+                pMSPIState->registerState.regTHRESHOLD  = MSPIn(pMSPIState->ui32Module)->THRESHOLD;
 
-                // TODO: May be no need to store these values, as they are constants anyways?
                 pMSPIState->registerState.regDMABCOUNT  = MSPIn(pMSPIState->ui32Module)->DMABCOUNT;
                 pMSPIState->registerState.regDMATHRESH  = MSPIn(pMSPIState->ui32Module)->DMATHRESH;
 
                 //
                 // Set the CQCFG last
                 //
-                pMSPIState->registerState.regCQCFG      = MSPIn(pMSPIState->ui32Module)->CQCFG;
-                pMSPIState->registerState.bValid        = true;
+                pMSPIState->registerState.regCQCFG    = MSPIn(pMSPIState->ui32Module)->CQCFG;
+                pMSPIState->registerState.bValid      = true;
+
+                if (MSPIn(pMSPIState->ui32Module)->CQCFG & _VAL2FLD(MSPI_CQCFG_CQEN, MSPI_CQCFG_CQEN_EN))
+                {
+                    mspi_cq_disable(pMSPIState);
+                }
             }
 
             //

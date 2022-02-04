@@ -333,9 +333,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>AM_FREERTOS AM_PART_APOLLO3 AM_DEBUG_PRINTF AM_PACKAGE_BGA AM_UTIL_FAULTISR_PRINT keil</Define>
+              <Define>AM_DEBUG_PRINTF AM_PACKAGE_BGA AM_UTIL_FAULTISR_PRINT AM_PART_APOLLO3 AM_FREERTOS keil</Define>
               <Undefine></Undefine>
-              <IncludePath>../../../../../devices;../../../../../CMSIS/ARM/Include;../../../../../utils;../../../bsp;../../../../../mcu/apollo3;../../../../..;../src;../../../../../CMSIS/AmbiqMicro/Include;../../../../../third_party/FreeRTOSv10.1.1/Source/portable/Keil/AMapollo2;../../../../../third_party/FreeRTOSv10.1.1/Source/include</IncludePath>
+              <IncludePath>../../../../../third_party/FreeRTOSv10.1.1/Source/portable/Keil/AMapollo2;../../../../../CMSIS/AmbiqMicro/Include;../../../../../devices;../../../../../third_party/FreeRTOSv10.1.1/Source/include;../src;../../../../..;../../../../../CMSIS/ARM/Include;../../../../../utils;../../../bsp;../../../../../mcu/apollo3</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -377,6 +377,31 @@
       </TargetOption>
       <Groups>
         <Group>
+          <GroupName>src</GroupName>
+          <Files>
+            <File>
+              <FileName>freertos_mspi_display.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../src/freertos_mspi_display.c</FilePath>
+            </File>
+            <File>
+              <FileName>main_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../src/main_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>render_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../src/render_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../src/rtos.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
           <GroupName>FreeRTOSv10.1.1_AMapollo2</GroupName>
           <Files>
             <File>
@@ -412,27 +437,27 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>src</GroupName>
+          <GroupName>utils</GroupName>
           <Files>
             <File>
-              <FileName>freertos_mspi_display.c</FileName>
+              <FileName>am_util_debug.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../src/freertos_mspi_display.c</FilePath>
+              <FilePath>../../../../../utils/am_util_debug.c</FilePath>
             </File>
             <File>
-              <FileName>main_task.c</FileName>
+              <FileName>am_util_delay.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../src/main_task.c</FilePath>
+              <FilePath>../../../../../utils/am_util_delay.c</FilePath>
             </File>
             <File>
-              <FileName>render_task.c</FileName>
+              <FileName>am_util_faultisr.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../src/render_task.c</FilePath>
+              <FilePath>../../../../../utils/am_util_faultisr.c</FilePath>
             </File>
             <File>
-              <FileName>rtos.c</FileName>
+              <FileName>am_util_stdio.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../src/rtos.c</FilePath>
+              <FilePath>../../../../../utils/am_util_stdio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -473,31 +498,6 @@
               <FileName>timers.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../third_party/FreeRTOSv10.1.1/Source/timers.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>utils</GroupName>
-          <Files>
-            <File>
-              <FileName>am_util_debug.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../utils/am_util_debug.c</FilePath>
-            </File>
-            <File>
-              <FileName>am_util_delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../utils/am_util_delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>am_util_faultisr.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../utils/am_util_faultisr.c</FilePath>
-            </File>
-            <File>
-              <FileName>am_util_stdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../utils/am_util_stdio.c</FilePath>
             </File>
           </Files>
         </Group>

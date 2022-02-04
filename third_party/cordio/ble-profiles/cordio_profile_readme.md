@@ -11,6 +11,10 @@ Copyright (c) 2019 Packetcraft, Inc.
 Changes
 -------
 
+The included Bluetooth Cordio profiles are based on the following commit.
+
+https://github.com/packetcraft-inc/stacks/commit/86372d84ef0386d8834ed036e613c8f2ded1ff16
+
 The following changes were made in r19.02
 
 Enhancements in this release:

@@ -64,7 +64,7 @@ static struct
   uint16_t          hdlMasterList[APP_DB_HDL_LIST_LEN];   /*! Cached handle list in master role */
   uint16_t          hdlSlaveList[APP_DB_HDL_LIST_LEN];    /*! Cached handle list in slave role */
   wsfHandlerId_t    handlerId;                            /*! WSF hander ID */
-  uint8_t           discState;                            /*! Service discovery state */  
+  uint8_t           discState;                            /*! Service discovery state */
   eWatchScanState   scan_state;
   bool_t            autoConnect;                          /*! TRUE if auto-connecting */
 } watchCb;
@@ -603,6 +603,29 @@ static void watchScanReport(dmEvt_t *pMsg)
     return;
   }
 
+#if 1   // Ambiq: Avoid "assignment in condition" warning
+  pData  = DmFindAdType(DM_ADV_TYPE_LOCAL_NAME, pMsg->scanReport.len,
+                        pMsg->scanReport.pData);
+  if ( pData )
+  {
+    name_length = *pData;
+    name_length--;
+
+    memcpy(device_name, pData + 2, name_length);
+  }
+  else
+  {
+    pData = DmFindAdType(DM_ADV_TYPE_SHORT_NAME, pMsg->scanReport.len,
+                          pMsg->scanReport.pData);
+    if ( pData )
+    {
+      name_length = *pData;
+      name_length--;
+
+      memcpy(device_name, pData + 2, name_length);
+    }
+  }
+#else
   if ((pData = DmFindAdType(DM_ADV_TYPE_LOCAL_NAME, pMsg->scanReport.len,
                    pMsg->scanReport.pData)))
   {
@@ -620,6 +643,7 @@ static void watchScanReport(dmEvt_t *pMsg)
     memcpy(device_name, pData + 2, name_length);
 
   }
+#endif
 
   WsfTrace("Found: 0x%02x:%02x:%02x:%02x:%02x:%02x rssi: %d %s",
     pMsg->scanReport.addr[5],
@@ -693,7 +717,7 @@ static void watchScanReport(dmEvt_t *pMsg)
       /* connect will start after scanning stops with expiration
        * of scan timer.
        */
-      
+
       /* Store peer information for connect on scan stop */
       watchConnInfo.addrType = DmHostAddrType(pMsg->scanReport.addrType);
       memcpy(watchConnInfo.addr, pMsg->scanReport.addr, sizeof(bdAddr_t));
@@ -755,7 +779,7 @@ static void watchOpen(dmEvt_t *pMsg)
     }
   }
   else {
-    
+
     AppAdvStart(APP_MODE_AUTO_INIT);
 
   }
@@ -778,8 +802,8 @@ static void watchSetup(dmEvt_t *pMsg)
   AppAdvSetData(APP_SCAN_DATA_DISCOVERABLE, sizeof(watchScanDataDisc), (uint8_t *) watchScanDataDisc);
 
   /* set advertising and scan response data for connectable mode */
-  AppAdvSetData(APP_ADV_DATA_CONNECTABLE, 0, NULL);
-  AppAdvSetData(APP_SCAN_DATA_CONNECTABLE, 0, NULL);
+  AppAdvSetData(APP_ADV_DATA_CONNECTABLE, sizeof(watchAdvDataDisc), (uint8_t *) watchAdvDataDisc);
+  AppAdvSetData(APP_SCAN_DATA_CONNECTABLE, sizeof(watchScanDataDisc), (uint8_t *) watchScanDataDisc);
 
   /* start advertising; automatically set connectable/discoverable mode and bondable mode */
   AppAdvStart(APP_MODE_AUTO_INIT);
@@ -914,9 +938,9 @@ static void watchBtnCback(uint8_t btn)
 
   APP_TRACE_INFO3("btn: %d - master conn id: %d - slave conn id: %d", btn, masterConnId, slaveConnId);
 
-  // as long as button 1 is short pressed, we'll scan and connect to 
+  // as long as button 1 is short pressed, we'll scan and connect to
   // a  new fit device.
-  if (1) 
+  if (1)
   {
     /* No connection as a master */
     switch (btn)
@@ -1196,8 +1220,8 @@ static void watchProcMsg(dmEvt_t *pMsg)
 
     case ATT_MTU_UPDATE_IND:
       APP_TRACE_INFO1("Negotiated MTU %d", ((attEvt_t *)pMsg)->mtu);
-      break;  
-      
+      break;
+
     case DM_RESET_CMPL_IND:
       AttsCalculateDbHash();
       watchSetup(pMsg);
@@ -1249,6 +1273,10 @@ static void watchProcMsg(dmEvt_t *pMsg)
       uiEvent = APP_UI_CONN_CLOSE;
       break;
 
+    case DM_PHY_UPDATE_IND:
+      APP_TRACE_INFO3("DM_PHY_UPDATE_IND status: %d, RX: %d, TX: %d", pMsg->phyUpdate.status,pMsg->phyUpdate.rxPhy, pMsg->phyUpdate.txPhy);
+      break;
+
     case DM_SEC_PAIR_CMPL_IND:
       DmSecGenerateEccKeyReq();
       uiEvent = APP_UI_SEC_PAIR_CMPL;
@@ -1278,9 +1306,9 @@ static void watchProcMsg(dmEvt_t *pMsg)
     case DM_VENDOR_SPEC_CMD_CMPL_IND:
       {
         #if defined(AM_PART_APOLLO) || defined(AM_PART_APOLLO2)
-       
+
           uint8_t *param_ptr = &pMsg->vendorSpecCmdCmpl.param[0];
-        
+
           switch (pMsg->vendorSpecCmdCmpl.opcode)
           {
             case 0xFC20: //read at address
@@ -1289,8 +1317,8 @@ static void watchProcMsg(dmEvt_t *pMsg)
 
               BSTREAM_TO_UINT32(read_value, param_ptr);
 
-              APP_TRACE_INFO3("VSC 0x%0x complete status %x param %x", 
-                pMsg->vendorSpecCmdCmpl.opcode, 
+              APP_TRACE_INFO3("VSC 0x%0x complete status %x param %x",
+                pMsg->vendorSpecCmdCmpl.opcode,
                 pMsg->hdr.status,
                 read_value);
             }
@@ -1302,11 +1330,11 @@ static void watchProcMsg(dmEvt_t *pMsg)
                     pMsg->hdr.status);
             break;
           }
-          
+
         #endif
       }
       break;
-	  
+
     default:
       break;
   }

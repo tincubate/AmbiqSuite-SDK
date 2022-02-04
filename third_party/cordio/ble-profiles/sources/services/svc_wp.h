@@ -45,7 +45,7 @@ extern "C" {
  */
 /**@{*/
 /*! \brief Proprietary Service */
-#define WP_START_HDL               0x200            /*!< \brief Start handle. */
+#define WP_START_HDL               0x0200           /*!< \brief Start handle. */
 #define WP_END_HDL                 (WP_MAX_HDL - 1) /*!< \brief End handle. */
 
 /**************************************************************************************************

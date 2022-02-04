@@ -12,7 +12,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -44,7 +44,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -1429,7 +1429,6 @@ am_hal_ble_blocking_hci_read(void *pHandle, uint32_t *pui32Data, uint32_t *pui32
         //
         // Check if the length is not out of the boundary
         //
-        // Fixme: it is assumed here all the sizes of the buffer are 256
         if ((HciRead.ui16Length == 0) || (HciRead.ui16Length > 256))
         {
             return AM_HAL_STATUS_OUT_OF_RANGE;
@@ -1873,7 +1872,7 @@ am_hal_ble_blocking_transfer(void *pHandle, am_hal_ble_transfer_t *psTransfer)
     //
     // End the critical section.
     //
-    AM_CRITICAL_END; //fixme moved further down to cover am_hal_ble_bus_release();
+    AM_CRITICAL_END;
 
     //
     // Wait for the transaction to complete, and clear out any interrupts that
@@ -1915,15 +1914,12 @@ am_hal_ble_blocking_transfer(void *pHandle, am_hal_ble_transfer_t *psTransfer)
     //
     am_hal_ble_bus_release(pBle);
 
-    //
-    // End the critical section.
-    //
-    // AM_CRITICAL_END;  //fixme moved further down to cover am_hal_ble_bus_release();
 
     //
     // Return the status.
     //
     return AM_HAL_STATUS_SUCCESS;
+
 } // am_hal_ble_blocking_transfer()
 
 //*****************************************************************************

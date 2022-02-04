@@ -2,7 +2,7 @@
 #
 # Makefile - Rules for building the libraries, examples and docs.
 #
-# Copyright (c) 2020, Ambiq Micro, Inc.
+# Copyright (c) 2021, Ambiq Micro, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+# This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 #
 #******************************************************************************
 TARGET := freertos_mspi_display
@@ -43,6 +43,12 @@ PROJECT := freertos_mspi_display_gcc
 CONFIG := bin
 
 SHELL:=/bin/bash
+
+# Enable printing explicit commands with 'make VERBOSE=1'
+ifneq ($(VERBOSE),1)
+Q:=@
+endif
+
 #### Setup ####
 
 TOOLCHAIN ?= arm-none-eabi
@@ -82,51 +88,51 @@ all clean:
 else
 
 DEFINES = -DPART_$(PART)
-DEFINES+= -DAM_FREERTOS
-DEFINES+= -DAM_PART_APOLLO3
 DEFINES+= -DAM_DEBUG_PRINTF
 DEFINES+= -DAM_PACKAGE_BGA
 DEFINES+= -DAM_UTIL_FAULTISR_PRINT
+DEFINES+= -DAM_PART_APOLLO3
+DEFINES+= -DAM_FREERTOS
 DEFINES+= -Dgcc
 
-INCLUDES = -I../../../../../devices
+INCLUDES = -I../../../../../CMSIS/AmbiqMicro/Include
+INCLUDES+= -I../../../../../devices
+INCLUDES+= -I../../../../../third_party/FreeRTOSv10.1.1/Source/portable/GCC/AMapollo2
+INCLUDES+= -I../../../../../third_party/FreeRTOSv10.1.1/Source/include
+INCLUDES+= -I../src
+INCLUDES+= -I../../../../..
 INCLUDES+= -I../../../../../CMSIS/ARM/Include
 INCLUDES+= -I../../../../../utils
 INCLUDES+= -I../../../bsp
 INCLUDES+= -I../../../../../mcu/apollo3
-INCLUDES+= -I../../../../..
-INCLUDES+= -I../src
-INCLUDES+= -I../../../../../CMSIS/AmbiqMicro/Include
-INCLUDES+= -I../../../../../third_party/FreeRTOSv10.1.1/Source/portable/GCC/AMapollo2
-INCLUDES+= -I../../../../../third_party/FreeRTOSv10.1.1/Source/include
 
-VPATH = ../../../../../devices
-VPATH+=:../../../../../utils
+VPATH = ../src
 VPATH+=:../../../../../third_party/FreeRTOSv10.1.1/Source/portable/GCC/AMapollo2
-VPATH+=:../../../../../third_party/FreeRTOSv10.1.1/Source/portable/MemMang
-VPATH+=:../src
 VPATH+=:../../../../../third_party/FreeRTOSv10.1.1/Source
+VPATH+=:../../../../../utils
+VPATH+=:../../../../../devices
 VPATH+=:../src/image
+VPATH+=:../../../../../third_party/FreeRTOSv10.1.1/Source/portable/MemMang
 
-SRC = port.c
+SRC = freertos_mspi_display.c
+SRC += main_task.c
+SRC += render_task.c
+SRC += rtos.c
+SRC += port.c
 SRC += ambiq_logo.c
 SRC += NeZa1.c
 SRC += NeZa2.c
 SRC += watch_background.c
-SRC += freertos_mspi_display.c
-SRC += main_task.c
-SRC += render_task.c
-SRC += rtos.c
+SRC += am_util_debug.c
+SRC += am_util_delay.c
+SRC += am_util_faultisr.c
+SRC += am_util_stdio.c
 SRC += am_devices_mspi_rm69330.c
 SRC += event_groups.c
 SRC += list.c
 SRC += queue.c
 SRC += tasks.c
 SRC += timers.c
-SRC += am_util_debug.c
-SRC += am_util_delay.c
-SRC += am_util_faultisr.c
-SRC += am_util_stdio.c
 SRC += heap_2.c
 SRC += startup_gcc.c
 
@@ -172,26 +178,26 @@ $(CONFIG):
 	@mkdir -p $@
 
 $(CONFIG)/%.o: %.c $(CONFIG)/%.d
-	@echo " Compiling $(COMPILERNAME) $<" ;\
-	$(CC) -c $(CFLAGS) $< -o $@
+	@echo " Compiling $(COMPILERNAME) $<"
+	$(Q) $(CC) -c $(CFLAGS) $< -o $@
 
 $(CONFIG)/%.o: %.s $(CONFIG)/%.d
-	@echo " Assembling $(COMPILERNAME) $<" ;\
-	$(CC) -c $(CFLAGS) $< -o $@
+	@echo " Assembling $(COMPILERNAME) $<"
+	$(Q) $(CC) -c $(CFLAGS) $< -o $@
 
 $(CONFIG)/$(TARGET).axf: $(OBJS) $(LIBS)
-	@echo " Linking $(COMPILERNAME) $@" ;\
-	$(CC) -Wl,-T,$(LINKER_FILE) -o $@ $(OBJS) $(LFLAGS)
+	@echo " Linking $(COMPILERNAME) $@"
+	$(Q) $(CC) -Wl,-T,$(LINKER_FILE) -o $@ $(OBJS) $(LFLAGS)
 
 $(CONFIG)/$(TARGET).bin: $(CONFIG)/$(TARGET).axf
-	@echo " Copying $(COMPILERNAME) $@..." ;\
-	$(CP) $(CPFLAGS) $< $@ ;\
-	$(OD) $(ODFLAGS) $< > $(CONFIG)/$(TARGET).lst
-	@$(SIZE) $(OBJS) $(LIBS) $(CONFIG)/$(TARGET).axf >$(CONFIG)/$(TARGET).size
+	@echo " Copying $(COMPILERNAME) $@..."
+	$(Q) $(CP) $(CPFLAGS) $< $@
+	$(Q) $(OD) $(ODFLAGS) $< > $(CONFIG)/$(TARGET).lst
+	$(Q) $(SIZE) $(OBJS) $(LIBS) $(CONFIG)/$(TARGET).axf >$(CONFIG)/$(TARGET).size
 
 clean:
 	@echo "Cleaning..." ;\
-	$(RM) -f $(OBJS) $(DEPS) \
+	$(Q) $(RM) -f $(OBJS) $(DEPS) \
 	    $(CONFIG)/$(TARGET).bin $(CONFIG)/$(TARGET).axf \
 	    $(CONFIG)/$(TARGET).lst $(CONFIG)/$(TARGET).map
 

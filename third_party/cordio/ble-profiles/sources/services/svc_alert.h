@@ -40,7 +40,7 @@ extern "C" {
  *
  */
 /**@{*/
-#define ALERT_START_HDL               0xA0                /*!< \brief Start handle. */
+#define ALERT_START_HDL               0x00C0              /*!< \brief Start handle. */
 #define ALERT_END_HDL                 (ALERT_MAX_HDL - 1) /*!< \brief End handle. */
 
 /**************************************************************************************************

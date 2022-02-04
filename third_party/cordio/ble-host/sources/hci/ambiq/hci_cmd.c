@@ -100,10 +100,10 @@ uint8_t *hciCmdAlloc(uint16_t opcode, uint16_t len)
  *
  *  \param  pData  Buffer containing HCI command to send or NULL.
  *
- *  \return None.
+ *  \return TRUE if any new or pending hci command sent successfully.
  */
 /*************************************************************************************************/
-void hciCmdSend(uint8_t *pData)
+bool_t hciCmdSend(uint8_t *pData)
 {
   uint8_t         *p;
   wsfHandlerId_t  handlerId;
@@ -119,21 +119,31 @@ void hciCmdSend(uint8_t *pData)
   if (hciCmdCb.numCmdPkts > 0)
   {
     /* if queue not empty */
-    if ((p = WsfMsgDeq(&hciCmdCb.cmdQueue, &handlerId)) != NULL)
+    if ((p = WsfMsgPeek(&hciCmdCb.cmdQueue, &handlerId)) != NULL)
     {
-      /* decrement controller command packet count */
-      hciCmdCb.numCmdPkts--;
-
-      /* store opcode of command we're sending */
-      BYTES_TO_UINT16(hciCmdCb.cmdOpcode, p);
-
-      /* start command timeout */
-      WsfTimerStartSec(&hciCmdCb.cmdTimer, HCI_CMD_TIMEOUT);
-
       /* send command to transport */
-      hciTrSendCmd(p);
+      if (hciTrSendCmd(p) == TRUE)
+      {
+
+        /* remove from the queue*/
+        WsfMsgDeq(&hciCmdCb.cmdQueue, &handlerId);
+
+        /* decrement controller command packet count */
+        hciCmdCb.numCmdPkts--;
+
+        /* store opcode of command we're sending */
+        BYTES_TO_UINT16(hciCmdCb.cmdOpcode, p);
+
+        /* Free buffer here after dequeue */
+        WsfMsgFree(p);
+
+        /* start command timeout */
+        WsfTimerStartSec(&hciCmdCb.cmdTimer, HCI_CMD_TIMEOUT);
+        return TRUE;
+      }
     }
   }
+  return FALSE;
 }
 
 /*************************************************************************************************/
@@ -1174,6 +1184,30 @@ void HciReadTxPwrLvlCmd(uint16_t handle, uint8_t type)
 
 /*************************************************************************************************/
 /*!
+ *  \fn     hciClearCmdQueue
+ *
+ *  \brief  Clears the command queue
+ *
+ *  \return None.
+ */
+/*************************************************************************************************/
+void hciClearCmdQueue(void)
+{
+  uint8_t *pBuf;
+  wsfHandlerId_t  handlerId;
+
+  // Free up any unsent HCI commandss
+  while((pBuf = WsfMsgDeq(&hciCmdCb.cmdQueue, &handlerId)) != NULL)
+  {
+    WsfMsgFree(pBuf);
+  }
+
+  /* initialize numCmdPkts for special case of start the reset sequence */
+  hciCmdCb.numCmdPkts = 1;
+}
+
+/*************************************************************************************************/
+/*!
  *  \fn     HciResetCmd
  *
  *  \brief  HCI reset command.
@@ -1184,7 +1218,6 @@ void HciReadTxPwrLvlCmd(uint16_t handle, uint8_t type)
 void HciResetCmd(void)
 {
   uint8_t *pBuf;
-  wsfHandlerId_t  handlerId;
   hciHwErrorEvt_t evt;
 
   // let security module to clean up pending request/command
@@ -1192,14 +1225,7 @@ void HciResetCmd(void)
 
   hciCb.secCback((hciEvt_t *)&evt);
 
-  // Free up any unsent HCI commandss
-  while((pBuf = WsfMsgDeq(&hciCmdCb.cmdQueue, &handlerId)) != NULL)
-  {
-    WsfMsgFree(pBuf);
-  }
-
-  /* initialize numCmdPkts for special case of reset command */
-  hciCmdCb.numCmdPkts = 1;
+  hciClearCmdQueue();
 
   if ((pBuf = hciCmdAlloc(HCI_OPCODE_RESET, HCI_LEN_RESET)) != NULL)
   {
@@ -1609,7 +1635,7 @@ void HciLeTestEndCmd(void)
  *
  *  \brief      HCI LE Receiver test command[V3].
  *
- *  \param      hciLeRxTestV3Cmd_t      
+ *  \param      hciLeRxTestV3Cmd_t
  *  \return     None.
  */
 /*************************************************************************************************/
@@ -1629,7 +1655,7 @@ void HciLeReceiverTestCmdV3(hciLeRxTestV3Cmd_t *rx_test_v3)
         UINT8_TO_BSTREAM(p, rx_test_v3->slot_dur);
         UINT8_TO_BSTREAM(p, rx_test_v3->switching_pattern_len);
         memcpy(p, rx_test_v3->antenna_id, MAX_SWITCHING_PATTERN_LEN);
-        
+
         hciCmdSend(pBuf);
     }
 }
@@ -1640,7 +1666,7 @@ void HciLeReceiverTestCmdV3(hciLeRxTestV3Cmd_t *rx_test_v3)
  *
  *  \brief      HCI LE transmitter test command[V3].
  *
- *  \param      hciLeTxTestV3Cmd_t      
+ *  \param      hciLeTxTestV3Cmd_t
  *  \return     None.
  */
 /*************************************************************************************************/
@@ -1660,7 +1686,7 @@ void HciLeTransmitterTestCmdV3(hciLeTxTestV3Cmd_t *tx_test_v3)
         UINT8_TO_BSTREAM(p, tx_test_v3->cte_type);
         UINT8_TO_BSTREAM(p, tx_test_v3->switching_pattern_len);
         memcpy(p, tx_test_v3->antenna_id, MAX_SWITCHING_PATTERN_LEN);
-        
+
         hciCmdSend(pBuf);
     }
 }

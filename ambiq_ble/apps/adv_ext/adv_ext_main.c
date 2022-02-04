@@ -6,7 +6,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -38,7 +38,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -613,8 +613,6 @@ static void advExtSendRunningSpeedMeasurement(dmConnId_t connId)
   {
     static uint8_t walk_run = 1;
 
-    /* TODO: Set Running Speed and Cadence Measurement Parameters */
-
     RscpsSetParameter(RSCP_SM_PARAM_SPEED, 1);
     RscpsSetParameter(RSCP_SM_PARAM_CADENCE, 2);
     RscpsSetParameter(RSCP_SM_PARAM_STRIDE_LENGTH, 3);
@@ -1006,7 +1004,7 @@ static void advExtProcMsg(advExtMsg_t *pMsg)
 
     case DM_CONN_CLOSE_IND:
     {
-//		APP_TRACE_INFO1("conn close reason = 0x%x\n", pMsg->connClose.reason);
+//      APP_TRACE_INFO1("conn close reason = 0x%x\n", pMsg->connClose.reason);
         uint8_t connHdl = pMsg->dm.connClose.handle;
 
         for ( i = 0; i< DM_CONN_MAX; i++ )
@@ -1024,6 +1022,10 @@ static void advExtProcMsg(advExtMsg_t *pMsg)
         uiEvent = APP_UI_CONN_CLOSE;
     }
     break;
+
+    case DM_PHY_UPDATE_IND:
+      APP_TRACE_INFO3("DM_PHY_UPDATE_IND status: %d, RX: %d, TX: %d", pMsg->dm.phyUpdate.status, pMsg->dm.phyUpdate.rxPhy, pMsg->dm.phyUpdate.txPhy);
+      break;
 
     case DM_SEC_PAIR_CMPL_IND:
       DmSecGenerateEccKeyReq();

@@ -64,7 +64,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#CFG" target="_self">CFG - Configuration Register</a>
+                            <a class="el" href="#CFG" target="_self">CFG - Configuration</a>
                         </td>
                     </tr>
 
@@ -108,7 +108,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#INTEN" target="_self">INTEN - WDT Interrupt register: Enable</a>
+                            <a class="el" href="#INTEN" target="_self">INTEN - WDT Interrupt: Enable</a>
                         </td>
                     </tr>
 
@@ -119,7 +119,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#INTSTAT" target="_self">INTSTAT - WDT Interrupt register: Status</a>
+                            <a class="el" href="#INTSTAT" target="_self">INTSTAT - WDT Interrupt: Status</a>
                         </td>
                     </tr>
 
@@ -130,7 +130,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#INTCLR" target="_self">INTCLR - WDT Interrupt register: Clear</a>
+                            <a class="el" href="#INTCLR" target="_self">INTCLR - WDT Interrupt: Clear</a>
                         </td>
                     </tr>
 
@@ -141,7 +141,7 @@
                         </td>
                         <td class="entry">
                             <span style="width:32px;display:inline-block;">&#160;</span>
-                            <a class="el" href="#INTSET" target="_self">INTSET - WDT Interrupt register: Set</a>
+                            <a class="el" href="#INTSET" target="_self">INTSET - WDT Interrupt: Set</a>
                         </td>
                     </tr>
 
@@ -151,7 +151,7 @@
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="CFG" class="panel-title">CFG - Configuration Register</h3>
+                <h3 id="CFG" class="panel-title">CFG - Configuration</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -169,7 +169,7 @@
 
                 </table>
                 <h3>Description:</h3>
-                <p>This is the configuration register for the watch dog timer.  It controls the enable, interrupt set, clocks for the timer, the compare values for the counters to trigger a reset or interrupt.   This register can only be written to if the watch dog timer is unlocked (WDTLOCK is not set).</p>
+                <p>This is the configuration register for the watch dog timer. It controls the enable, interrupt set, clocks for the timer, the compare values for the counters to trigger a reset or interrupt. This register can only be written to if the watch dog timer is unlocked (WDTLOCK is not set).</p>
                 <h3>Example Macro Usage:</h3>
                 <pre style="margin:10px" class="language-pascal"><span style='color:#3f7f59; '>//
 // Register access is all performed through the standard CMSIS structure-based
@@ -272,7 +272,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31:27</td>
                             <td>RSVD</td>
                             <td>RO</td>
-                            <td>This bitfield is reserved for future use.<br><br>
+                            <td>This bit field is reserved for future use.<br><br>
                                 </td>
                         </tr>
 
@@ -280,8 +280,8 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>26:24</td>
                             <td>CLKSEL</td>
                             <td>RW</td>
-                            <td>Select the frequency for the WDT.  All values not enumerated below are undefined.<br><br>
-                                 OFF                  = 0x0 - Low Power Mode.  This setting disables the watch dog timer.<br>
+                            <td>Select the frequency for the WDT. All values not enumerated below are undefined.<br><br>
+                                 OFF                  = 0x0 - Low Power Mode. This setting disables the watch dog timer.<br>
                              128HZ                = 0x1 - 128 Hz LFRC clock.<br>
                              16HZ                 = 0x2 - 16 Hz LFRC clock.<br>
                              1HZ                  = 0x3 - 1 Hz LFRC clock.<br>
@@ -292,7 +292,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>23:16</td>
                             <td>INTVAL</td>
                             <td>RW</td>
-                            <td>This bitfield is the compare value for counter bits 7:0 to generate a watchdog interrupt.<br><br>
+                            <td>This bit field is the compare value for counter bits 7:0 to generate a watchdog interrupt.<br><br>
                                 </td>
                         </tr>
 
@@ -300,7 +300,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>15:8</td>
                             <td>RESVAL</td>
                             <td>RW</td>
-                            <td>This bitfield is the compare value for counter bits 7:0 to generate a watchdog reset.  This will cause a software reset.<br><br>
+                            <td>This bit field is the compare value for counter bits 7:0 to generate a watchdog reset. This will cause a software reset.<br><br>
                                 </td>
                         </tr>
 
@@ -308,7 +308,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>7:3</td>
                             <td>RSVD</td>
                             <td>RO</td>
-                            <td>This bitfield is reserved for future use.<br><br>
+                            <td>This bit field is reserved for future use.<br><br>
                                 </td>
                         </tr>
 
@@ -316,7 +316,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>2</td>
                             <td>RESEN</td>
                             <td>RW</td>
-                            <td>This bitfield enables the WDT reset.  This needs to be set together with the WDREN bit in REG_RSTGEN_CFG register (in reset gen) to trigger the reset.<br><br>
+                            <td>This bit field enables the WDT reset. This needs to be set together with the WDREN bit in REG_RSTGEN_CFG register (in reset gen) to trigger the reset.<br><br>
                                 </td>
                         </tr>
 
@@ -324,7 +324,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>1</td>
                             <td>INTEN</td>
                             <td>RW</td>
-                            <td>This bitfield enables the WDT interrupt. Note : This bit must be set before the interrupt status bit will reflect a watchdog timer expiration.  The IER interrupt register must also be enabled for a WDT interrupt to be sent to the NVIC.<br><br>
+                            <td>This bit field enables the WDT interrupt. Note : This bit must be set before the interrupt status bit will reflect a watchdog timer expiration. The IER interrupt register must also be enabled for a WDT interrupt to be sent to the NVIC.<br><br>
                                 </td>
                         </tr>
 
@@ -332,7 +332,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>0</td>
                             <td>WDTEN</td>
                             <td>RW</td>
-                            <td>This bitfield enables the WDT.<br><br>
+                            <td>This bit field enables the WDT.<br><br>
                                 </td>
                         </tr>
 
@@ -362,7 +362,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
                 </table>
                 <h3>Description:</h3>
-                <p>This register will Restart the watchdog timer. Writing a special key value into this register will result in the watch dog timer being reset, so that the count will start again.  It is expected that the software will periodically write to this register to indicate that the system is functional.  The watch dog timer can continue running when the system is in deep sleep, and the interrupt will trigger the wake.  After the wake, the core can reset the watch dog timer.</p>
+                <p>This register will Restart the watchdog timer. Writing a special key value into this register will result in the watch dog timer being reset, so that the count will start again. It is expected that the software will periodically write to this register to indicate that the system is functional. The watch dog timer can continue running when the system is in deep sleep, and the interrupt will trigger the wake. After the wake, the core can reset the watch dog timer.</p>
                 <h3>Example Macro Usage:</h3>
                 <pre style="margin:10px" class="language-pascal"><span style='color:#3f7f59; '>//
 // Register access is all performed through the standard CMSIS structure-based
@@ -447,7 +447,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31:8</td>
                             <td>RSVD</td>
                             <td>RO</td>
-                            <td>This bitfield is reserved for future use.<br><br>
+                            <td>This bit field is reserved for future use.<br><br>
                                 </td>
                         </tr>
 
@@ -455,8 +455,8 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>7:0</td>
                             <td>RSTRT</td>
                             <td>WO</td>
-                            <td>Writing 0xB2 to WDTRSTRT restarts the watchdog timer.  This is a write only register.  Reading this register will only provide all 0.<br><br>
-                                 KEYVALUE             = 0xB2 - This is the key value to write to WDTRSTRT to restart the WDT.  This is a write only register.</td>
+                            <td>Writing 0xB2 to WDTRSTRT restarts the watchdog timer. This is a write only register. Reading this register will only provide all 0.<br><br>
+                                 KEYVALUE             = 0xB2 - This is the key value to write to WDTRSTRT to restart the WDT. This is a write only register.</td>
                         </tr>
 
                     </tbody>
@@ -485,7 +485,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
                 </table>
                 <h3>Description:</h3>
-                <p>This register locks the watch dog timer.  Once it is locked, the configuration register (WDTCFG) for watch dog timer cannot be written to.</p>
+                <p>This register locks the watch dog timer. Once it is locked, the configuration register (WDTCFG) for watch dog timer cannot be written to.</p>
                 <h3>Example Macro Usage:</h3>
                 <pre style="margin:10px" class="language-pascal"><span style='color:#3f7f59; '>//
 // Register access is all performed through the standard CMSIS structure-based
@@ -570,7 +570,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31:8</td>
                             <td>RSVD</td>
                             <td>RO</td>
-                            <td>This bitfield is reserved for future use.<br><br>
+                            <td>This bit field is reserved for future use.<br><br>
                                 </td>
                         </tr>
 
@@ -608,7 +608,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
                 </table>
                 <h3>Description:</h3>
-                <p>This register holds the current count for the watch dog timer.  This is a read only register.  SW cannot set the value in the counter, but can reset it.</p>
+                <p>This register holds the current count for the watch dog timer. This is a read only register. SW cannot set the value in the counter, but can reset it.</p>
                 <h3>Example Macro Usage:</h3>
                 <pre style="margin:10px" class="language-pascal"><span style='color:#3f7f59; '>//
 // Register access is all performed through the standard CMSIS structure-based
@@ -693,7 +693,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31:8</td>
                             <td>RSVD</td>
                             <td>RO</td>
-                            <td>This bitfield is reserved for future use.<br><br>
+                            <td>This bit field is reserved for future use.<br><br>
                                 </td>
                         </tr>
 
@@ -713,7 +713,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="INTEN" class="panel-title">INTEN - WDT Interrupt register: Enable</h3>
+                <h3 id="INTEN" class="panel-title">INTEN - WDT Interrupt: Enable</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -816,7 +816,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31:1</td>
                             <td>RSVD</td>
                             <td>RO</td>
-                            <td>This bitfield is reserved for future use.<br><br>
+                            <td>This bit field is reserved for future use.<br><br>
                                 </td>
                         </tr>
 
@@ -836,7 +836,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="INTSTAT" class="panel-title">INTSTAT - WDT Interrupt register: Status</h3>
+                <h3 id="INTSTAT" class="panel-title">INTSTAT - WDT Interrupt: Status</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -939,7 +939,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31:1</td>
                             <td>RSVD</td>
                             <td>RO</td>
-                            <td>This bitfield is reserved for future use.<br><br>
+                            <td>This bit field is reserved for future use.<br><br>
                                 </td>
                         </tr>
 
@@ -959,7 +959,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="INTCLR" class="panel-title">INTCLR - WDT Interrupt register: Clear</h3>
+                <h3 id="INTCLR" class="panel-title">INTCLR - WDT Interrupt: Clear</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -1062,7 +1062,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31:1</td>
                             <td>RSVD</td>
                             <td>RO</td>
-                            <td>This bitfield is reserved for future use.<br><br>
+                            <td>This bit field is reserved for future use.<br><br>
                                 </td>
                         </tr>
 
@@ -1082,7 +1082,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
 
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 id="INTSET" class="panel-title">INTSET - WDT Interrupt register: Set</h3>
+                <h3 id="INTSET" class="panel-title">INTSET - WDT Interrupt: Set</h3>
             </div>
             <div class="panel-body">
                 <h3>Address:</h3>
@@ -1185,7 +1185,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
                             <td>31:1</td>
                             <td>RSVD</td>
                             <td>RO</td>
-                            <td>This bitfield is reserved for future use.<br><br>
+                            <td>This bit field is reserved for future use.<br><br>
                                 </td>
                         </tr>
 
@@ -1211,7 +1211,7 @@ ADCn(0)-&gt;CFG_b.CLKSEL = ADC_CFG_CLKSEL_HFRC; <span style='color:#3f7f59; '>//
             <small>
                 AmbiqSuite Register Documentation&nbsp;
                 <a href="http://www.ambiqmicro.com">
-                <img class="footer" src="../resources/ambiqmicro_logo.png" alt="Ambiq Micro"/></a>&nbsp&nbsp Copyright &copy; 2020&nbsp&nbsp<br />
+                <img class="footer" src="../resources/ambiqmicro_logo.png" alt="Ambiq Micro"/></a>&nbsp&nbsp Copyright &copy; 2021&nbsp&nbsp<br />
                 This documentation is licensed and distributed under the <a rel="license" href="http://opensource.org/licenses/BSD-3-Clause">BSD 3-Clause License</a>.&nbsp&nbsp<br/>
             </small>
         </div>

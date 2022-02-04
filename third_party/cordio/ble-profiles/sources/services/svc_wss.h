@@ -40,7 +40,7 @@ extern "C" {
  *
  */
 /**@{*/
-#define WSS_START_HDL               0x0100            /*!< \brief Start handle. */
+#define WSS_START_HDL               0x0110            /*!< \brief Start handle. */
 #define WSS_END_HDL                 (WSS_MAX_HDL - 1) /*!< \brief End handle. */
 
 /**************************************************************************************************

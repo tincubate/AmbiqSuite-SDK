@@ -8,7 +8,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 #include "am_mcu_apollo.h"
@@ -56,6 +56,10 @@
 #define BYTE_NUM_PER_WRITE  65535
 #define AM_DEVICES_MSPI_RM69330_TIMEOUT             100000
 
+//
+// Adjust TE frequency of display.
+//
+//#define ADJ_TE_FREQ
 static struct
 {
     uint32_t row_start;
@@ -546,7 +550,6 @@ am_devices_mspi_rm69330_init(uint32_t ui32Module, am_devices_mspi_rm69330_config
     // Enable fault detection.
     //
 #if AM_APOLLO3_MCUCTRL
-//fixme    am_hal_mcuctrl_control(AM_HAL_MCUCTRL_CONTROL_FAULT_CAPTURE_ENABLE, 0);
 #else // AM_APOLLO3_MCUCTRL
     am_hal_mcuctrl_fault_capture_enable();
 #endif // AM_APOLLO3_MCUCTRL
@@ -621,11 +624,46 @@ am_devices_mspi_rm69330_init(uint32_t ui32Module, am_devices_mspi_rm69330_config
 
     am_devices_lcm_init((void*)&gAmDisplay[ui32Index], &g_sGraphic_conf);
 
+#if defined(ADJ_TE_FREQ)
+    //
+    // Adjust TE frequency of display.
+    //
+    const int MIPI_set_cmd_page = 0xFE;
+    uint8_t ui8CmdBuf[2];
+
+    ui8CmdBuf[0] = MIPI_set_cmd_page;
+    ui8CmdBuf[1] = 0x01; // MCS
+
+    ui32Status = am_devices_mspi_rm69330_command_write((void*)&gAmDisplay[ui32Index], ui8CmdBuf[0], &ui8CmdBuf[1], 1);
+    if (ui32Status)
+    {
+        return AM_DEVICES_MSPI_RM69330_STATUS_ERROR;
+    }
+
+    am_util_delay_ms(10);
+    ui8CmdBuf[0] = 0x29;
+    ui8CmdBuf[1] = 0x41;  //30fps
+    ui32Status = am_devices_mspi_rm69330_command_write((void*)&gAmDisplay[ui32Index], ui8CmdBuf[0], &ui8CmdBuf[1], 1);
+    if (ui32Status)
+    {
+        return AM_DEVICES_MSPI_RM69330_STATUS_ERROR;
+    }
+    am_util_delay_ms(10);
+    ui8CmdBuf[0] = MIPI_set_cmd_page;
+    ui8CmdBuf[1] = 0x00; // UCS
+    ui32Status = am_devices_mspi_rm69330_command_write((void*)&gAmDisplay[ui32Index], ui8CmdBuf[0], &ui8CmdBuf[1], 1);
+    if (ui32Status)
+    {
+        return AM_DEVICES_MSPI_RM69330_STATUS_ERROR;
+    }
+    am_util_delay_ms(10);
+#endif
     //
     // Read the Device ID.
     //
     am_devices_mspi_rm69330_read_id((void*)&gAmDisplay[ui32Index], &ui32DeviceID);
     am_util_stdio_printf("RM69330 Device ID = %6X\n", (ui32DeviceID & 0x00FFFFFF));
+
 
     //
     // Enable MSPI interrupts.

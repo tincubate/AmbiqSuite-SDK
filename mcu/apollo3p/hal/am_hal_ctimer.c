@@ -13,7 +13,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -161,38 +161,38 @@ g_ui8TmrClkSrcMask[32] =  // 5-bit field = 32 table entries
 
 static const uint16_t CTx_tbl[32][2] =
 {
-    CTX(12,2), CTX(50,2),      // 0
-    CTX(25,2), CTX(51,2),      // 1
-    CTX(13,2), CTX(52,2),      // 2
-    CTX(26,2), CTX(53,2),      // 3
-    CTX(18,2), CTX(54,2),      // 4
-    CTX(27,2), CTX(55,2),      // 5
-    CTX(19,2), CTX(56,2),      // 6
-    CTX(28,2), CTX(57,2),      // 7
-    CTX( 5,7), CTX(58,2),      // 8
-    CTX(29,2), CTX(59,2),      // 9
-    CTX( 6,5), CTX(60,2),      // 10
-    CTX(30,2), CTX(61,2),      // 11
-    CTX(22,2), CTX(62,2),      // 12
-    CTX(31,2), CTX(63,2),      // 13
-    CTX(23,2), CTX(64,2),      // 14
-    CTX(32,2), CTX(65,2),      // 15
-    CTX(42,2), CTX(66,2),      // 16
-    CTX( 4,6), CTX(67,2),      // 17
-    CTX(43,2), CTX(68,2),      // 18
-    CTX( 7,7), CTX(69,2),      // 19  
-    CTX(44,2), CTX(70,2),      // 20
-    CTX(24,5), CTX(71,2),      // 21
-    CTX(45,2), CTX(72,2),      // 22 
-    CTX(33,6), CTX(73,2),      // 23
-    CTX(46,2), 0xFFFF,         // 24
-    CTX(39,2), 0xFFFF,         // 25
-    CTX(47,2), 0xFFFF,         // 26
-    CTX(35,5), 0xFFFF,         // 27
-    CTX(48,2), 0xFFFF,         // 28
-    CTX(37,7), 0xFFFF,         // 29
-    CTX(49,2), 0xFFFF,         // 30
-    CTX(11,2), 0xFFFF,         // 31                              
+    {CTX(12,2), CTX(50,2)},     // 0
+    {CTX(25,2), CTX(51,2)},     // 1
+    {CTX(13,2), CTX(52,2)},     // 2
+    {CTX(26,2), CTX(53,2)},     // 3
+    {CTX(18,2), CTX(54,2)},     // 4
+    {CTX(27,2), CTX(55,2)},     // 5
+    {CTX(19,2), CTX(56,2)},     // 6
+    {CTX(28,2), CTX(57,2)},     // 7
+    {CTX( 5,7), CTX(58,2)},     // 8
+    {CTX(29,2), CTX(59,2)},     // 9
+    {CTX( 6,5), CTX(60,2)},     // 10
+    {CTX(30,2), CTX(61,2)},     // 11
+    {CTX(22,2), CTX(62,2)},     // 12
+    {CTX(31,2), CTX(63,2)},     // 13
+    {CTX(23,2), CTX(64,2)},     // 14
+    {CTX(32,2), CTX(65,2)},     // 15
+    {CTX(42,2), CTX(66,2)},     // 16
+    {CTX( 4,6), CTX(67,2)},     // 17
+    {CTX(43,2), CTX(68,2)},     // 18
+    {CTX( 7,7), CTX(69,2)},     // 19
+    {CTX(44,2), CTX(70,2)},     // 20
+    {CTX(24,5), CTX(71,2)},     // 21
+    {CTX(45,2), CTX(72,2)},     // 22
+    {CTX(33,6), CTX(73,2)},     // 23
+    {CTX(46,2), 0xFFFF},        // 24
+    {CTX(39,2), 0xFFFF},        // 25
+    {CTX(47,2), 0xFFFF},        // 26
+    {CTX(35,5), 0xFFFF},        // 27
+    {CTX(48,2), 0xFFFF},        // 28
+    {CTX(37,7), 0xFFFF},        // 29
+    {CTX(49,2), 0xFFFF},        // 30
+    {CTX(11,2), 0xFFFF}         // 31
 };
 
 #define OUTC(timB,timN,N2)      ((N2 << 4) | (timB << 3) | (timN << 0))
@@ -1248,7 +1248,7 @@ am_hal_ctimer_output_config(uint32_t ui32TimerNumber,
                             uint32_t eDriveStrength)
 {
     uint32_t ux, ui32Ctx, ui32CtxPadNum;
-    uint32_t ui32CtxIdx;	
+    uint32_t ui32CtxIdx;
     uint32_t ui32CtxOutcfgFnc, ui32CtxOutcfgMsk, ui32CfgShf;
     uint32_t ui32OutcfgValue;
 
@@ -1283,7 +1283,7 @@ am_hal_ctimer_output_config(uint32_t ui32TimerNumber,
             ui32CtxIdx = 1;
             break;
         }
-        
+
         ui32CtxPadNum = 0xFF;
     }
 
@@ -2196,13 +2196,13 @@ am_hal_ctimer_int_set(uint32_t ui32Interrupt)
 //!
 //!     AM_REG_CTIMER_INTEN_CTMRAxC0INT_M, AM_HAL_CTIMER_INT_TIMERAxC1,
 //!
-//! @return u32RetVal either the timer interrupt status, or interrupt enabled.
+//! @return ui32RetVal either the timer interrupt status, or interrupt enabled.
 //
 //*****************************************************************************
 uint32_t
 am_hal_ctimer_int_status_get(bool bEnabledOnly)
 {
-    uint32_t u32RetVal = 0;
+    uint32_t ui32RetVal = 0;
 
     //
     // Begin critical section.
@@ -2215,12 +2215,12 @@ am_hal_ctimer_int_status_get(bool bEnabledOnly)
 
     if ( bEnabledOnly )
     {
-        u32RetVal  = CTIMERn(0)->INTSTAT;
-        u32RetVal &= CTIMERn(0)->INTEN;
+        ui32RetVal  = CTIMERn(0)->INTSTAT;
+        ui32RetVal &= CTIMERn(0)->INTEN;
     }
     else
     {
-        u32RetVal = CTIMERn(0)->INTSTAT;
+        ui32RetVal = CTIMERn(0)->INTSTAT;
     }
 
     //
@@ -2228,7 +2228,7 @@ am_hal_ctimer_int_status_get(bool bEnabledOnly)
     //
     AM_CRITICAL_END
 
-    return u32RetVal;
+    return ui32RetVal;
 
 } // am_hal_ctimer_int_status_get()
 

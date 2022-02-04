@@ -11,7 +11,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -43,7 +43,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -448,8 +448,8 @@ static void ancsSetup(ancsMsg_t *pMsg)
     AppAdvSetData(APP_SCAN_DATA_DISCOVERABLE, sizeof(ancsScanDataDisc), (uint8_t *) ancsScanDataDisc);
 
     /* set advertising and scan response data for connectable mode */
-    AppAdvSetData(APP_ADV_DATA_CONNECTABLE, 0, NULL);
-    AppAdvSetData(APP_SCAN_DATA_CONNECTABLE, 0, NULL);
+    AppAdvSetData(APP_ADV_DATA_CONNECTABLE, sizeof(ancsAdvDataDisc), (uint8_t *) ancsAdvDataDisc);
+    AppAdvSetData(APP_SCAN_DATA_CONNECTABLE, sizeof(ancsScanDataDisc), (uint8_t *) ancsScanDataDisc);
 
     /* start advertising; automatically set connectable/discoverable mode and bondable mode */
     AppAdvStart(APP_MODE_AUTO_INIT);
@@ -772,6 +772,10 @@ static void ancsProcMsg(ancsMsg_t *pMsg)
         break;
 
         case DM_CONN_UPDATE_IND:
+        break;
+
+        case DM_PHY_UPDATE_IND:
+            APP_TRACE_INFO3("DM_PHY_UPDATE_IND status: %d, RX: %d, TX: %d", pMsg->dm.phyUpdate.status, pMsg->dm.phyUpdate.rxPhy, pMsg->dm.phyUpdate.txPhy);
         break;
 
         case DM_SEC_PAIR_CMPL_IND:

@@ -553,7 +553,7 @@ static void tagSetup(dmEvt_t *pMsg)
   AppAdvSetData(APP_SCAN_DATA_DISCOVERABLE, sizeof(tagScanData), (uint8_t *) tagScanData);
 
   /* set advertising and scan response data for connectable mode */
-  AppAdvSetData(APP_ADV_DATA_CONNECTABLE, 0, NULL);
+  AppAdvSetData(APP_ADV_DATA_CONNECTABLE, sizeof(tagAdvDataDisc), (uint8_t *) tagAdvDataDisc);
   AppAdvSetData(APP_SCAN_DATA_CONNECTABLE, sizeof(tagScanData), (uint8_t *) tagScanData);
 
   /* start advertising; automatically set connectable/discoverable mode and bondable mode */

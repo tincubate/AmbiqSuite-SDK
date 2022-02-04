@@ -14,7 +14,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -46,7 +46,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -132,6 +132,7 @@ enable_print_interface(void)
 void
 button_timer_handler(TimerHandle_t xTimer)
 {
+#if AM_BSP_NUM_BUTTONS
     //
     // Every time we get a button timer tick, check all of our buttons.
     //
@@ -149,7 +150,7 @@ button_timer_handler(TimerHandle_t xTimer)
     if ( am_devices_button_released(am_bsp_psButtons[1]) )
     {
       AppUiBtnTest(APP_UI_BTN_1_SHORT);
-
+#endif
       switch ( current_test_case++ )
       {
         case 0:
@@ -214,28 +215,34 @@ button_timer_handler(TimerHandle_t xTimer)
       {
         current_test_case = 0;
       }
+#if AM_BSP_NUM_BUTTONS
     }
 
     if ( am_devices_button_released(am_bsp_psButtons[2]) )
     {
         AppUiBtnTest(APP_UI_BTN_2_SHORT);
     }
+#endif
 }
 
 void
 setup_buttons(void)
 {
+    uint32_t ui32ButtonTimer = 20 * 100;
+
+#if AM_BSP_NUM_BUTTONS
     //
     // Enable the buttons for user interaction.
     //
     am_devices_button_array_init(am_bsp_psButtons, AM_BSP_NUM_BUTTONS);
-
+    ui32ButtonTimer = 20;
+#endif
     //
     // Start a timer.
     //
 
     // Create a FreeRTOS Timer
-    xButtonTimer = xTimerCreate("Button Timer", pdMS_TO_TICKS(20),
+    xButtonTimer = xTimerCreate("Button Timer", pdMS_TO_TICKS(ui32ButtonTimer),
             pdTRUE, NULL, button_timer_handler);
 
     if (xButtonTimer != NULL)

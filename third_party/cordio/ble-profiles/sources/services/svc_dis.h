@@ -41,7 +41,7 @@ extern "C" {
  */
 /**@{*/
 /*! \brief Device Information Service */
-#define DIS_START_HDL               0x30              /*!< \brief Start handle. */
+#define DIS_START_HDL               0x0030            /*!< \brief Start handle. */
 #define DIS_END_HDL                 (DIS_MAX_HDL - 1) /*!< \brief End handle. */
 
 /**************************************************************************************************

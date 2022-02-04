@@ -9,6 +9,8 @@
 #ifndef HCI_DRV_APOLLO_H
 #define HCI_DRV_APOLLO_H
 
+#include <stdbool.h>
+
 #ifdef __cplusplus
 extern "C"
 {

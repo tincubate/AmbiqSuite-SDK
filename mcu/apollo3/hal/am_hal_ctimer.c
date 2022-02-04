@@ -13,7 +13,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -2159,13 +2159,13 @@ am_hal_ctimer_int_set(uint32_t ui32Interrupt)
 //!
 //!     AM_REG_CTIMER_INTEN_CTMRAxC0INT_M, AM_HAL_CTIMER_INT_TIMERAxC1,
 //!
-//! @return u32RetVal either the timer interrupt status, or interrupt enabled.
+//! @return ui32RetVal either the timer interrupt status, or interrupt enabled.
 //
 //*****************************************************************************
 uint32_t
 am_hal_ctimer_int_status_get(bool bEnabledOnly)
 {
-    uint32_t u32RetVal = 0;
+    uint32_t ui32RetVal = 0;
 
     //
     // Begin critical section.
@@ -2178,12 +2178,12 @@ am_hal_ctimer_int_status_get(bool bEnabledOnly)
 
     if ( bEnabledOnly )
     {
-        u32RetVal  = CTIMERn(0)->INTSTAT;
-        u32RetVal &= CTIMERn(0)->INTEN;
+        ui32RetVal  = CTIMERn(0)->INTSTAT;
+        ui32RetVal &= CTIMERn(0)->INTEN;
     }
     else
     {
-        u32RetVal = CTIMERn(0)->INTSTAT;
+        ui32RetVal = CTIMERn(0)->INTSTAT;
     }
 
     //
@@ -2191,7 +2191,7 @@ am_hal_ctimer_int_status_get(bool bEnabledOnly)
     //
     AM_CRITICAL_END
 
-    return u32RetVal;
+    return ui32RetVal;
 
 } // am_hal_ctimer_int_status_get()
 

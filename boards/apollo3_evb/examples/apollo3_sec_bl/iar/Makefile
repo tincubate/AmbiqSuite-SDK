@@ -2,7 +2,7 @@
 #
 # Makefile - Rules for building the libraries, examples and docs.
 #
-# Copyright (c) 2020, Ambiq Micro, Inc.
+# Copyright (c) 2021, Ambiq Micro, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -34,12 +34,12 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+# This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 #
 #******************************************************************************
-TARGET := apollo3_secbl
+TARGET := apollo3_sec_bl
 COMPILERNAME := iar
-PROJECT := apollo3_secbl_iar
+PROJECT := apollo3_sec_bl_iar
 CONFIG := bin
 AM_SoftwareRoot ?= ../../../..
 
@@ -58,7 +58,7 @@ all: directories binary
 
 .PHONY: binary
 binary:
-	IarBuild.exe apollo3_secbl.ewp -make Debug -log info
+	IarBuild.exe apollo3_sec_bl.ewp -make Debug -log info
 
 directories: $(CONFIG)
 
@@ -67,14 +67,14 @@ $(CONFIG):
 
 clean:
 	@echo Cleaning... ;\
-	IarBuild.exe apollo3_secbl.ewp -clean Debug -log all
+	IarBuild.exe apollo3_sec_bl.ewp -clean Debug -log all
 
-
-../../../bsp/iar/bin/libam_bsp.a:
-	$(MAKE) -C ../../../bsp
 
 ../../../../../mcu/apollo3/hal/iar/bin/libam_hal.a:
 	$(MAKE) -C ../../../../../mcu/apollo3/hal
+
+../../../bsp/iar/bin/libam_bsp.a:
+	$(MAKE) -C ../../../bsp
 
 endif
 .PHONY: all clean directories

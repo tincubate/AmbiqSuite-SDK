@@ -8,7 +8,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -40,11 +40,16 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 #ifndef HCI_DRV_APOLLO3_H
 #define HCI_DRV_APOLLO3_H
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 
 //*****************************************************************************
 //
@@ -56,10 +61,11 @@
 // Tx power level in dBm.
 typedef enum
 {
-  TX_POWER_LEVEL_MINUS_10P0_dBm = 0x0,
-  TX_POWER_LEVEL_0P0_dBm,
-  TX_POWER_LEVEL_PLUS_3P0_dBm,
-  TX_POWER_LEVEL_MAX_VAL,
+  TX_POWER_LEVEL_MINUS_10P0_dBm = 0x4,
+  TX_POWER_LEVEL_MINUS_5P0_dBm = 0x5,
+  TX_POWER_LEVEL_0P0_dBm = 0x8,
+  TX_POWER_LEVEL_PLUS_3P0_dBm = 0xF,
+  TX_POWER_LEVEL_INVALID = 0x10,
 }txPowerLevel_t;
 
 
@@ -80,5 +86,9 @@ extern void HciVscUpdateBDAddress(void);
 extern void HciDrvHandler(wsfEventMask_t event, wsfMsgHdr_t *pMsg);
 extern void HciDrvHandlerInit(wsfHandlerId_t handlerId);
 extern void HciDrvIntService(void);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // HCI_DRV_APOLLO3_H

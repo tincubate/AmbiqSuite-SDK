@@ -39,10 +39,10 @@ extern "C" {
  *  \param  pContext    Connection context.
  *  \param  pAclData    WSF msg buffer containing an ACL packet.
  *
- *  \return None.
+ *  \return The length of ACL packet.
  */
 /*************************************************************************************************/
-void hciTrSendAclData(void *pContext, uint8_t *pAclData);
+uint16_t hciTrSendAclData(void *pContext, uint8_t *pAclData);
 
 /*************************************************************************************************/
 /*!
@@ -50,10 +50,10 @@ void hciTrSendAclData(void *pContext, uint8_t *pAclData);
  *
  *  \param  pCmdData    WSF msg buffer containing an HCI command.
  *
- *  \return None.
+ *  \return TRUE if packet sent, FALSE otherwise.
  */
 /*************************************************************************************************/
-void hciTrSendCmd(uint8_t *pCmdData);
+bool_t hciTrSendCmd(uint8_t *pCmdData);
 
 /*************************************************************************************************/
 /*!

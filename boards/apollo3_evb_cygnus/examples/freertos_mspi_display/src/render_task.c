@@ -8,7 +8,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 #include "freertos_mspi_display.h"
@@ -158,34 +158,30 @@ display_init(void)
 
     //
     // Initialize the display specific GPIO signals.
-    // FIX ME - This needs to be ported to the official Apollo3/3P + Cygnus BSPs when ready.
     //
     am_hal_gpio_pinconfig(AM_BSP_GPIO_DSPL_RESET, g_AM_HAL_GPIO_OUTPUT);
-    am_hal_gpio_output_set(AM_BSP_GPIO_DSPL_RESET);    
+    am_hal_gpio_output_set(AM_BSP_GPIO_DSPL_RESET);
 
     am_hal_gpio_pinconfig(AM_BSP_GPIO_DSPL_TE, g_AM_BSP_GPIO_DSPL_TE);
-    
+
     am_hal_gpio_pinconfig(AM_BSP_GPIO_DSPL0_OLED_EN, g_AM_HAL_GPIO_INPUT);
-    
+
     am_hal_gpio_pinconfig(AM_BSP_GPIO_DSPL0_OLED_PWER_EN, g_AM_HAL_GPIO_OUTPUT);
-    am_hal_gpio_output_clear(AM_BSP_GPIO_DSPL0_OLED_PWER_EN);   
-    
+    am_hal_gpio_output_clear(AM_BSP_GPIO_DSPL0_OLED_PWER_EN);
+
     am_hal_gpio_pinconfig(AM_BSP_GPIO_DSPL0_VIO_EN, g_AM_HAL_GPIO_OUTPUT);
     am_hal_gpio_output_set(AM_BSP_GPIO_DSPL0_VIO_EN);
-    
+
     am_hal_gpio_pinconfig(AM_BSP_GPIO_DSPL0_DSPL_3V3_EN, g_AM_HAL_GPIO_OUTPUT);
     am_hal_gpio_output_set(AM_BSP_GPIO_DSPL0_DSPL_3V3_EN);
-    // 
-    // FIXME!!!
-    //
-    
+
     // Initialize the MSPI Display
     ui32Status = am_devices_mspi_rm69330_init(DISPLAY_MSPI_MODULE, &QuadDisplayMSPICfg, &g_DisplayHandle, &g_MSPIDisplayHandle);
     if (AM_DEVICES_MSPI_RM69330_STATUS_SUCCESS != ui32Status)
     {
       DEBUG_PRINT("Failed to init Display device\n");
     }
-    
+
     NVIC_EnableIRQ(mspi_display_interrupts[DISPLAY_MSPI_MODULE]);
 
     AM_HAL_GPIO_MASKCREATE(GpioIntMask);
@@ -197,7 +193,7 @@ display_init(void)
     am_hal_interrupt_master_enable();
 
     am_devices_mspi_rm69330_display_on(g_DisplayHandle);
-    
+
     return ui32Status;
 }
 

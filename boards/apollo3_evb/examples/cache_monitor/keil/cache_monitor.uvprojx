@@ -333,9 +333,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>APS6404L AM_PART_APOLLO3 AM_PACKAGE_BGA keil</Define>
+              <Define>AM_PACKAGE_BGA APS6404L AM_PART_APOLLO3 AM_PRINTF_BUFSIZE=256 keil</Define>
               <Undefine></Undefine>
-              <IncludePath>../src;../../../../../utils;../../../../..;../../../../../CMSIS/ARM/Include;../../../../../CMSIS/AmbiqMicro/Include;../../../../../devices;../../../../../mcu/apollo3;../../../bsp</IncludePath>
+              <IncludePath>../../../../../CMSIS/ARM/Include;../../../../../mcu/apollo3;../../../../../utils;../../../../..;../src;../../../bsp;../../../../../CMSIS/AmbiqMicro/Include;../../../../../devices</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -377,22 +377,22 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>src</GroupName>
-          <Files>
-            <File>
-              <FileName>cache_monitor.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../src/cache_monitor.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>prime_mpi_src</GroupName>
           <Files>
             <File>
               <FileName>prime_mpi.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../third_party/prime_mpi/src/prime_mpi.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>src</GroupName>
+          <Files>
+            <File>
+              <FileName>cache_monitor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../src/cache_monitor.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -440,14 +440,14 @@
           <GroupName>lib</GroupName>
           <Files>
             <File>
-              <FileName>libam_hal.lib</FileName>
-              <FileType>4</FileType>
-              <FilePath>../../../../../mcu/apollo3/hal/keil/bin/libam_hal.lib</FilePath>
-            </File>
-            <File>
               <FileName>libam_bsp.lib</FileName>
               <FileType>4</FileType>
               <FilePath>../../../bsp/keil/bin/libam_bsp.lib</FilePath>
+            </File>
+            <File>
+              <FileName>libam_hal.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>../../../../../mcu/apollo3/hal/keil/bin/libam_hal.lib</FilePath>
             </File>
           </Files>
         </Group>

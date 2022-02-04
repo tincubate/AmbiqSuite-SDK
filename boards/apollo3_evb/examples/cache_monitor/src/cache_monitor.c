@@ -16,7 +16,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -48,7 +48,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -281,7 +281,7 @@ XIP_handler(void)
         while(1);
     }
     g_cache_miss = g_IMON[1] - g_IMON[2];
-    g_hit_rate = (float)g_IMON[2] * 100.0 / (float)g_IMON[1];
+    g_hit_rate = (float)g_IMON[2] * 100.0F / (float)g_IMON[1];
     am_util_stdio_printf("*****Iteration%d complete*****\n", g_iteration);
     am_util_stdio_printf("Total fetch number: %d\n", g_IMON[0]);
     am_util_stdio_printf("Look up number: %d\n", g_DMON[1]);
@@ -515,7 +515,7 @@ main(void)
             while(1);
         }
         g_cache_miss = g_DMON[1] - g_DMON[2];
-        g_hit_rate = (float)g_DMON[2] / (float)g_DMON[1] * 100.0;
+        g_hit_rate = (float)g_DMON[2] / (float)g_DMON[1] * 100.0F;
         am_util_stdio_printf("*****Iteration%d complete*****\n", g_iteration);
         am_util_stdio_printf("Total fetch number: %d\n", g_DMON[0]);
         am_util_stdio_printf("Look up number: %d\n", g_DMON[1]);
@@ -559,7 +559,7 @@ main(void)
             while(1);
         }
         g_cache_miss = g_IMON[1] - g_IMON[2];
-        g_hit_rate = (float)g_IMON[2] * 100.0 / (float)g_IMON[1];
+        g_hit_rate = (float)g_IMON[2] * 100.0F / (float)g_IMON[1];
         am_util_stdio_printf("*****Iteration%d complete*****\n", g_iteration);
         am_util_stdio_printf("Total fetch number: %d\n", g_IMON[0]);
         am_util_stdio_printf("Look up number: %d\n", g_DMON[1]);

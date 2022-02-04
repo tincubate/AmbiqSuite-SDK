@@ -333,9 +333,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>SEC_ECC_CFG=SEC_ECC_CFG_UECC WSF_TRACE_ENABLED AM_PACKAGE_BGA AM_FREERTOS AM_PART_APOLLO3 AM_DEBUG_PRINTF keil</Define>
+              <Define>SEC_ECC_CFG=SEC_ECC_CFG_HCI WSF_TRACE_ENABLED AM_DEBUG_PRINTF AM_FREERTOS AM_PACKAGE_BGA AM_PART_APOLLO3 keil</Define>
               <Undefine></Undefine>
-              <IncludePath>../../../../../ambiq_ble/apps/beaconscanner;../../../../../mcu/apollo3;../../../../../third_party/cordio/ble-host/sources/stack/dm;../../../../../utils;../../../../../third_party/cordio/wsf/sources;../../../../../third_party/FreeRTOSv10.1.1/Source/include;../../../../../third_party/cordio/ble-host/sources/stack/l2c;../../../../../third_party/cordio/ble-profiles/sources/apps/app;../../../../../third_party/cordio/ble-host/include;../../../../../third_party/cordio/ble-profiles/sources/profiles/hid;../../../../../third_party/cordio/ble-profiles/sources/profiles/gatt;../../../../../third_party/cordio/wsf/include;../../../../../CMSIS/AmbiqMicro/Include;../../../../../third_party/cordio/ble-host/sources/sec/common;../../../../../devices;../../../../../third_party/cordio/ble-profiles/sources/profiles/fmpl;../../../../../third_party/cordio/ble-host/sources/hci/ambiq/apollo3;../../../../..;../../../../../third_party/cordio/ble-host/sources/stack/smp;../src;../../../../../third_party/FreeRTOSv10.1.1/Source/portable/Keil/AMapollo2;../../../../../third_party/cordio/ble-host/sources/stack/hci;../../../../../third_party/cordio/ble-profiles/sources/profiles/bas;../../../../../third_party/cordio/ble-host/sources/stack/att;../../../../../third_party/cordio/ble-profiles/sources/profiles/wdxs;../../../../../third_party/cordio/ble-profiles/sources/profiles/gap;../../../../../third_party/cordio/wsf/sources/port/freertos;../../../bsp;../../../../../third_party/cordio/ble-profiles/sources/profiles/uribeacon;../../../../../third_party/cordio/ble-profiles/sources/apps;../../../../../third_party/uecc;../../../../../third_party/cordio/ble-host/sources/hci/ambiq;../../../../../third_party/cordio/wsf/sources/util;../../../../../third_party/cordio/ble-profiles/sources/profiles/include;../../../../../third_party/cordio/ble-host/sources/stack/cfg;../../../../../third_party/cordio/ble-profiles/sources/services;../../../../../third_party/cordio/ble-profiles/sources/profiles;../../../../../third_party/cordio/ble-profiles/include/app;../../../../../CMSIS/ARM/Include</IncludePath>
+              <IncludePath>../../../../../third_party/cordio/ble-profiles/include/app;../../../../../third_party/cordio/ble-host/sources/stack/hci;../../../../../third_party/cordio/ble-profiles/sources/profiles/fmpl;../../../../..;../../../../../third_party/cordio/ble-host/sources/stack/cfg;../../../../../third_party/cordio/ble-profiles/sources/profiles/wdxs;../src;../../../../../third_party/cordio/ble-host/sources/stack/dm;../../../../../third_party/cordio/ble-host/sources/stack/att;../../../../../CMSIS/ARM/Include;../../../../../third_party/cordio/ble-profiles/sources/profiles;../../../../../third_party/uecc;../../../../../third_party/cordio/wsf/sources/util;../../../../../third_party/cordio/ble-profiles/sources/profiles/uribeacon;../../../bsp;../../../../../third_party/cordio/ble-host/sources/hci/ambiq/apollo3;../../../../../third_party/cordio/ble-profiles/sources/profiles/gap;../../../../../third_party/cordio/ble-host/include;../../../../../third_party/cordio/ble-profiles/sources/services;../../../../../third_party/cordio/ble-profiles/sources/profiles/gatt;../../../../../utils;../../../../../third_party/cordio/wsf/sources/port/freertos;../../../../../third_party/FreeRTOSv10.1.1/Source/include;../../../../../third_party/cordio/ble-host/sources/sec/common;../../../../../third_party/cordio/wsf/sources;../../../../../third_party/FreeRTOSv10.1.1/Source/portable/Keil/AMapollo2;../../../../../third_party/cordio/ble-profiles/sources/profiles/include;../../../../../mcu/apollo3;../../../../../third_party/cordio/ble-profiles/sources/apps;../../../../../third_party/cordio/ble-profiles/sources/apps/app;../../../../../third_party/cordio/ble-profiles/sources/profiles/hid;../../../../../ambiq_ble/apps/beaconscanner;../../../../../third_party/cordio/wsf/include;../../../../../third_party/cordio/ble-host/sources/stack/l2c;../../../../../third_party/cordio/ble-host/sources/hci/ambiq;../../../../../third_party/cordio/ble-profiles/sources/profiles/bas;../../../../../devices;../../../../../CMSIS/AmbiqMicro/Include;../../../../../third_party/cordio/ble-host/sources/stack/smp</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -377,87 +377,227 @@
       </TargetOption>
       <Groups>
         <Group>
-          <GroupName>beaconscanner</GroupName>
+          <GroupName>cordio_gatt</GroupName>
           <Files>
             <File>
-              <FileName>beaconscanner_main.c</FileName>
+              <FileName>gatt_main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../ambiq_ble/apps/beaconscanner/beaconscanner_main.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/profiles/gatt/gatt_main.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>cordio_smp</GroupName>
+          <GroupName>cordio_hci</GroupName>
           <Files>
             <File>
-              <FileName>smpi_act.c</FileName>
+              <FileName>hci_main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smpi_act.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/hci/hci_main.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>cordio_common</GroupName>
+          <Files>
+            <File>
+              <FileName>app_db.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/app/common/app_db.c</FilePath>
             </File>
             <File>
-              <FileName>smpi_sc_act.c</FileName>
+              <FileName>app_hw.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smpi_sc_act.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/app/common/app_hw.c</FilePath>
             </File>
             <File>
-              <FileName>smpi_sc_sm.c</FileName>
+              <FileName>app_ui.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smpi_sc_sm.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/app/common/app_ui.c</FilePath>
             </File>
             <File>
-              <FileName>smpi_sm.c</FileName>
+              <FileName>ui_console.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smpi_sm.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/app/common/ui_console.c</FilePath>
             </File>
             <File>
-              <FileName>smpr_act.c</FileName>
+              <FileName>ui_lcd.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smpr_act.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/app/common/ui_lcd.c</FilePath>
             </File>
             <File>
-              <FileName>smpr_sc_act.c</FileName>
+              <FileName>ui_main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smpr_sc_act.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/app/common/ui_main.c</FilePath>
             </File>
             <File>
-              <FileName>smpr_sc_sm.c</FileName>
+              <FileName>ui_platform.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smpr_sc_sm.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/app/common/ui_platform.c</FilePath>
             </File>
             <File>
-              <FileName>smpr_sm.c</FileName>
+              <FileName>ui_timer.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smpr_sm.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/app/common/ui_timer.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>cordio_fmpl</GroupName>
+          <Files>
+            <File>
+              <FileName>fmpl_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/profiles/fmpl/fmpl_main.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>cordio_freertos</GroupName>
+          <Files>
+            <File>
+              <FileName>wsf_assert.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_assert.c</FilePath>
             </File>
             <File>
-              <FileName>smp_act.c</FileName>
+              <FileName>wsf_buf.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smp_act.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_buf.c</FilePath>
             </File>
             <File>
-              <FileName>smp_db.c</FileName>
+              <FileName>wsf_efs.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smp_db.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_efs.c</FilePath>
             </File>
             <File>
-              <FileName>smp_main.c</FileName>
+              <FileName>wsf_math.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smp_main.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_math.c</FilePath>
             </File>
             <File>
-              <FileName>smp_non.c</FileName>
+              <FileName>wsf_msg.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smp_non.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_msg.c</FilePath>
             </File>
             <File>
-              <FileName>smp_sc_act.c</FileName>
+              <FileName>wsf_os.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smp_sc_act.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_os.c</FilePath>
             </File>
             <File>
-              <FileName>smp_sc_main.c</FileName>
+              <FileName>wsf_queue.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smp_sc_main.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_queue.c</FilePath>
+            </File>
+            <File>
+              <FileName>wsf_timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>wsf_trace.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_trace.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>cordio_common</GroupName>
+          <Files>
+            <File>
+              <FileName>sec_aes.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/sec/common/sec_aes.c</FilePath>
+            </File>
+            <File>
+              <FileName>sec_aes_rev.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/sec/common/sec_aes_rev.c</FilePath>
+            </File>
+            <File>
+              <FileName>sec_ccm_hci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/sec/common/sec_ccm_hci.c</FilePath>
+            </File>
+            <File>
+              <FileName>sec_cmac_hci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/sec/common/sec_cmac_hci.c</FilePath>
+            </File>
+            <File>
+              <FileName>sec_ecc_debug.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/sec/common/sec_ecc_debug.c</FilePath>
+            </File>
+            <File>
+              <FileName>sec_ecc_hci.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/sec/common/sec_ecc_hci.c</FilePath>
+            </File>
+            <File>
+              <FileName>sec_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/sec/common/sec_main.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>FreeRTOSv10.1.1_AMapollo2</GroupName>
+          <Files>
+            <File>
+              <FileName>port.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/FreeRTOSv10.1.1/Source/portable/Keil/AMapollo2/port.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>cordio_cfg</GroupName>
+          <Files>
+            <File>
+              <FileName>cfg_stack.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/cfg/cfg_stack.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>cordio_uecc</GroupName>
+          <Files>
+            <File>
+              <FileName>sec_ecc.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/sec/uecc/sec_ecc.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>src</GroupName>
+          <Files>
+            <File>
+              <FileName>ble_freertos_beaconscanner.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../src/ble_freertos_beaconscanner.c</FilePath>
+            </File>
+            <File>
+              <FileName>radio_task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../src/radio_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtos.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../src/rtos.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>cordio_hidapp</GroupName>
+          <Files>
+            <File>
+              <FileName>hidapp_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/hidapp/hidapp_main.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -597,46 +737,6 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>src</GroupName>
-          <Files>
-            <File>
-              <FileName>ble_freertos_beaconscanner.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../src/ble_freertos_beaconscanner.c</FilePath>
-            </File>
-            <File>
-              <FileName>radio_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../src/radio_task.c</FilePath>
-            </File>
-            <File>
-              <FileName>rtos.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../src/rtos.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>cordio_hci</GroupName>
-          <Files>
-            <File>
-              <FileName>hci_main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/hci/hci_main.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>cordio_bas</GroupName>
-          <Files>
-            <File>
-              <FileName>bas_main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/profiles/bas/bas_main.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
           <GroupName>cordio_att</GroupName>
           <Files>
             <File>
@@ -727,62 +827,77 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>cordio_gap</GroupName>
+          <GroupName>cordio_hid</GroupName>
           <Files>
             <File>
-              <FileName>gap_main.c</FileName>
+              <FileName>hid_main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/profiles/gap/gap_main.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/profiles/hid/hid_main.c</FilePath>
             </File>
           </Files>
         </Group>
         <Group>
-          <GroupName>cordio_freertos</GroupName>
+          <GroupName>beaconscanner</GroupName>
           <Files>
             <File>
-              <FileName>wsf_assert.c</FileName>
+              <FileName>beaconscanner_main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_assert.c</FilePath>
+              <FilePath>../../../../../ambiq_ble/apps/beaconscanner/beaconscanner_main.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>uecc_uecc</GroupName>
+          <Files>
+            <File>
+              <FileName>uECC.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/uecc/uECC.c</FilePath>
             </File>
             <File>
-              <FileName>wsf_buf.c</FileName>
+              <FileName>uECC_ll.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_buf.c</FilePath>
+              <FilePath>../../../../../third_party/uecc/uECC_ll.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>cordio_util</GroupName>
+          <Files>
+            <File>
+              <FileName>bda.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/wsf/sources/util/bda.c</FilePath>
             </File>
             <File>
-              <FileName>wsf_efs.c</FileName>
+              <FileName>bstream.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_efs.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/wsf/sources/util/bstream.c</FilePath>
             </File>
             <File>
-              <FileName>wsf_math.c</FileName>
+              <FileName>calc128.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_math.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/wsf/sources/util/calc128.c</FilePath>
             </File>
             <File>
-              <FileName>wsf_msg.c</FileName>
+              <FileName>crc32.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_msg.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/wsf/sources/util/crc32.c</FilePath>
             </File>
             <File>
-              <FileName>wsf_os.c</FileName>
+              <FileName>print.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_os.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/wsf/sources/util/print.c</FilePath>
             </File>
             <File>
-              <FileName>wsf_queue.c</FileName>
+              <FileName>terminal.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_queue.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/wsf/sources/util/terminal.c</FilePath>
             </File>
             <File>
-              <FileName>wsf_timer.c</FileName>
+              <FileName>wstr.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_timer.c</FilePath>
-            </File>
-            <File>
-              <FileName>wsf_trace.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/wsf/sources/port/freertos/wsf_trace.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/wsf/sources/util/wstr.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -808,41 +923,6 @@
               <FileName>l2c_slave.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/l2c/l2c_slave.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>cordio_hid</GroupName>
-          <Files>
-            <File>
-              <FileName>hid_main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/profiles/hid/hid_main.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>cordio_gatt</GroupName>
-          <Files>
-            <File>
-              <FileName>gatt_main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/profiles/gatt/gatt_main.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>uecc_uecc</GroupName>
-          <Files>
-            <File>
-              <FileName>uECC.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/uecc/uECC.c</FilePath>
-            </File>
-            <File>
-              <FileName>uECC_ll.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/uecc/uECC_ll.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -902,177 +982,12 @@
           </Files>
         </Group>
         <Group>
-          <GroupName>cordio_uecc</GroupName>
+          <GroupName>cordio_bas</GroupName>
           <Files>
             <File>
-              <FileName>sec_ecc.c</FileName>
+              <FileName>bas_main.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/sec/uecc/sec_ecc.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>cordio_util</GroupName>
-          <Files>
-            <File>
-              <FileName>bda.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/wsf/sources/util/bda.c</FilePath>
-            </File>
-            <File>
-              <FileName>bstream.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/wsf/sources/util/bstream.c</FilePath>
-            </File>
-            <File>
-              <FileName>calc128.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/wsf/sources/util/calc128.c</FilePath>
-            </File>
-            <File>
-              <FileName>crc32.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/wsf/sources/util/crc32.c</FilePath>
-            </File>
-            <File>
-              <FileName>print.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/wsf/sources/util/print.c</FilePath>
-            </File>
-            <File>
-              <FileName>terminal.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/wsf/sources/util/terminal.c</FilePath>
-            </File>
-            <File>
-              <FileName>wstr.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/wsf/sources/util/wstr.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>cordio_common</GroupName>
-          <Files>
-            <File>
-              <FileName>sec_aes.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/sec/common/sec_aes.c</FilePath>
-            </File>
-            <File>
-              <FileName>sec_aes_rev.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/sec/common/sec_aes_rev.c</FilePath>
-            </File>
-            <File>
-              <FileName>sec_ccm_hci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/sec/common/sec_ccm_hci.c</FilePath>
-            </File>
-            <File>
-              <FileName>sec_cmac_hci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/sec/common/sec_cmac_hci.c</FilePath>
-            </File>
-            <File>
-              <FileName>sec_ecc_debug.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/sec/common/sec_ecc_debug.c</FilePath>
-            </File>
-            <File>
-              <FileName>sec_ecc_hci.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/sec/common/sec_ecc_hci.c</FilePath>
-            </File>
-            <File>
-              <FileName>sec_main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/sec/common/sec_main.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>cordio_cfg</GroupName>
-          <Files>
-            <File>
-              <FileName>cfg_stack.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/cfg/cfg_stack.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>cordio_hidapp</GroupName>
-          <Files>
-            <File>
-              <FileName>hidapp_main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/hidapp/hidapp_main.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>cordio_common</GroupName>
-          <Files>
-            <File>
-              <FileName>app_db.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/app/common/app_db.c</FilePath>
-            </File>
-            <File>
-              <FileName>app_hw.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/app/common/app_hw.c</FilePath>
-            </File>
-            <File>
-              <FileName>app_ui.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/app/common/app_ui.c</FilePath>
-            </File>
-            <File>
-              <FileName>ui_console.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/app/common/ui_console.c</FilePath>
-            </File>
-            <File>
-              <FileName>ui_lcd.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/app/common/ui_lcd.c</FilePath>
-            </File>
-            <File>
-              <FileName>ui_main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/app/common/ui_main.c</FilePath>
-            </File>
-            <File>
-              <FileName>ui_platform.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/app/common/ui_platform.c</FilePath>
-            </File>
-            <File>
-              <FileName>ui_timer.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/app/common/ui_timer.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>FreeRTOSv10.1.1_AMapollo2</GroupName>
-          <Files>
-            <File>
-              <FileName>port.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/FreeRTOSv10.1.1/Source/portable/Keil/AMapollo2/port.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>cordio_fmpl</GroupName>
-          <Files>
-            <File>
-              <FileName>fmpl_main.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/profiles/fmpl/fmpl_main.c</FilePath>
+              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/profiles/bas/bas_main.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1088,6 +1003,156 @@
               <FileName>hci_vs_apollo3.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../third_party/cordio/ble-host/sources/hci/ambiq/apollo3/hci_vs_apollo3.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>cordio_gap</GroupName>
+          <Files>
+            <File>
+              <FileName>gap_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-profiles/sources/profiles/gap/gap_main.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>cordio_smp</GroupName>
+          <Files>
+            <File>
+              <FileName>smpi_act.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smpi_act.c</FilePath>
+            </File>
+            <File>
+              <FileName>smpi_sc_act.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smpi_sc_act.c</FilePath>
+            </File>
+            <File>
+              <FileName>smpi_sc_sm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smpi_sc_sm.c</FilePath>
+            </File>
+            <File>
+              <FileName>smpi_sm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smpi_sm.c</FilePath>
+            </File>
+            <File>
+              <FileName>smpr_act.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smpr_act.c</FilePath>
+            </File>
+            <File>
+              <FileName>smpr_sc_act.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smpr_sc_act.c</FilePath>
+            </File>
+            <File>
+              <FileName>smpr_sc_sm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smpr_sc_sm.c</FilePath>
+            </File>
+            <File>
+              <FileName>smpr_sm.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smpr_sm.c</FilePath>
+            </File>
+            <File>
+              <FileName>smp_act.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smp_act.c</FilePath>
+            </File>
+            <File>
+              <FileName>smp_db.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smp_db.c</FilePath>
+            </File>
+            <File>
+              <FileName>smp_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smp_main.c</FilePath>
+            </File>
+            <File>
+              <FileName>smp_non.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smp_non.c</FilePath>
+            </File>
+            <File>
+              <FileName>smp_sc_act.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smp_sc_act.c</FilePath>
+            </File>
+            <File>
+              <FileName>smp_sc_main.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/cordio/ble-host/sources/stack/smp/smp_sc_main.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>FreeRTOSv10.1.1_MemMang</GroupName>
+          <Files>
+            <File>
+              <FileName>heap_2.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/FreeRTOSv10.1.1/Source/portable/MemMang/heap_2.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>FreeRTOSv10.1.1_Source</GroupName>
+          <Files>
+            <File>
+              <FileName>event_groups.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/FreeRTOSv10.1.1/Source/event_groups.c</FilePath>
+            </File>
+            <File>
+              <FileName>list.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/FreeRTOSv10.1.1/Source/list.c</FilePath>
+            </File>
+            <File>
+              <FileName>queue.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/FreeRTOSv10.1.1/Source/queue.c</FilePath>
+            </File>
+            <File>
+              <FileName>tasks.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/FreeRTOSv10.1.1/Source/tasks.c</FilePath>
+            </File>
+            <File>
+              <FileName>timers.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../third_party/FreeRTOSv10.1.1/Source/timers.c</FilePath>
+            </File>
+          </Files>
+        </Group>
+        <Group>
+          <GroupName>utils</GroupName>
+          <Files>
+            <File>
+              <FileName>am_util_ble.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../utils/am_util_ble.c</FilePath>
+            </File>
+            <File>
+              <FileName>am_util_delay.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../utils/am_util_delay.c</FilePath>
+            </File>
+            <File>
+              <FileName>am_util_faultisr.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../utils/am_util_faultisr.c</FilePath>
+            </File>
+            <File>
+              <FileName>am_util_stdio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>../../../../../utils/am_util_stdio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1143,41 +1208,6 @@
               <FileName>app_terminal.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../third_party/cordio/ble-profiles/sources/apps/app/app_terminal.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>FreeRTOSv10.1.1_MemMang</GroupName>
-          <Files>
-            <File>
-              <FileName>heap_2.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/FreeRTOSv10.1.1/Source/portable/MemMang/heap_2.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>utils</GroupName>
-          <Files>
-            <File>
-              <FileName>am_util_ble.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../utils/am_util_ble.c</FilePath>
-            </File>
-            <File>
-              <FileName>am_util_delay.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../utils/am_util_delay.c</FilePath>
-            </File>
-            <File>
-              <FileName>am_util_faultisr.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../utils/am_util_faultisr.c</FilePath>
-            </File>
-            <File>
-              <FileName>am_util_stdio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../utils/am_util_stdio.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1313,36 +1343,6 @@
               <FileName>svc_wss.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../../../third_party/cordio/ble-profiles/sources/services/svc_wss.c</FilePath>
-            </File>
-          </Files>
-        </Group>
-        <Group>
-          <GroupName>FreeRTOSv10.1.1_Source</GroupName>
-          <Files>
-            <File>
-              <FileName>event_groups.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/FreeRTOSv10.1.1/Source/event_groups.c</FilePath>
-            </File>
-            <File>
-              <FileName>list.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/FreeRTOSv10.1.1/Source/list.c</FilePath>
-            </File>
-            <File>
-              <FileName>queue.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/FreeRTOSv10.1.1/Source/queue.c</FilePath>
-            </File>
-            <File>
-              <FileName>tasks.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/FreeRTOSv10.1.1/Source/tasks.c</FilePath>
-            </File>
-            <File>
-              <FileName>timers.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>../../../../../third_party/FreeRTOSv10.1.1/Source/timers.c</FilePath>
             </File>
           </Files>
         </Group>

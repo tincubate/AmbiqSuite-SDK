@@ -13,7 +13,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -175,10 +175,10 @@ am_hal_stimer_counter_clear(void)
 //!       Only deltas added to the STimer counter can be written to the compare
 //!       registers.
 //!
-//! @return None.
+//! @return 0 on success.
 //
 //*****************************************************************************
-void
+uint32_t
 am_hal_stimer_compare_delta_set(uint32_t ui32CmprInstance, uint32_t ui32Delta)
 {
     uint32_t cfgVal;
@@ -186,7 +186,7 @@ am_hal_stimer_compare_delta_set(uint32_t ui32CmprInstance, uint32_t ui32Delta)
 
     if ( ui32CmprInstance > 7 )
     {
-        return;
+        return AM_HAL_STATUS_OUT_OF_RANGE;
     }
 
     // We need to disable the compare temporarily while setting the delta value
@@ -219,7 +219,7 @@ am_hal_stimer_compare_delta_set(uint32_t ui32CmprInstance, uint32_t ui32Delta)
         uint32_t cmpVal;
 
         // Expected value
-        expVal = CTIMER->STTMR + ui32Delta;
+        expVal = am_hal_stimer_counter_get() + ui32Delta;
 
         // Max allowed - taking care of latency
         expMax = expVal + 10;
@@ -239,7 +239,6 @@ am_hal_stimer_compare_delta_set(uint32_t ui32CmprInstance, uint32_t ui32Delta)
         }
     }
 
-
     //
     // Restore Compare Enable bit
     //
@@ -249,6 +248,12 @@ am_hal_stimer_compare_delta_set(uint32_t ui32CmprInstance, uint32_t ui32Delta)
     // End the critical section.
     //
     AM_CRITICAL_END
+    if (numTries >= 4)
+    {
+        // Could not set delta correctly!!
+        return AM_HAL_STATUS_FAIL;
+    }
+    return AM_HAL_STATUS_SUCCESS;
 }
 
 //*****************************************************************************

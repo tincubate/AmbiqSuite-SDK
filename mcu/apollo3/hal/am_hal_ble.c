@@ -12,7 +12,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -44,7 +44,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -1524,7 +1524,6 @@ am_hal_ble_blocking_hci_read(void *pHandle, uint32_t *pui32Data, uint32_t *pui32
         //
         // Check if the length is not out of the boundary
         //
-        // Fixme: it is assumed here all the sizes of the buffer are 256
         if ( (HciRead.ui16Length == 0) || (HciRead.ui16Length > 256) )
         {
             return AM_HAL_STATUS_OUT_OF_RANGE;
@@ -1705,37 +1704,6 @@ am_hal_ble_check_irq(am_hal_ble_state_t *pBle)
 
     return false;
 } // am_hal_ble_check_irq()
-
-//*****************************************************************************
-//
-// Return true if we recently received a BSTATUS edge.
-//
-//*****************************************************************************
-static bool
-am_hal_ble_check_status_edge(am_hal_ble_state_t *pBle)
-{
-    //
-    // We need to make a special exception for "continue" packets, since the
-    // BLE radio may deassert the STATUS signal mid-packet.
-    //
-    if (pBle->bContinuePacket)
-    {
-        pBle->bContinuePacket = false;
-        return true;
-    }
-
-    if (pBle->bPatchComplete == false)
-    {
-        return am_hal_ble_check_status(pBle);
-    }
-
-    if ( BLEIFn(0)->INTSTAT_b.BLECSSTAT == 0)
-    {
-        return false;
-    }
-
-    return true;
-} // am_hal_ble_check_status_edge()
 
 //*****************************************************************************
 //
@@ -1999,7 +1967,7 @@ am_hal_ble_blocking_transfer(void *pHandle, am_hal_ble_transfer_t *psTransfer)
     //
     // End the critical section.
     //
-    AM_CRITICAL_END; //fixme moved further down to cover am_hal_ble_bus_release();
+    AM_CRITICAL_END;
 
     //
     // Wait for the transaction to complete, and clear out any interrupts that
@@ -2041,10 +2009,6 @@ am_hal_ble_blocking_transfer(void *pHandle, am_hal_ble_transfer_t *psTransfer)
     //
     am_hal_ble_bus_release(pBle);
 
-    //
-    // End the critical section.
-    //
-    // AM_CRITICAL_END;  //fixme moved further down to cover am_hal_ble_bus_release();
 
     //
     // Return the status.
@@ -3105,7 +3069,7 @@ am_hal_ble_sleep_get(void *pHandle)
 //
 // set the tx power of BLE
 // values.
-// ui32TxPower: 0x03->-20dBm 0x04->-10dBm 0x05->-5dBm 0x08->0dBm 0x0F->3dBm
+// ui32TxPower: 0x04->-10dBm 0x05->-5dBm 0x08->0dBm 0x0F->3dBm
 //
 //*****************************************************************************
 uint32_t

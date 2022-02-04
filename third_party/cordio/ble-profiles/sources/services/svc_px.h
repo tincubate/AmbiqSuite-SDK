@@ -42,7 +42,7 @@ extern "C" {
  *
  */
 /**@{*/
-#define PX_START_HDL                      0x50             /*!< \brief Start handle. */
+#define PX_START_HDL                      0x0180           /*!< \brief Start handle. */
 #define PX_END_HDL                        (PX_MAX_HDL - 1) /*!< \brief End handle. */
 
 /**************************************************************************************************

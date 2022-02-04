@@ -14,7 +14,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -46,7 +46,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -83,7 +83,7 @@ const am_hal_version_t g_ui32HALversion =
 //*****************************************************************************
 #if (defined (__ARMCC_VERSION)) && (__ARMCC_VERSION < 6000000)
 __asm void
-am_hal_triple_read( uint32_t u32TimerAddr, uint32_t ui32Data[])
+am_hal_triple_read( uint32_t ui32TimerAddr, uint32_t ui32Data[])
 {
     push    {r1, r4}                // Save r1=ui32Data, r4
     mrs     r4, PRIMASK             // Save current interrupt state
@@ -100,7 +100,7 @@ am_hal_triple_read( uint32_t u32TimerAddr, uint32_t ui32Data[])
 }
 #elif (defined (__ARMCC_VERSION)) && (__ARMCC_VERSION >= 6000000)
 void
-am_hal_triple_read(uint32_t u32TimerAddr, uint32_t ui32Data[])
+am_hal_triple_read(uint32_t ui32TimerAddr, uint32_t ui32Data[])
 {
   __asm (
     " push  {R1, R4}\n"
@@ -116,15 +116,15 @@ am_hal_triple_read(uint32_t u32TimerAddr, uint32_t ui32Data[])
     " str   R2, [R0, #4]\n"
     " str   R3, [R0, #8]\n"
     :
-    : [u32TimerAddr] "r" (u32TimerAddr),
-      [u32Data] "r" (&u32Data[0])
+    : [ui32TimerAddr] "r" (ui32TimerAddr),
+      [ui32Data] "r" (&ui32Data[0])
     : "r0", "r1", "r2", "r3", "r4"
   );
 }
 #elif defined(__GNUC_STDC_INLINE__)
 __attribute__((naked))
 void
-am_hal_triple_read(uint32_t u32TimerAddr, uint32_t ui32Data[])
+am_hal_triple_read(uint32_t ui32TimerAddr, uint32_t ui32Data[])
 {
     __asm
     (
@@ -146,7 +146,7 @@ am_hal_triple_read(uint32_t u32TimerAddr, uint32_t ui32Data[])
 #pragma diag_suppress = Pe940   // Suppress IAR compiler warning about missing
                                 // return statement on a non-void function
 __stackless void
-am_hal_triple_read( uint32_t u32TimerAddr, uint32_t ui32Data[])
+am_hal_triple_read( uint32_t ui32TimerAddr, uint32_t ui32Data[])
 {
     __asm(" push    {r1, r4}    ");         // Save r1=ui32Data, r4
     __asm(" mrs     r4, PRIMASK ");         // Save current interrupt state

@@ -52,7 +52,7 @@ extern "C" {
  *
  */
 /**@{*/
-#define GLS_START_HDL               0xF0              /*!< \brief Start handle. */
+#define GLS_START_HDL               0x0100            /*!< \brief Start handle. */
 #define GLS_END_HDL                 (GLS_MAX_HDL - 1) /*!< \brief End handle. */
 
 /**************************************************************************************************

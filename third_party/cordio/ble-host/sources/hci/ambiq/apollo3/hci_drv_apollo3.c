@@ -8,7 +8,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -483,7 +483,7 @@ HciDrvRadioBoot(bool bColdBoot)
     //
     // Set the BLE TX Output power to 0dBm.
     //
-    am_hal_ble_tx_power_set(BLE, 0x8);
+    am_hal_ble_tx_power_set(BLE, TX_POWER_LEVEL_0P0_dBm);
 
     //
     // Enable interrupts for the BLE module.
@@ -1270,17 +1270,18 @@ HciDrvErrorHandlerSet(hci_drv_error_handler_t pfnErrorHandler)
  *          for Nationz.
  *
  *  \param  txPowerlevel    valid range from 0 to 15 in decimal.
+ *  Note: The Tx power will be linear if txPowerlevel is between 4-15, so we strongly recommend not
+ *        to set txPowerlevel below 4.
  *
  *  \return true when success, otherwise false
  */
 /*************************************************************************************************/
-static const uint8_t ui8TxPowerRegValues[TX_POWER_LEVEL_MAX_VAL] = {0x04, 0x08, 0x0F};
 bool_t
 HciVscSetRfPowerLevelEx(txPowerLevel_t txPowerlevel)
 {
-    if(txPowerlevel < TX_POWER_LEVEL_MAX_VAL)
+    if(txPowerlevel < TX_POWER_LEVEL_INVALID)
     {
-        am_hal_ble_tx_power_set(BLE, (uint8_t)ui8TxPowerRegValues[txPowerlevel]);
+        am_hal_ble_tx_power_set(BLE, (uint8_t)txPowerlevel);
         return true;
     }
     else

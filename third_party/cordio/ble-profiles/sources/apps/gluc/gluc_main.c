@@ -243,8 +243,8 @@ static void glucSetup(dmEvt_t *pMsg)
   AppAdvSetData(APP_SCAN_DATA_DISCOVERABLE, sizeof(glucScanDataDisc), (uint8_t *) glucScanDataDisc);
 
   /* set advertising and scan response data for connectable mode */
-  AppAdvSetData(APP_ADV_DATA_CONNECTABLE, 0, NULL);
-  AppAdvSetData(APP_SCAN_DATA_CONNECTABLE, 0, NULL);
+  AppAdvSetData(APP_ADV_DATA_CONNECTABLE, sizeof(glucAdvDataDisc), (uint8_t *) glucAdvDataDisc);
+  AppAdvSetData(APP_SCAN_DATA_CONNECTABLE, sizeof(glucScanDataDisc), (uint8_t *) glucScanDataDisc);
 
   /* start advertising; automatically set connectable/discoverable mode and bondable mode */
   AppAdvStart(APP_MODE_AUTO_INIT);

@@ -38,10 +38,10 @@ extern "C" {
  *
  *  \param  pData  Buffer containing HCI command to send or NULL.
  *
- *  \return None.
+ *  \return TRUE if any new or pending hci command sent successfully.
  */
 /*************************************************************************************************/
-void hciCmdSend(uint8_t *pData);
+bool_t hciCmdSend(uint8_t *pData);
 
 /*************************************************************************************************/
 /*!
@@ -86,6 +86,16 @@ void hciCmdTimeout(wsfMsgHdr_t *pMsg);
 /*************************************************************************************************/
 void hciCmdRecvCmpl(uint8_t numCmdPkts);
 
+/*************************************************************************************************/
+/*!
+ *  \fn     hciClearCmdQueue
+ *
+ *  \brief  Clears the command queue
+ *
+ *  \return None.
+ */
+/*************************************************************************************************/
+void hciClearCmdQueue(void);
 
 
 #ifdef __cplusplus

@@ -13,7 +13,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -45,7 +45,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -69,6 +69,34 @@
 //
 //*****************************************************************************
 bool g_bSimobuckTrimsDone = false;
+
+//
+//    Mask of HCPA Enables from the PWRCTRL->DEVPWRSTATUS register mapped to the
+//        PWRCTRL->DEVPWREN register
+//
+#define HCPA_MASK       ( \
+    _VAL2FLD(PWRCTRL_DEVPWREN_PWRIOS, PWRCTRL_DEVPWREN_PWRIOS_EN) | \
+    _VAL2FLD(PWRCTRL_DEVPWREN_PWRUART0, PWRCTRL_DEVPWREN_PWRUART0_EN) | \
+    _VAL2FLD(PWRCTRL_DEVPWREN_PWRUART1, PWRCTRL_DEVPWREN_PWRUART1_EN) | \
+    _VAL2FLD(PWRCTRL_DEVPWREN_PWRSCARD, PWRCTRL_DEVPWREN_PWRSCARD_EN))
+
+//
+//    Mask of HCPB Enables from the PWRCTRL->DEVPWRSTATUS register mapped to the
+//        PWRCTRL->DEVPWREN register
+//
+#define HCPB_MASK       ( \
+    _VAL2FLD(PWRCTRL_DEVPWREN_PWRIOM0, PWRCTRL_DEVPWREN_PWRIOM0_EN) | \
+    _VAL2FLD(PWRCTRL_DEVPWREN_PWRIOM1, PWRCTRL_DEVPWREN_PWRIOM1_EN) | \
+    _VAL2FLD(PWRCTRL_DEVPWREN_PWRIOM2, PWRCTRL_DEVPWREN_PWRIOM2_EN))
+
+//
+//    Mask of HCPC Enables from the PWRCTRL->DEVPWRSTATUS register mapped to the
+//        PWRCTRL->DEVPWREN register
+//
+#define HCPC_MASK       ( \
+    _VAL2FLD(PWRCTRL_DEVPWREN_PWRIOM3, PWRCTRL_DEVPWREN_PWRIOM3_EN) | \
+    _VAL2FLD(PWRCTRL_DEVPWREN_PWRIOM4, PWRCTRL_DEVPWREN_PWRIOM4_EN) | \
+    _VAL2FLD(PWRCTRL_DEVPWREN_PWRIOM5, PWRCTRL_DEVPWREN_PWRIOM5_EN))
 
 //
 // Define the peripheral control structure.
@@ -267,7 +295,7 @@ am_hal_pwrctrl_periph_enable(am_hal_pwrctrl_periph_e ePeripheral)
     {
         am_hal_flash_delay(FLASH_CYCLES_US(10));
 
-        if ( (PWRCTRL->DEVPWRSTATUS & am_hal_pwrctrl_peripheral_control[ePeripheral].ui32PeriphStatus) > 0)
+        if ((PWRCTRL->DEVPWRSTATUS & am_hal_pwrctrl_peripheral_control[ePeripheral].ui32PeriphStatus) > 0)
         {
             break;
         }
@@ -276,16 +304,67 @@ am_hal_pwrctrl_periph_enable(am_hal_pwrctrl_periph_e ePeripheral)
     //
     // Check the device status.
     //
-    if ( (PWRCTRL->DEVPWRSTATUS & am_hal_pwrctrl_peripheral_control[ePeripheral].ui32PeriphStatus) > 0 )
+    if ((PWRCTRL->DEVPWRSTATUS & am_hal_pwrctrl_peripheral_control[ePeripheral].ui32PeriphStatus) > 0)
     {
         return AM_HAL_STATUS_SUCCESS;
     }
     else
     {
+        //
+        // IF the Power Enable fails, make sure the DEVPWREN is Low
+        //
+        AM_CRITICAL_BEGIN
+        PWRCTRL->DEVPWREN &= ~am_hal_pwrctrl_peripheral_control[ePeripheral].ui32PeriphEnable;
+        AM_CRITICAL_END
+
         return AM_HAL_STATUS_FAIL;
     }
 
 } // am_hal_pwrctrl_periph_enable()
+
+// ****************************************************************************
+//
+//  am_hal_pwrctrl_periph_disable_msk_check()
+//  Function checks the PWRCTRL->DEVPWREN since the PWRCTRL->DEVPWRSTATUS
+//        register alone cannot tell the user if a peripheral is enabled when
+//        and HCPx register is being used.
+//
+// ****************************************************************************
+static uint32_t
+pwrctrl_periph_disable_msk_check(am_hal_pwrctrl_periph_e ePeripheral)
+{
+    uint32_t retVal = AM_HAL_STATUS_FAIL;
+    uint32_t HCPxMask = PWRCTRL->DEVPWREN;
+
+    switch (am_hal_pwrctrl_peripheral_control[ePeripheral].ui32PeriphStatus)
+    {
+        case (PWRCTRL_DEVPWRSTATUS_HCPA_Msk):
+            if (((HCPxMask & HCPA_MASK) > 0) && ((HCPxMask & am_hal_pwrctrl_peripheral_control[ePeripheral].ui32PeriphEnable) == 0))
+            {
+                retVal = AM_HAL_STATUS_SUCCESS;
+            }
+            break;
+
+        case (PWRCTRL_DEVPWRSTATUS_HCPB_Msk):
+            if (((HCPxMask & HCPB_MASK) > 0) && ((HCPxMask & am_hal_pwrctrl_peripheral_control[ePeripheral].ui32PeriphEnable) == 0))
+            {
+                retVal = AM_HAL_STATUS_SUCCESS;
+            }
+            break;
+
+        case (PWRCTRL_DEVPWRSTATUS_HCPC_Msk):
+            if (((HCPxMask & HCPC_MASK) > 0) && ((HCPxMask & am_hal_pwrctrl_peripheral_control[ePeripheral].ui32PeriphEnable) == 0))
+            {
+                retVal = AM_HAL_STATUS_SUCCESS;
+            }
+            break;
+
+        default:
+            break;
+    }
+
+    return retVal;
+}
 
 // ****************************************************************************
 //
@@ -307,7 +386,7 @@ am_hal_pwrctrl_periph_disable(am_hal_pwrctrl_periph_e ePeripheral)
     {
         am_hal_flash_delay(FLASH_CYCLES_US(10));
 
-        if ( (PWRCTRL->DEVPWRSTATUS & am_hal_pwrctrl_peripheral_control[ePeripheral].ui32PeriphStatus) == 0 )
+        if ((PWRCTRL->DEVPWRSTATUS & am_hal_pwrctrl_peripheral_control[ePeripheral].ui32PeriphStatus) == 0)
         {
             break;
         }
@@ -316,81 +395,40 @@ am_hal_pwrctrl_periph_disable(am_hal_pwrctrl_periph_e ePeripheral)
     //
     // Check the device status.
     //
-    if ( ( PWRCTRL->DEVPWRSTATUS & am_hal_pwrctrl_peripheral_control[ePeripheral].ui32PeriphStatus) == 0 )
+    if ((PWRCTRL->DEVPWRSTATUS & am_hal_pwrctrl_peripheral_control[ePeripheral].ui32PeriphStatus) == 0)
     {
         return AM_HAL_STATUS_SUCCESS;
     }
     else
     {
-        return AM_HAL_STATUS_FAIL;
+        return pwrctrl_periph_disable_msk_check(ePeripheral);
     }
 
 } // am_hal_pwrctrl_periph_disable()
 
 //*****************************************************************************
 //
-//! @brief Determine whether a peripheral is currently enabled.
-//!
-//! @param ePeripheral - The peripheral to enable.
-//! @param pui32Enabled - Pointer to a ui32 that will return as 1 or 0.
-//!
-//! This function determines to the caller whether a given peripheral is
-//! currently enabled or disabled.
-//!
-//! @return status - generic or interface specific status.
+// am_hal_pwrctrl_periph_enabled()
+// This function determines to the caller whether a given peripheral is
+// currently enabled or disabled.
 //
 //*****************************************************************************
 uint32_t
 am_hal_pwrctrl_periph_enabled(am_hal_pwrctrl_periph_e ePeripheral,
                               uint32_t *pui32Enabled)
 {
-    uint32_t ui32Mask = 0;
+    uint32_t ui32Mask = am_hal_pwrctrl_peripheral_control[ePeripheral].ui32PeriphStatus;
     uint32_t ui32Enabled = 0;
 
-    if ( pui32Enabled == NULL )
+    if (pui32Enabled == NULL)
     {
         return AM_HAL_STATUS_INVALID_ARG;
     }
 
-    switch ( ePeripheral )
-    {
-        case AM_HAL_PWRCTRL_PERIPH_NONE:
-        case AM_HAL_PWRCTRL_PERIPH_SCARD:
-            break;
-        case AM_HAL_PWRCTRL_PERIPH_IOS:
-        case AM_HAL_PWRCTRL_PERIPH_UART0:
-        case AM_HAL_PWRCTRL_PERIPH_UART1:
-            ui32Mask = PWRCTRL_DEVPWRSTATUS_HCPA_Msk;
-            break;
-        case AM_HAL_PWRCTRL_PERIPH_IOM0:
-        case AM_HAL_PWRCTRL_PERIPH_IOM1:
-        case AM_HAL_PWRCTRL_PERIPH_IOM2:
-            ui32Mask = PWRCTRL_DEVPWRSTATUS_HCPB_Msk;
-            break;
-        case AM_HAL_PWRCTRL_PERIPH_IOM3:
-        case AM_HAL_PWRCTRL_PERIPH_IOM4:
-        case AM_HAL_PWRCTRL_PERIPH_IOM5:
-            ui32Mask = PWRCTRL_DEVPWRSTATUS_HCPC_Msk;
-            break;
-        case AM_HAL_PWRCTRL_PERIPH_ADC:
-            ui32Mask = PWRCTRL_DEVPWRSTATUS_PWRADC_Msk;
-            break;
-        case AM_HAL_PWRCTRL_PERIPH_MSPI:
-            ui32Mask = PWRCTRL_DEVPWRSTATUS_PWRMSPI_Msk;
-            break;
-        case AM_HAL_PWRCTRL_PERIPH_PDM:
-            ui32Mask = PWRCTRL_DEVPWRSTATUS_PWRPDM_Msk;
-            break;
-        case AM_HAL_PWRCTRL_PERIPH_BLEL:
-            ui32Mask = PWRCTRL_DEVPWRSTATUS_BLEL_Msk;
-            break;
-        default:
-            return AM_HAL_STATUS_FAIL;
-    }
-
-    if ( ui32Mask != 0 )
+    if (ui32Mask != 0)
     {
         ui32Enabled = PWRCTRL->DEVPWRSTATUS & ui32Mask ? 1 : 0;
+        ui32Enabled = ui32Enabled && (PWRCTRL->DEVPWREN & am_hal_pwrctrl_peripheral_control[ePeripheral].ui32PeriphEnable);
     }
 
     *pui32Enabled = ui32Enabled;

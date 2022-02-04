@@ -8,7 +8,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 #ifndef SVC_THROUGHPUT_H
@@ -75,28 +75,33 @@ extern "C"
 
 /*! Partial throughput tx characteristic UUIDs */
 #define ATT_UUID_THROUGHPUT_TX_PART          0x5402
+/*! Partial throughput connection update characteristic UUIDs */
+#define ATT_UUID_THROUGHPUT_CON_UPT_PART     0x5403
 
-/* Amota services */
+/* Throughput services */
 #define ATT_UUID_THROUGHPUT_SERVICE          ATT_UUID_AMBIQ_BUILD(ATT_UUID_THROUGHPUT_SERVICE_PART)
 
-/* Amota characteristics */
+/* Throughput characteristics */
 #define ATT_UUID_THROUGHPUT_RX               ATT_UUID_AMBIQ_BUILD(ATT_UUID_THROUGHPUT_RX_PART)
 #define ATT_UUID_THROUGHPUT_TX               ATT_UUID_AMBIQ_BUILD(ATT_UUID_THROUGHPUT_TX_PART)
-
+#define ATT_UUID_THROUGHPUT_CON_UPT          ATT_UUID_AMBIQ_BUILD(ATT_UUID_THROUGHPUT_CON_UPT_PART)
 // throughput Service
-#define THROUGHPUT_START_HDL               0x300
+#define THROUGHPUT_START_HDL               0x0840
 #define THROUGHPUT_END_HDL                 (THROUGHPUT_MAX_HDL - 1)
 
 
 /* Throughput Service Handles */
 enum
 {
-  THROUGHPUT_SVC_HDL = THROUGHPUT_START_HDL,     /* THROUGHPUT service declaration */
-  THROUGHPUT_RX_CH_HDL,                     /* THROUGHPUT write command characteristic */ 
-  THROUGHPUT_RX_HDL,                        /* THROUGHPUT write command data */
-  THROUGHPUT_TX_CH_HDL,                     /* THROUGHPUT notify characteristic */ 
-  THROUGHPUT_TX_HDL,                        /* THROUGHPUT notify data */
-  THROUGHPUT_TX_CH_CCC_HDL,                 /* THROUGHPUT notify client characteristic configuration */
+  THROUGHPUT_SVC_HDL = THROUGHPUT_START_HDL,     /* Throughput service declaration */
+  THROUGHPUT_RX_CH_HDL,                     /* Throughput write command characteristic */
+  THROUGHPUT_RX_HDL,                        /* Throughput write command data */
+  THROUGHPUT_TX_CH_HDL,                     /* Throughput notify characteristic */
+  THROUGHPUT_TX_HDL,                        /* Throughput notify data */
+  THROUGHPUT_TX_CH_CCC_HDL,                 /* Throughput notify client characteristic configuration */
+  THROUGHPUT_CON_UPT_CH_HDL,                 /* Throughput connection update characteristic*/
+  THROUGHPUT_CON_UPT_HDL,                    /* Throughput connection update data*/
+  THROUGHPUT_CON_UPT_CCC_HDL,                /* Throughput connection update data notify client characteristic configuration */
   THROUGHPUT_MAX_HDL
 };
 

@@ -2,7 +2,7 @@
 #
 # Makefile - Rules for building the libraries, examples and docs.
 #
-# Copyright (c) 2020, Ambiq Micro, Inc.
+# Copyright (c) 2021, Ambiq Micro, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+# This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 #
 #******************************************************************************
 TARGET := uart_ble_bridge
@@ -82,22 +82,22 @@ all clean:
 else
 
 DEFINES = -DPART_$(PART)
-DEFINES+= -DAM_PACKAGE_BGA
 DEFINES+= -DAM_PART_APOLLO3P
+DEFINES+= -DAM_PACKAGE_BGA
 DEFINES+= -Dgcc
 
-INCLUDES = -I../../../../../CMSIS/ARM/Include
-INCLUDES+= -I../../../../../mcu/apollo3p
-INCLUDES+= -I../../../../..
+INCLUDES = -I../../../../../CMSIS/AmbiqMicro/Include
+INCLUDES+= -I../../../../../CMSIS/ARM/Include
 INCLUDES+= -I../../../bsp
 INCLUDES+= -I../../../../../devices
-INCLUDES+= -I../../../../../utils
 INCLUDES+= -I../src
-INCLUDES+= -I../../../../../CMSIS/AmbiqMicro/Include
+INCLUDES+= -I../../../../../mcu/apollo3p
+INCLUDES+= -I../../../../../utils
+INCLUDES+= -I../../../../..
 
-VPATH = ../../../../../devices
+VPATH = ../src
 VPATH+=:../../../../../utils
-VPATH+=:../src
+VPATH+=:../../../../../devices
 
 SRC = uart_ble_bridge.c
 SRC += am_util_ble.c

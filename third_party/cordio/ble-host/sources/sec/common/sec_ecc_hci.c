@@ -79,11 +79,18 @@ void SecEccHciCback(secQueueBuf_t *pBuf, hciEvt_t *pEvent, wsfHandlerId_t handle
   }
   else if (pEvent->hdr.event == HCI_LE_GENERATE_DHKEY_CMPL_CBACK_EVT)
   {
-    /* Reverse copy the DH key (to big endian) */
-    WStrReverseCpy(pMsg->data.sharedSecret.secret, pEvent->leGenDHKey.key, SEC_ECC_KEY_LEN);
+    if(pEvent->hdr.status == HCI_ERR_INVALID_PARAM)
+    {
+        pMsg->hdr.status = HCI_ERR_INVALID_PARAM;
+    }
+    else
+    {
+        /* Reverse copy the DH key (to big endian) */
+        WStrReverseCpy(pMsg->data.sharedSecret.secret, pEvent->leGenDHKey.key, SEC_ECC_KEY_LEN);
 
-    /* Send shared secret to handler */
-    pMsg->hdr.status = pEvent->leGenDHKey.status;
+        /* Send shared secret to handler */
+        pMsg->hdr.status = pEvent->leGenDHKey.status;
+    }
     WsfMsgSend(handlerId, pMsg);
   }
 }

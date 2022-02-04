@@ -18,7 +18,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -50,7 +50,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 #ifndef AM_UTIL_STDIO_H
@@ -71,7 +71,7 @@ extern "C"
 
 // buffer size for printf
 #ifndef AM_PRINTF_BUFSIZE
-#define AM_PRINTF_BUFSIZE       256   // Global printf buffer size
+#define AM_PRINTF_BUFSIZE       1024   // Global printf buffer size
 #endif
 
 typedef void (*am_util_stdio_print_char_t)(char *pcStr);
@@ -84,9 +84,12 @@ typedef void (*am_util_stdio_print_char_t)(char *pcStr);
 extern void am_util_stdio_printf_init(am_util_stdio_print_char_t pfnCharPrint);
 extern uint32_t am_util_stdio_strtoul(const char *str, char **endptr, int base);
 extern bool am_util_stdio_textmode_set(bool bSetTextTranslationMode);
+extern uint32_t am_util_stdio_vprintf(const char *pcFmt, va_list pArgs);
 extern uint32_t am_util_stdio_vsprintf(char *pcBuf, const char *pcFmt, va_list pArgs);
-extern uint32_t am_util_stdio_sprintf(char *pui8Buf, const char *pui8Fmt, ...);
+extern uint32_t am_util_stdio_vsnprintf(char *pcBuf, uint32_t n, const char *pcFmt, va_list pArgs);
 extern uint32_t am_util_stdio_printf(const char *pui8Fmt, ...);
+extern uint32_t am_util_stdio_sprintf(char *pui8Buf, const char *pui8Fmt, ...);
+extern uint32_t am_util_stdio_snprintf(char *pcBuf, uint32_t n, const char *pcFmt, ...);
 extern void am_util_stdio_terminal_clear(void);
 
 #ifdef __cplusplus

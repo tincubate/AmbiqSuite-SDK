@@ -2,7 +2,7 @@
 #
 # Makefile - Rules for building the libraries, examples and docs.
 #
-# Copyright (c) 2020, Ambiq Micro, Inc.
+# Copyright (c) 2021, Ambiq Micro, Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@
 # ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 #
-# This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+# This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 #
 #******************************************************************************
 TARGET := freertos_mspi_display
@@ -82,52 +82,52 @@ all clean:
 else
 
 DEFINES = -DPART_$(PART)
-DEFINES+= -DAM_PACKAGE_BGA
 DEFINES+= -DAM_FREERTOS
+DEFINES+= -DAM_UTIL_FAULTISR_PRINT
 DEFINES+= -DAM_PART_APOLLO3P
 DEFINES+= -DAM_DEBUG_PRINTF
-DEFINES+= -DAM_UTIL_FAULTISR_PRINT
+DEFINES+= -DAM_PACKAGE_BGA
 DEFINES+= -Dgcc
 
-INCLUDES = -I../../../../../mcu/apollo3p
-INCLUDES+= -I../../../bsp
-INCLUDES+= -I../../../../../devices
-INCLUDES+= -I../../../../../utils
-INCLUDES+= -I../src
+INCLUDES = -I../../../../..
 INCLUDES+= -I../../../../../CMSIS/AmbiqMicro/Include
-INCLUDES+= -I../../../../..
 INCLUDES+= -I../../../../../CMSIS/ARM/Include
-INCLUDES+= -I../../../../../third_party/FreeRTOSv10.1.1/Source/include
+INCLUDES+= -I../../../../../mcu/apollo3p
+INCLUDES+= -I../../../../../utils
 INCLUDES+= -I../../../../../third_party/FreeRTOSv10.1.1/Source/portable/GCC/AMapollo2
+INCLUDES+= -I../../../../../devices
+INCLUDES+= -I../../../bsp
+INCLUDES+= -I../src
+INCLUDES+= -I../../../../../third_party/FreeRTOSv10.1.1/Source/include
 
-VPATH = ../../../../../third_party/FreeRTOSv10.1.1/Source
+VPATH = ../../../../../devices
 VPATH+=:../src/image
-VPATH+=:../../../../../devices
-VPATH+=:../../../../../utils
+VPATH+=:../../../../../third_party/FreeRTOSv10.1.1/Source
 VPATH+=:../src
-VPATH+=:../../../../../third_party/FreeRTOSv10.1.1/Source/portable/GCC/AMapollo2
+VPATH+=:../../../../../utils
 VPATH+=:../../../../../third_party/FreeRTOSv10.1.1/Source/portable/MemMang
+VPATH+=:../../../../../third_party/FreeRTOSv10.1.1/Source/portable/GCC/AMapollo2
 
-SRC = freertos_mspi_display.c
-SRC += main_task.c
-SRC += render_task.c
-SRC += rtos.c
-SRC += ambiq_logo.c
+SRC = ambiq_logo.c
 SRC += NeZa1.c
 SRC += NeZa2.c
 SRC += watch_background.c
+SRC += freertos_mspi_display.c
+SRC += main_task.c
+SRC += render_task.c
+SRC += rtos.c
 SRC += port.c
 SRC += am_devices_mspi_rm69330.c
-SRC += event_groups.c
-SRC += list.c
-SRC += queue.c
-SRC += tasks.c
-SRC += timers.c
 SRC += am_util_debug.c
 SRC += am_util_delay.c
 SRC += am_util_faultisr.c
 SRC += am_util_stdio.c
 SRC += heap_2.c
+SRC += event_groups.c
+SRC += list.c
+SRC += queue.c
+SRC += tasks.c
+SRC += timers.c
 SRC += startup_gcc.c
 
 CSRC = $(filter %.c,$(SRC))

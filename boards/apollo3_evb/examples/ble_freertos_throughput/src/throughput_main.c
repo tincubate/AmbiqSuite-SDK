@@ -11,7 +11,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2019, Ambiq Micro
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -43,7 +43,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision v2.2.0-6-g9329ccc58 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 
@@ -77,7 +77,6 @@
 enum
 {
     THROUGHPUT_SEND_DATA_TIMER_IND = THROUGHPUT_MSG_START,  /*! data sending timer expired */
-    READ_REM_FEATRUE_REQ_EVT
 };
 
 /**************************************************************************************************
@@ -114,7 +113,7 @@ static const appSlaveCfg_t tpSlaveCfg =
 /*! configurable parameters for security */
 static const appSecCfg_t tpSecCfg =
 {
-    0,//DM_AUTH_BOND_FLAG,                      /*! Authentication and bonding flags */
+    0, //DM_AUTH_BOND_FLAG,                 /*! Authentication and bonding flags */
     0,                                      /*! Initiator key distribution flags */
     DM_KEY_DIST_LTK,                        /*! Responder key distribution flags */
     FALSE,                                  /*! TRUE if Out-of-band pairing data is present */
@@ -209,11 +208,27 @@ static const attsCccSet_t tpCccSet[THROUGHPUT_NUM_CCC_IDX] =
 #define TX_PACKET_CNT_MAX    65535
 #define TX_DATA_TIMER_MS     100
 #define UPLINK_DATA_CNT      512
-#define BIDIRCT_PKT_CNT_MAX  601
-#define UPLINK_FLAG          0xAA
+#define BIDIRCT_PKT_CNT_MAX  600
+#define UPLINK_FLAG          0xA5
 #define DOWNLINK_FLAG        0x5A
 #define MTU_REQ_FLAG         0xFE
 #define BIDIRECT_FLAG        0x88
+#define UPLINK_DATA          0xAA
+
+// the transmit mode between phone and throughput example
+// UPLINK means sending notification from device to phone
+// DOWNLINK means writing data from phone to device
+// BIDIRECT means firstly device sent notification then phone write data
+typedef enum
+{
+    TRANSMIT_MODE_NONE,
+    TRANSMIT_MODE_UPLINK,
+    TRANSMIT_MODE_DOWNLINK,
+    TRANSMIT_MODE_BIDIRECT
+}transmit_mode_t;
+
+uint8_t transmit_mode = TRANSMIT_MODE_NONE;
+
 
 /* Control block */
 static struct
@@ -223,10 +238,9 @@ static struct
     wsfTimer_t              sendDataTimer;  // timer for sending data
 }throughputCb;
 
-bool        sendDataFlag = false;
-uint8_t     uplinkData[UPLINK_DATA_CNT] = {0, 0, 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18};
-uint16_t    txIdx = 0;
-uint16_t    preRxIdx=0, rxIdx = 0;
+uint8_t     uplinkData[UPLINK_DATA_CNT] = {0, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18};
+uint32_t    txIdx = 0;
+uint16_t    preRxIdx = 0, rxIdx = 0;
 uint16_t    maxTransPacket = TX_PACKET_CNT_MAX;
 uint8_t     g_mtu;
 
@@ -406,26 +420,28 @@ static void throughputBtnCback(uint8_t btn)
 
 static void throughputSendData(uint8_t connId)
 {
-    uplinkData[0] = txIdx & 0xff;
-    uplinkData[1] = (txIdx >> 8) & 0xff;
-
-    if ((sendDataFlag)&&(txIdx < maxTransPacket))
+    if ( (transmit_mode == TRANSMIT_MODE_BIDIRECT)
+        || (transmit_mode == TRANSMIT_MODE_UPLINK) )
     {
-        AttsHandleValueNtf(connId, THROUGHPUT_TX_HDL, g_mtu-3, uplinkData);
-
-        /*Device stops sending packages while device sends 65535 packages.*/
-        if (txIdx >= TX_PACKET_CNT_MAX)
+        if ( txIdx <= maxTransPacket )
         {
-            APP_TRACE_INFO0("Device sends 65535 packages done");
-            txIdx = 0;
-        }
+            uplinkData[0] = txIdx & 0xff;
+            uplinkData[1] = (txIdx >> 8) & 0xff;
 
-        if( ((txIdx & 0x3ff) == 0) && (txIdx>>10 != 0))
+            AttsHandleValueNtf(connId, THROUGHPUT_TX_HDL, g_mtu-3, uplinkData);
+
+            if ( ((txIdx & 0x3ff) == 0) && (txIdx>>10 != 0) )
+            {
+                APP_TRACE_INFO1("Device tx %d packages", txIdx);
+            }
+
+            txIdx++;
+        }
+        else if ( transmit_mode == TRANSMIT_MODE_UPLINK )
         {
-            APP_TRACE_INFO1("Device tx %d packages", txIdx);
+            txIdx = 1;
+            WsfTimerStartMs(&throughputCb.sendDataTimer, TX_DATA_TIMER_MS);
         }
-
-        txIdx++;
     }
 }
 
@@ -474,7 +490,7 @@ static void throughputProcMsg(tpMsg_t *pMsg)
 
         case ATT_MTU_UPDATE_IND:
             APP_TRACE_INFO1("Negotiated MTU = %d", ((attEvt_t *)pMsg)->mtu);
-            g_mtu=((attEvt_t *)pMsg)->mtu;
+            g_mtu = ((attEvt_t *)pMsg)->mtu;
 
         break;
 
@@ -501,32 +517,25 @@ static void throughputProcMsg(tpMsg_t *pMsg)
             txIdx = 0;
             rxIdx = 0;
             preRxIdx = 0;
-            sendDataFlag = false;
+            transmit_mode = TRANSMIT_MODE_NONE;
 
-            g_mtu=AttGetMtu(1);
+            g_mtu = AttGetMtu(pMsg->hdr.param);
 
             uiEvent = APP_UI_CONN_OPEN;
 
         break;
 
-
         case DM_CONN_CLOSE_IND:
         {
             hciDisconnectCmplEvt_t *evt = (hciDisconnectCmplEvt_t*) pMsg;
-
 
             throughputCb.connId = DM_CONN_ID_NONE;
 
             APP_TRACE_INFO1(">>> Connection closed reason 0x%x <<<", evt->reason);
 
             uiEvent = APP_UI_CONN_CLOSE;
-
         }
         break;
-
-        case DM_PHY_UPDATE_IND:
-          APP_TRACE_INFO2("DM_PHY_UPDATE_IND RX: %d, TX: %d", pMsg->dm.phyUpdate.rxPhy, pMsg->dm.phyUpdate.txPhy);
-          break;
 
         case DM_CONN_UPDATE_IND:
         {
@@ -535,7 +544,7 @@ static void throughputProcMsg(tpMsg_t *pMsg)
             (void)evt;
 
             APP_TRACE_INFO1("connection update status = 0x%x", evt->status);
-                            
+
             if (evt->status == 0)
             {
                 APP_TRACE_INFO1("handle = 0x%x", evt->handle);
@@ -543,7 +552,6 @@ static void throughputProcMsg(tpMsg_t *pMsg)
                 APP_TRACE_INFO1("connLatency = 0x%x", evt->connLatency);
                 APP_TRACE_INFO1("supTimeout = 0x%x", evt->supTimeout);
             }
-
         }
         break;
 
@@ -582,77 +590,74 @@ static void throughputProcMsg(tpMsg_t *pMsg)
 
 
 uint8_t throughputWriteCb(dmConnId_t connId, uint16_t handle, uint8_t operation,
-                                    uint16_t offset, uint16_t len, uint8_t *pValue,
-                                    attsAttr_t *pAttr)
+                          uint16_t offset, uint16_t len, uint8_t *pValue,
+                          attsAttr_t *pAttr)
 {
     if (len >= 1)
     {
-        rxIdx = (pValue[1]<<8) | pValue[0];
+        rxIdx = (pValue[1] << 8) | pValue[0];
 
         // check if the Packet is an command packet to start uplink/downlink/bidrection test.
-        if(rxIdx == 1)
+        if ( rxIdx == 1 )
         {
-            if(pValue[3] == DOWNLINK_FLAG)
+            // Downlink means phone writing data to device using GATT write command
+            if ( pValue[3] == DOWNLINK_FLAG )
             {
                 //starting trans of downlink
                 txIdx = 0;
                 preRxIdx = 1;
                 maxTransPacket = 0;
-                sendDataFlag = false;
+                transmit_mode = TRANSMIT_MODE_DOWNLINK;
 
                 APP_TRACE_INFO0("Got downlink trans command  and starting downlink trans\r\n");
                 return ATT_SUCCESS;
             }
-            else if(pValue[3] == MTU_REQ_FLAG)
+            else if ( pValue[3] == MTU_REQ_FLAG )
             {
                 //send MTU to APP
 
-                sendDataFlag = false;
-                txIdx = 0;
+                txIdx = 1;
                 preRxIdx = 0;
-                maxTransPacket = 0;
 
                 memset(uplinkData, MTU_REQ_FLAG, UPLINK_DATA_CNT);
                 uplinkData[6] = g_mtu;
                 uplinkData[7] = g_mtu;
                 uplinkData[8] = g_mtu;
+                uplinkData[9] = BIDIRCT_PKT_CNT_MAX&0xFF;
+                uplinkData[10] = (BIDIRCT_PKT_CNT_MAX>>8)&0xFF;
 
-                sendDataFlag = true;
                 maxTransPacket = 1;
 
-                am_util_delay_ms(50);
-                throughputSendData(connId);
-
-                sendDataFlag = false;
-                txIdx = 0;
-                preRxIdx = 0;
-
                 APP_TRACE_INFO0("Got MTU cmd from APP, send Local MTU to APP");
+
+                AttsHandleValueNtf(connId, THROUGHPUT_TX_HDL, g_mtu-3, uplinkData);
             }
-            else if((pValue[3] == BIDIRECT_FLAG))
+            // Bidirection is device send 600 packets notification then phone send 600 packets data, alternatively
+            else if ( (pValue[3] == BIDIRECT_FLAG) )
             {
                 //starting trans of bidrection
 
                 txIdx = 1;
-                preRxIdx=0;
-                sendDataFlag = true;
+                preRxIdx = 0;
                 maxTransPacket = BIDIRCT_PKT_CNT_MAX;
+                transmit_mode = TRANSMIT_MODE_BIDIRECT;
 
-                memset(uplinkData, UPLINK_FLAG, UPLINK_DATA_CNT);
+                memset(uplinkData, UPLINK_DATA, UPLINK_DATA_CNT);
 
                 WsfTimerStartMs(&throughputCb.sendDataTimer, TX_DATA_TIMER_MS);
                 APP_TRACE_INFO0("Got bidirection trans cmd and start bidrection trans\r\n");
             }
-            else
+            // Uplink means device sends notification data to phone
+            else if ( (pValue[3] == UPLINK_FLAG) )
             {
                 //starting  trans of uplink
 
                 txIdx = 1;
                 preRxIdx = 0;
-                sendDataFlag = true;
                 maxTransPacket = TX_PACKET_CNT_MAX;
+                transmit_mode = TRANSMIT_MODE_UPLINK;
 
-                memset(uplinkData, UPLINK_FLAG, 256);
+                memset(uplinkData, UPLINK_DATA, UPLINK_DATA_CNT);
 
                 WsfTimerStartMs(&throughputCb.sendDataTimer, TX_DATA_TIMER_MS);
                 APP_TRACE_INFO0("Got uplink trans cmd and start Uplink trans\r\n");
@@ -675,7 +680,8 @@ uint8_t throughputWriteCb(dmConnId_t connId, uint16_t handle, uint8_t operation,
                 APP_TRACE_INFO2("Device received error package index, last index is %d, now is %d!", preRxIdx, rxIdx);
             }
         }
-        else
+        // Not output trace for case preRxIdx==65535, rxIdx==0
+        else if ( (rxIdx < preRxIdx) && (rxIdx > 0) )
         {
             APP_TRACE_INFO2("Device received error package index, last index is %d, now is %d!!!", preRxIdx, rxIdx);
         }

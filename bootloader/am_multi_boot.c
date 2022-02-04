@@ -14,7 +14,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -46,7 +46,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 #include <string.h>
@@ -147,7 +147,11 @@ check_flash_address_range(uint32_t address, uint32_t size)
         am_hal_mcuctrl_device_info_get(&sDevice);
 #endif // AM_APOLLO3_MCUCTRL
 
+#if !defined(AM_PART_APOLLO4B)
         g_intFlashSize = sDevice.ui32FlashSize;
+#else
+        g_intFlashSize = sDevice.ui32MRAMSize;
+#endif
     }
 
     //
@@ -302,9 +306,6 @@ program_image(uint32_t bEncrypted)
             }
         }
     }
-    // TODO: Apply necessary protections to flash
-    // Need to add flash protection - chunk by chunk including potentially
-    // the last partial chunk
 }
 
 //*****************************************************************************

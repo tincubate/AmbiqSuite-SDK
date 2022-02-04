@@ -122,6 +122,7 @@ typedef struct
   wsfMsgHdr_t             hdr;
   uint8_t                 numSets;
   uint8_t                 advHandle[DM_NUM_ADV_SETS];
+  uint8_t                 reserved; /** dummy to work around gcc warning. */
 } dmAdvApiStop_t;
 
 /* Data structure for DM_ADV_MSG_API_REMOVE */

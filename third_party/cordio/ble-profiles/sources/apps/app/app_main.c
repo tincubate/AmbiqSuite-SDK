@@ -110,6 +110,10 @@ static void appProcMsg(wsfMsgHdr_t *pMsg)
       appUiTimerExpired(pMsg);
       break;
 
+    case APP_HCI_READ_REMOTE_FEAT:
+      DmReadRemoteFeatures((dmConnId_t) pMsg->param);
+      break;
+
     default:
       break;
   }
@@ -456,3 +460,24 @@ void AppUpdatePrivacyMode(appDbHdl_t hdl)
     }
   }
 }
+
+/*************************************************************************************************/
+/*!
+ *  \brief  Start the reading remote feature timer after connection establish.
+ *
+ *  \param  connId    DM connection ID.
+ *
+ *  \return None.
+ */
+/*************************************************************************************************/
+void appConnReadRemoteFeatTimerStart(dmConnId_t connId)
+{
+  /* look up app connection control block from DM connection ID */
+  appConnCb_t *pCb = &appConnCb[connId - 1];
+
+  pCb->readRemoteFeatTimer.handlerId = appHandlerId;
+  pCb->readRemoteFeatTimer.msg.event = APP_HCI_READ_REMOTE_FEAT;
+  pCb->readRemoteFeatTimer.msg.param = connId;
+  WsfTimerStartMs(&pCb->readRemoteFeatTimer, APP_TIME_READ_REMOTE_FEAT_MS);
+}
+

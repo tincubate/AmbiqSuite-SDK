@@ -10,7 +10,7 @@
 
 //*****************************************************************************
 //
-// Copyright (c) 2020, Ambiq Micro, Inc.
+// Copyright (c) 2021, Ambiq Micro, Inc.
 // All rights reserved.
 //
 // Redistribution and use in source and binary forms, with or without
@@ -42,7 +42,7 @@
 // ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 // POSSIBILITY OF SUCH DAMAGE.
 //
-// This is part of revision 2.5.1 of the AmbiqSuite Development Package.
+// This is part of revision release_sdk_3_0_0-742e5ac27c of the AmbiqSuite Development Package.
 //
 //*****************************************************************************
 #include <string.h>
@@ -117,7 +117,7 @@ static void voles_conn_parameter_req(void)
     connSpec.connLatency = 0;       //0;
     connSpec.supTimeout = 400;
     connSpec.minCeLen = 0;
-    connSpec.maxCeLen = 0xffff;     //fixme
+    connSpec.maxCeLen = 0xffff;
     DmConnUpdate(1, &connSpec);
 }
 
@@ -157,7 +157,7 @@ voles_conn_update(dmEvt_t *pMsg)
     hciLeConnUpdateCmplEvt_t *evt = (hciLeConnUpdateCmplEvt_t*) pMsg;
 
     APP_TRACE_INFO1("connection update status = 0x%x", evt->status);
-    
+
     if (evt->status == 0)
     {
         APP_TRACE_INFO1("handle = 0x%x", evt->handle);
